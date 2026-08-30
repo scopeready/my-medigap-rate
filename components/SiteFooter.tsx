@@ -1,5 +1,12 @@
 import Link from "next/link";
-import { ORG, SITE, TPMO_DISCLAIMER, GOVERNMENT_DISCLAIMER, DATA_DISCLAIMER } from "@/lib/site";
+import {
+  ORG,
+  SITE,
+  TPMO_DISCLAIMER,
+  GOVERNMENT_DISCLAIMER,
+  DATA_DISCLAIMER,
+  LICENSING_DISCLOSURE,
+} from "@/lib/site";
 
 export function SiteFooter() {
   const year = new Date().getFullYear();
@@ -52,6 +59,7 @@ export function SiteFooter() {
 
         <div className="footer-legal">
           <p>{GOVERNMENT_DISCLAIMER}</p>
+          <p>{LICENSING_DISCLOSURE}</p>
           <p>{TPMO_DISCLAIMER}</p>
           <p>{DATA_DISCLAIMER}</p>
           <p>

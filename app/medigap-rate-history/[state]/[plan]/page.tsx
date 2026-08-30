@@ -10,7 +10,7 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { EvidenceNote } from "@/components/EvidenceNote";
 import { Figure, Withheld } from "@/components/Figure";
 import { isoToLong, money } from "@/lib/format";
-import { ORG, SITE } from "@/lib/site";
+import { ORG, PREDICTION_DISCLAIMER, SITE } from "@/lib/site";
 
 interface Props {
   params: Promise<{ state: string; plan: string }>;
@@ -201,6 +201,8 @@ export default async function StatePlanPage({ params }: Props) {
             </div>
 
             {s.abbr === "TN" && <p className="citation">{TN_NOTE}</p>}
+
+            <p className="citation">{PREDICTION_DISCLAIMER}</p>
 
             {verifiedHere === 0 && (
               <div style={{ marginTop: "2rem" }}>

@@ -1,4 +1,5 @@
 /** Site-wide constants. Single source of truth for identity and contact data. */
+import { STATES } from "./states";
 
 export const SITE = {
   name: "MyMedigapRate",
@@ -27,3 +28,30 @@ export const GOVERNMENT_DISCLAIMER =
 
 export const DATA_DISCLAIMER =
   "Premiums shown on this site are published only after the underlying rate filing has been located in the issuing state's public filing system and cited on the page. Figures that have not yet cleared that check are labelled unverified and are never presented as a quote.";
+
+/**
+ * Licensing and compensation disclosure. Required site-wide, not only on the
+ * about page: a reader who lands on a state page from search never sees /about.
+ *
+ * The state list is derived from `STATES` rather than written out, so it cannot
+ * drift from the flag that governs the agent call-to-action. Editing one place
+ * changes both.
+ */
+export const LICENSED_ABBRS: readonly string[] = STATES.filter((s) => s.licensed).map(
+  (s) => s.abbr,
+);
+
+export const LICENSING_DISCLOSURE =
+  `Insurance products are offered through ${ORG.legalName}. ${ORG.agent} is a licensed ` +
+  `insurance agent in ${LICENSED_ABBRS.join(", ")}. We may receive compensation from ` +
+  `insurance carriers for policies sold.`;
+
+/**
+ * Required wherever rate history is shown. Presenting past increases as
+ * predictive would be a misrepresentation, and this site exists to show past
+ * increases — so the sentence travels with them rather than living on /terms.
+ */
+export const PREDICTION_DISCLAIMER =
+  "Rates and approved increases change. Past rate increases do not predict future increases. " +
+  "Verify current pricing with the carrier or the issuing state's insurance department before " +
+  "making a decision.";

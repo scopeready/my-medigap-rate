@@ -226,6 +226,35 @@ distinction is worth having. Restoring it means widening `EvidenceTier` in
 
 ---
 
+## 🟡 14. `ROUTED_PLANS` routes two plans the data cannot fill
+
+`lib/plans.ts` routes Plan G, Plan N, High-Deductible G and Plan F — 4 x 51 = the 204
+state x plan pages. Two independent sources say it should be two plans, not four:
+
+- **The data.** The analytics layer covers **G and N only**. Plan F and HDG have premiums
+  in all 48 states (3,260 and 1,760 workbook rows) and **no rate-increase history
+  anywhere**. No amount of filing verification changes that; the profile was never
+  collected. So 102 of the 204 pages cannot show a rate history, which is the entire
+  purpose of the page type.
+- **The content plan.** `CONTENT_MAP.md` §1 specifies "~96 routes (48 states x Plan G,
+  Plan N)". Plan F and HDG were never in it.
+
+Plan F is also closed to anyone first eligible on or after 2020-01-01, so its audience is
+shrinking by definition — and the site's audience is switchers, who are mostly on G.
+
+**Recommendation: remove `plan-f` and `high-deductible-plan-g` from `ROUTED_ORDER`.** Both
+keep their national explainer pages under `/medigap-plans/[plan]`, so no content is lost;
+the sitemap regenerates automatically. That takes the route count from 280 to 178 and puts
+the plan, the data and the site back in agreement.
+
+**Alternative** if the routes are wanted for search coverage: keep them on a template that
+shows benefits and premium ranges and does not promise a rate history. That is more work
+and weaker pages.
+
+**Decision needed:** drop, or re-template?
+
+---
+
 ## Summary of decisions needed from Darin
 
 | # | Decision |
@@ -240,4 +269,5 @@ distinction is worth having. Restoring it means widening `EvidenceTier` in
 | 11 | Confirm quarterly refresh cadence and owner |
 | 12 | WI/MA — informational pages or exclude? |
 | 13 | Evidence tiers — keep a single `A`, or restore the `A1`/`A2` distinction? |
-| — | `ROUTED_PLANS` includes Plan F and HDG, which have premiums but no rate-increase history in any state. Drop them from the routed set, give them a template that does not promise history, or collect F/HDG analytics later. |
+| 14 | Plan F / HDG routes — drop them, or re-template them? |
+| 14 | `ROUTED_PLANS` includes Plan F and HDG. **Recommendation: drop them** — see #14. |

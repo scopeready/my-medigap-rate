@@ -111,6 +111,19 @@ main { display: block; min-height: 60vh; }
 
 /* ---------- header ---------- */
 
+/* Government non-affiliation bar. Small, but must stay legible: 65+ audience,
+   and it is the single most important disclaimer on the site. */
+.gov-bar {
+  background: var(--ink);
+  color: #fff;
+  font-size: .8rem;
+  line-height: 1.45;
+}
+.gov-bar p { margin: 0; padding: .5rem 0; }
+@media (max-width: 640px) {
+  .gov-bar { font-size: .76rem; }
+}
+
 .site-header {
   position: sticky; top: 0; z-index: 40;
   background: rgba(255, 255, 255, .92);

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "./Logo";
+import { GOVERNMENT_DISCLAIMER } from "@/lib/site";
 
 const LINKS = [
   { href: "/medigap-rate-history", label: "Rate history" },
@@ -11,6 +12,16 @@ const LINKS = [
 export function SiteHeader() {
   return (
     <header className="site-header">
+      {/*
+        Government non-affiliation, at the top of every page. The site is
+        designed to read as neutral research, which makes stating who operates
+        it more necessary rather than less.
+      */}
+      <div className="gov-bar">
+        <div className="wrap">
+          <p>{GOVERNMENT_DISCLAIMER}</p>
+        </div>
+      </div>
       <div className="wrap site-header__inner">
         <Link href="/" className="brand">
           <Logo />

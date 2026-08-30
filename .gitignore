@@ -6,6 +6,10 @@
 # ---------------------------------------------------------------------------
 data/csg/
 
+# Belt and braces: no vendor workbook may be committed from anywhere in the tree.
+*.xlsx
+*.xls
+
 # dependencies
 node_modules/
 .pnp
@@ -34,6 +38,12 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+
+# python (the ingest pipeline)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
 
 # os / editor
 .DS_Store
