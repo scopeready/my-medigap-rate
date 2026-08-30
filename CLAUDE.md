@@ -96,15 +96,20 @@ returns nothing when they are absent. **The build must never fail because the
 data is missing** — that is the production condition.
 
 ```bash
-npm run data:status        # counts, tier breakdown, top rank-1 queue items
+npm run data:status        # counts, tier breakdown, next queue items by rank
 npm run data:status -- NV  # scoped to one state
 ```
 
-Do not hand-edit the JSON. The verification workflow is: work the queue rank 1
-first (licensed states), find the filing, then update that record's
-`evidence_tier`, `verification_status`, `publishable` and `source_citation`
-together. Those four move as a unit; changing `publishable` alone does nothing
-because the gate checks all four.
+Do not hand-edit the JSON. The verification workflow is: work the queue from the
+lowest rank, find the filing, then update that record's `evidence_tier`,
+`verification_status`, `publishable` and `source_citation` together. Those four
+move as a unit; changing `publishable` alone does nothing because the gate checks
+all four.
+
+`rank` is a unique ordinal over the whole queue, not a priority tier — the
+reconciler sorts licensed states first, then by largest filed increase, and
+numbers the result. So "work rank 1 first" means the lowest ranks, not the rows
+whose rank equals 1. Of 4,279 items, 1,395 are in licensed states.
 
 `lib/csg-data.ts` normalizes defensively and defaults everything it does not
 recognize to Tier C / not publishable. Keep it that way. Also keep its filesystem
@@ -128,14 +133,15 @@ This is a Medicare marketing site subject to CMS/TPMO rules.
 ## Commands
 
 ```bash
-npm run dev        # local dev server
-npm run build      # production build — must be warning-free
-npm run typecheck  # tsc --noEmit
-npm start          # serve the production build
+npm run dev                # local dev server
+npm run build              # production build — must be warning-free
+npm run typecheck          # tsc --noEmit
+npm run verify:publishable # pre-deploy evidence guard
+npm start                  # serve the production build
 ```
 
-Before pushing: `npm run typecheck && npm run build`, and confirm the build ends
-with no Turbopack warnings.
+Before pushing: `npm run typecheck && npm run build && npm run verify:publishable`,
+and confirm the build ends with no Turbopack warnings.
 
 ## Secrets
 

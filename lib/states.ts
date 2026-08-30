@@ -10,7 +10,14 @@ export interface StateInfo {
    * window. Drives the copy on each state page.
    */
   rules: "standard" | "birthday" | "anniversary" | "continuous" | "waiver" | "state-standardized";
-  /** Whether the agency is licensed to write business in the state. */
+  /**
+   * Whether the agency is licensed to write business in the state.
+   *
+   * Exactly fifteen are true: NV, CA, UT, AZ, NM, CO, MN, OH, WA, GA, TX, TN,
+   * FL, SC, NC. Never New York. This list drives the agent call-to-action, so
+   * a state marked true here is a representation that we can sell there —
+   * do not add one without confirming the producer licence is current.
+   */
   licensed: boolean;
 }
 
@@ -24,10 +31,10 @@ export interface StateInfo {
  *   state-standardized— MA, MN and WI use their own plan sets, not A-N
  */
 export const STATES: readonly StateInfo[] = [
-  { slug: "alabama", abbr: "AL", name: "Alabama", rules: "standard", licensed: true },
+  { slug: "alabama", abbr: "AL", name: "Alabama", rules: "standard", licensed: false },
   { slug: "alaska", abbr: "AK", name: "Alaska", rules: "standard", licensed: false },
   { slug: "arizona", abbr: "AZ", name: "Arizona", rules: "standard", licensed: true },
-  { slug: "arkansas", abbr: "AR", name: "Arkansas", rules: "standard", licensed: true },
+  { slug: "arkansas", abbr: "AR", name: "Arkansas", rules: "standard", licensed: false },
   { slug: "california", abbr: "CA", name: "California", rules: "birthday", licensed: true },
   { slug: "colorado", abbr: "CO", name: "Colorado", rules: "standard", licensed: true },
   { slug: "connecticut", abbr: "CT", name: "Connecticut", rules: "continuous", licensed: false },
@@ -36,22 +43,22 @@ export const STATES: readonly StateInfo[] = [
   { slug: "florida", abbr: "FL", name: "Florida", rules: "standard", licensed: true },
   { slug: "georgia", abbr: "GA", name: "Georgia", rules: "standard", licensed: true },
   { slug: "hawaii", abbr: "HI", name: "Hawaii", rules: "standard", licensed: false },
-  { slug: "idaho", abbr: "ID", name: "Idaho", rules: "birthday", licensed: true },
-  { slug: "illinois", abbr: "IL", name: "Illinois", rules: "birthday", licensed: true },
-  { slug: "indiana", abbr: "IN", name: "Indiana", rules: "standard", licensed: true },
-  { slug: "iowa", abbr: "IA", name: "Iowa", rules: "standard", licensed: true },
-  { slug: "kansas", abbr: "KS", name: "Kansas", rules: "standard", licensed: true },
-  { slug: "kentucky", abbr: "KY", name: "Kentucky", rules: "anniversary", licensed: true },
-  { slug: "louisiana", abbr: "LA", name: "Louisiana", rules: "birthday", licensed: true },
+  { slug: "idaho", abbr: "ID", name: "Idaho", rules: "birthday", licensed: false },
+  { slug: "illinois", abbr: "IL", name: "Illinois", rules: "birthday", licensed: false },
+  { slug: "indiana", abbr: "IN", name: "Indiana", rules: "standard", licensed: false },
+  { slug: "iowa", abbr: "IA", name: "Iowa", rules: "standard", licensed: false },
+  { slug: "kansas", abbr: "KS", name: "Kansas", rules: "standard", licensed: false },
+  { slug: "kentucky", abbr: "KY", name: "Kentucky", rules: "anniversary", licensed: false },
+  { slug: "louisiana", abbr: "LA", name: "Louisiana", rules: "birthday", licensed: false },
   { slug: "maine", abbr: "ME", name: "Maine", rules: "continuous", licensed: false },
-  { slug: "maryland", abbr: "MD", name: "Maryland", rules: "standard", licensed: true },
+  { slug: "maryland", abbr: "MD", name: "Maryland", rules: "standard", licensed: false },
   { slug: "massachusetts", abbr: "MA", name: "Massachusetts", rules: "state-standardized", licensed: false },
-  { slug: "michigan", abbr: "MI", name: "Michigan", rules: "standard", licensed: true },
-  { slug: "minnesota", abbr: "MN", name: "Minnesota", rules: "state-standardized", licensed: false },
-  { slug: "mississippi", abbr: "MS", name: "Mississippi", rules: "standard", licensed: true },
-  { slug: "missouri", abbr: "MO", name: "Missouri", rules: "anniversary", licensed: true },
+  { slug: "michigan", abbr: "MI", name: "Michigan", rules: "standard", licensed: false },
+  { slug: "minnesota", abbr: "MN", name: "Minnesota", rules: "state-standardized", licensed: true },
+  { slug: "mississippi", abbr: "MS", name: "Mississippi", rules: "standard", licensed: false },
+  { slug: "missouri", abbr: "MO", name: "Missouri", rules: "anniversary", licensed: false },
   { slug: "montana", abbr: "MT", name: "Montana", rules: "standard", licensed: false },
-  { slug: "nebraska", abbr: "NE", name: "Nebraska", rules: "standard", licensed: true },
+  { slug: "nebraska", abbr: "NE", name: "Nebraska", rules: "standard", licensed: false },
   { slug: "nevada", abbr: "NV", name: "Nevada", rules: "birthday", licensed: true },
   { slug: "new-hampshire", abbr: "NH", name: "New Hampshire", rules: "standard", licensed: false },
   { slug: "new-jersey", abbr: "NJ", name: "New Jersey", rules: "standard", licensed: false },
@@ -60,9 +67,9 @@ export const STATES: readonly StateInfo[] = [
   { slug: "north-carolina", abbr: "NC", name: "North Carolina", rules: "standard", licensed: true },
   { slug: "north-dakota", abbr: "ND", name: "North Dakota", rules: "standard", licensed: false },
   { slug: "ohio", abbr: "OH", name: "Ohio", rules: "standard", licensed: true },
-  { slug: "oklahoma", abbr: "OK", name: "Oklahoma", rules: "birthday", licensed: true },
-  { slug: "oregon", abbr: "OR", name: "Oregon", rules: "birthday", licensed: true },
-  { slug: "pennsylvania", abbr: "PA", name: "Pennsylvania", rules: "standard", licensed: true },
+  { slug: "oklahoma", abbr: "OK", name: "Oklahoma", rules: "birthday", licensed: false },
+  { slug: "oregon", abbr: "OR", name: "Oregon", rules: "birthday", licensed: false },
+  { slug: "pennsylvania", abbr: "PA", name: "Pennsylvania", rules: "standard", licensed: false },
   { slug: "rhode-island", abbr: "RI", name: "Rhode Island", rules: "standard", licensed: false },
   { slug: "south-carolina", abbr: "SC", name: "South Carolina", rules: "standard", licensed: true },
   { slug: "south-dakota", abbr: "SD", name: "South Dakota", rules: "standard", licensed: false },
@@ -70,9 +77,9 @@ export const STATES: readonly StateInfo[] = [
   { slug: "texas", abbr: "TX", name: "Texas", rules: "standard", licensed: true },
   { slug: "utah", abbr: "UT", name: "Utah", rules: "standard", licensed: true },
   { slug: "vermont", abbr: "VT", name: "Vermont", rules: "continuous", licensed: false },
-  { slug: "virginia", abbr: "VA", name: "Virginia", rules: "standard", licensed: true },
-  { slug: "washington", abbr: "WA", name: "Washington", rules: "waiver", licensed: false },
-  { slug: "west-virginia", abbr: "WV", name: "West Virginia", rules: "standard", licensed: true },
+  { slug: "virginia", abbr: "VA", name: "Virginia", rules: "standard", licensed: false },
+  { slug: "washington", abbr: "WA", name: "Washington", rules: "waiver", licensed: true },
+  { slug: "west-virginia", abbr: "WV", name: "West Virginia", rules: "standard", licensed: false },
   { slug: "wisconsin", abbr: "WI", name: "Wisconsin", rules: "state-standardized", licensed: false },
   { slug: "wyoming", abbr: "WY", name: "Wyoming", rules: "standard", licensed: false },
 ];
