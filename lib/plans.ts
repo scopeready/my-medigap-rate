@@ -116,16 +116,18 @@ export function getPlan(slug: string): PlanInfo | undefined {
 }
 
 /**
- * Plans that get a programmatic rate-history page in every state. These are the
- * four blocks with enough competing filings to make a trend readable. The other
- * plan letters get an explainer page but no per-state route.
+ * Plans that get a programmatic rate-history page in every state.
+ *
+ * Plan G and Plan N only, deliberately. A rate-history page exists to show a
+ * block's filed rate actions over time, and the research corpus carries that
+ * history for G and N alone — the other plan letters have premiums but no
+ * increase history in any state, so their pages could never show the one thing
+ * the page type is for. Every other letter gets a national explainer under
+ * `/medigap-plans/[plan]` instead.
+ *
+ * Adding a letter here is only correct once verified rate actions exist for it.
  */
-const ROUTED_ORDER: readonly PlanSlug[] = [
-  "plan-g",
-  "plan-n",
-  "high-deductible-plan-g",
-  "plan-f",
-];
+const ROUTED_ORDER: readonly PlanSlug[] = ["plan-g", "plan-n"];
 
 export const ROUTED_PLANS: readonly PlanInfo[] = ROUTED_ORDER.map((slug) => {
   const p = BY_SLUG.get(slug);

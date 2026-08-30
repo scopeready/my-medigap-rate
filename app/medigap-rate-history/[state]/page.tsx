@@ -66,7 +66,23 @@ export default async function StatePage({ params }: Props) {
         <div className="grid grid--2" style={{ marginTop: "2rem", alignItems: "start" }}>
           <div className="card">
             <h3>{RULE_LABEL[s.rules]}</h3>
-            <p style={{ marginBottom: 0 }}>{RULE_NOTE[s.rules]}</p>
+            <p>{RULE_NOTE[s.rules]}</p>
+            {/*
+              This classification is editorial, not a regulator's wording, and it
+              has not been verified against the state's own rules the way a rate
+              figure is verified against a filing. Saying so is consistent with
+              how the rest of the site treats an unconfirmed claim.
+            */}
+            <p className="card__meta" style={{ marginBottom: 0 }}>
+              Our summary of the rule, not the regulator&rsquo;s wording. State switching rules
+              change and carry conditions this cannot hold &mdash; confirm with the {s.name}{" "}
+              insurance department or your{" "}
+              <a href="https://www.shiphelp.org/" rel="noopener noreferrer" target="_blank">
+                free state counselling programme
+              </a>{" "}
+              before acting on it.{" "}
+              <Link href="/switching-medigap-plans">More on switching</Link>.
+            </p>
           </div>
           <div className="card">
             <h3>At a glance</h3>

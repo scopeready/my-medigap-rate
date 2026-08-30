@@ -11,6 +11,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: url("/"), lastModified: now, changeFrequency: "weekly", priority: 1 },
     { url: url("/medigap-rate-history"), lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: url("/medigap-plans"), lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    // Editorial guides. High priority: they answer the question the audience
+    // actually searches, and unlike the data pages they are complete today.
+    { url: url("/why-did-my-medigap-premium-increase"), lastModified: now, changeFrequency: "monthly", priority: 0.9 },
+    { url: url("/how-medigap-rates-work"), lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: url("/what-is-a-closed-block"), lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: url("/medigap-loss-ratios-explained"), lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: url("/switching-medigap-plans"), lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: url("/turning-65"), lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: url("/methodology"), lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: url("/about"), lastModified: now, changeFrequency: "monthly", priority: 0.5 },
     { url: url("/contact"), lastModified: now, changeFrequency: "monthly", priority: 0.5 },
@@ -41,5 +49,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   );
 
-  return [...staticPages, ...planPages, ...statePages, ...statePlanPages];
+  // Only licensed states get a turning-65 page: those pages carry an agent
+  // call-to-action, and one for a state we cannot write in would imply we can
+  // sell there. Mirrors generateStaticParams in app/turning-65/[state].
+  const turning65Pages: MetadataRoute.Sitemap = STATES.filter((s) => s.licensed).map((s) => ({
+    url: url(`/turning-65/${s.slug}`),
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
+  return [...staticPages, ...planPages, ...statePages, ...statePlanPages, ...turning65Pages];
 }

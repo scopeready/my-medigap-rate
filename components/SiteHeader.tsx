@@ -5,6 +5,7 @@ import { GOVERNMENT_DISCLAIMER } from "@/lib/site";
 const LINKS = [
   { href: "/medigap-rate-history", label: "Rate history" },
   { href: "/medigap-plans", label: "Plans" },
+  { href: "/why-did-my-medigap-premium-increase", label: "Why rates rise" },
   { href: "/methodology", label: "Methodology" },
   { href: "/about", label: "About" },
 ];

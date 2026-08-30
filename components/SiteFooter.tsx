@@ -23,6 +23,17 @@ export function SiteFooter() {
             </ul>
           </div>
           <div>
+            <h4>Guides</h4>
+            <ul>
+              <li><Link href="/why-did-my-medigap-premium-increase">Why my premium went up</Link></li>
+              <li><Link href="/how-medigap-rates-work">How Medigap rates work</Link></li>
+              <li><Link href="/what-is-a-closed-block">What is a closed block</Link></li>
+              <li><Link href="/medigap-loss-ratios-explained">Loss ratios explained</Link></li>
+              <li><Link href="/switching-medigap-plans">Switching plans</Link></li>
+              <li><Link href="/turning-65">Turning 65</Link></li>
+            </ul>
+          </div>
+          <div>
             <h4>Site</h4>
             <ul>
               <li><Link href="/about">About</Link></li>
