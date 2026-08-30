@@ -19,6 +19,26 @@ or deploy anything from another project into this one.
 - Hosting: Vercel, auto-deploying from GitHub. Zero required environment
   variables; every route is statically prerendered.
 
+## Who the visitor is
+
+Not primarily people turning 65. The organic audience is the **rate-shocked
+switcher** — already on Medicare, premium just jumped, searching "why did my
+Plan G premium go up" or "most stable Medigap company in Texas." They already
+know the word Medigap. Write for them. Head terms are owned by eight-figure
+budgets and are not winnable; the long tail this data uniquely answers is.
+
+## Known vendor-data defects — never render these as real
+
+| Item | Detail |
+|---|---|
+| NC Medico Corp Life | "2079.9%" (Plan G) / "2058.3%" (Plan N) — garbled feed values |
+| IA United of Omaha | "107.6%" at both ages — likely feed defect |
+| Lumos | AM Best rating and outlook swapped in every state (normalised on ingest, flag kept) |
+| OK Farm Bureau | "100.0%" — **may be genuine** (small 3,747-life block). Verify with OK DOI before dismissing. |
+
+The reconciler's anomaly filter (monthly rate ≥ $1,500, or any increase ≥ 100%)
+keeps these out of the verification queue; they stay in `qa_flags.json`.
+
 ## The rule that outranks everything else
 
 **No figure is published without a citation to a public rate filing.**

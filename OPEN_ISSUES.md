@@ -189,6 +189,43 @@ without requiring data.
 
 ---
 
+## 🔴 13. The documented verification shape does not pass the gate
+
+Added 2026-08-30, reconciling `DATA_DICTIONARY.md` and the data-phase `CLAUDE.md`
+against `lib/evidence.ts`.
+
+Three governance fields use different vocabularies in the handoff documentation and in
+the code that enforces them. A record updated exactly as the old documentation instructs
+is **silently degraded and withheld** — no error, no warning, nothing on the page:
+
+| Written as documented | Loader normalises to | Result |
+|---|---|---|
+| `evidence_tier: "A1"` | `"C"` | unrecognised tier fails closed |
+| `verification_status: "verified"` | `"unverified"` | not in the allowed set |
+| `source_citation: { filing_id, type, state, retrieved }` | `null` | no `regulator`; `filingNumber` missing |
+
+Tested end to end against the kit: the record comes back Tier C, unverified, citation
+null, and `gate()` returns `WITHHELD (tier_c)`.
+
+This matters because the verification pass is the product. Working the queue and
+recording results in the documented shape would produce **zero visible change** and give
+no indication anything was wrong.
+
+**Resolved for the writing side:** `DATA_DICTIONARY.md` §2 now documents the shape the
+gate actually enforces, with a worked example, and `npm run verify:publishable` fails
+loudly on a mis-shaped record rather than letting it render as withheld.
+
+**Still open — tier granularity.** The old scheme distinguished `A1` (primary regulator
+document) from `A2` (official regulator dataset such as an NAIC experience exhibit). The
+site has a single `A`. Loss ratios come from NAIC exhibits, not from filings, so the
+distinction is worth having. Restoring it means widening `EvidenceTier` in
+`lib/evidence.ts`, the normaliser in `lib/csg-data.ts`, and
+`scripts/verify-publishable.mjs` together.
+
+**Decision needed:** keep the single `A`, or restore `A1`/`A2`?
+
+---
+
 ## Summary of decisions needed from Darin
 
 | # | Decision |
@@ -202,4 +239,5 @@ without requiring data.
 | 10 | Are male/tobacco rate profiles needed? |
 | 11 | Confirm quarterly refresh cadence and owner |
 | 12 | WI/MA — informational pages or exclude? |
+| 13 | Evidence tiers — keep a single `A`, or restore the `A1`/`A2` distinction? |
 | — | `ROUTED_PLANS` includes Plan F and HDG, which have premiums but no rate-increase history in any state. Drop them from the routed set, give them a template that does not promise history, or collect F/HDG analytics later. |
