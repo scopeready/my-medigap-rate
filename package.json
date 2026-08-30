@@ -9,7 +9,8 @@
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "data:status": "node scripts/data-status.mjs",
-    "verify:publishable": "node scripts/verify-publishable.mjs"
+    "check:figures": "node scripts/check-figures.mjs",
+    "verify:publishable": "node scripts/check-figures.mjs && node scripts/verify-publishable.mjs"
   },
   "dependencies": {
     "next": "16.3.3",

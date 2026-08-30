@@ -55,3 +55,20 @@ export const PREDICTION_DISCLAIMER =
   "Rates and approved increases change. Past rate increases do not predict future increases. " +
   "Verify current pricing with the carrier or the issuing state's insurance department before " +
   "making a decision.";
+
+/**
+ * What our commission actually costs the reader: nothing.
+ *
+ * Medigap benefits are standardised by plan letter, so price is the only thing
+ * that differs between companies selling the same letter — and the commission
+ * is paid by the insurer out of the filed rate, not added on top of it. A
+ * buyer pays the same premium through us, through another agent, or direct.
+ *
+ * This matters commercially as well as ethically. Disclosing the commission
+ * without this sentence reads as "using an agent costs money", which is both
+ * false and the opposite of what a reader should take away.
+ */
+export const COMPENSATION_NOTE =
+  "You pay the same premium whichever way you buy: the commission comes out of the carrier's " +
+  "filed rate, it is never added to yours. Going direct to the insurer does not make the policy " +
+  "cheaper, and using us does not make it dearer.";

@@ -6,6 +6,7 @@ import {
   GOVERNMENT_DISCLAIMER,
   DATA_DISCLAIMER,
   LICENSING_DISCLOSURE,
+  COMPENSATION_NOTE,
 } from "@/lib/site";
 
 export function SiteFooter() {
@@ -70,7 +71,9 @@ export function SiteFooter() {
 
         <div className="footer-legal">
           <p>{GOVERNMENT_DISCLAIMER}</p>
-          <p>{LICENSING_DISCLOSURE}</p>
+          <p>
+            {LICENSING_DISCLOSURE} {COMPENSATION_NOTE}
+          </p>
           <p>{TPMO_DISCLAIMER}</p>
           <p>{DATA_DISCLAIMER}</p>
           <p>

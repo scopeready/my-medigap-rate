@@ -1,9 +1,10 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { MedicareCosts } from "@/components/MedicareCosts";
 import { Cite, SourceList } from "@/components/Cite";
 import { LeadCta } from "@/components/LeadCta";
-import { SITE } from "@/lib/site";
+import { SITE, COMPENSATION_NOTE } from "@/lib/site";
 import { STATES } from "@/lib/states";
 import type { SourceId } from "@/lib/sources";
 
@@ -147,6 +148,13 @@ export default function Page() {
             <Cite id="medigap-ready" />
           </p>
 
+          <h2>What Medicare costs before any Medigap policy</h2>
+          <p>
+            A Medigap policy sits on top of these; it does not replace them. You keep paying the
+            Part B premium whatever supplement you hold.
+          </p>
+          <MedicareCosts />
+
           <h2>The decision that follows you</h2>
           <p>
             Benefits are standardised by plan letter — a Plan G is a Plan G whoever sells it. So the
@@ -218,7 +226,7 @@ export default function Page() {
           <h2>Get a second opinion, free</h2>
           <p>
             Every state has a State Health Insurance Assistance Program giving free, unbiased
-            one-to-one counselling. They take no commission on anything.
+            one-to-one counselling, funded federally rather than by carriers.
             <Cite id="ship-about" /> Find yours through the{" "}
             <a href="https://www.shiphelp.org/" rel="noopener noreferrer" target="_blank">
               SHIP locator
@@ -226,9 +234,11 @@ export default function Page() {
             or 1-877-839-2675.
           </p>
           <p>
-            We are a licensed agency and we are paid by carriers when someone buys through us. That
-            is a real conflict of interest, and it is the reason we point at the free option in the
-            same breath. <Link href="/about">How we handle that</Link>.
+            We are a licensed agency and carriers pay us when someone buys through us. That is a
+            real conflict of interest and we would rather you knew it. What it is <em>not</em> is a
+            cost to you: {COMPENSATION_NOTE.charAt(0).toLowerCase() + COMPENSATION_NOTE.slice(1)}{" "}
+            So the reason to use the free counselling service is a second opinion, not a cheaper
+            policy. <Link href="/about">How we handle the conflict</Link>.
           </p>
 
           <h2>State enrollment rules</h2>

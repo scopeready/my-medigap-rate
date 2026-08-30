@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { ORG, LICENSED_ABBRS } from "@/lib/site";
+import { ORG, LICENSED_ABBRS, COMPENSATION_NOTE } from "@/lib/site";
 
 /**
  * The consultation call-to-action used at the foot of the editorial pages.
  *
- * Three things it deliberately does:
+ * Four things it deliberately does:
  *
  *  - Says what happens next. The reader is told who calls, roughly when, and
  *    that nothing is sold on the call. Vagueness about the follow-up is how
@@ -15,6 +15,10 @@ import { ORG, LICENSED_ABBRS } from "@/lib/site";
  *  - Asks no health questions anywhere. Underwriting belongs in the agent
  *    conversation, and collecting conditions on a web page would change this
  *    site's privacy obligations entirely.
+ *  - Says plainly that the reader pays nothing either way. Naming our
+ *    commission without that leaves a reader thinking an agent costs money,
+ *    which is false: the commission is inside the carrier's filed rate whether
+ *    or not anybody helps them.
  */
 export function LeadCta({
   heading = "Find out whether it is your block or just your age",
@@ -42,11 +46,11 @@ export function LeadCta({
         </a>
       </p>
       <p className="lead-cta__terms">
-        {ORG.agent} answers, usually the same business day. It is a conversation, not a quote
-        engine, and nothing is sold on the call. We never ask about your health conditions
-        through this website. We can write policies in {LICENSED_ABBRS.join(", ")} — everywhere
-        else, we will point you at your state&rsquo;s free counselling programme instead, which
-        takes no commission.
+        <strong>This costs you nothing.</strong> {COMPENSATION_NOTE} {ORG.agent} answers, usually
+        the same business day. It is a conversation, not a quote engine, and nothing is sold on
+        the call. We never ask about your health conditions through this website. We can write
+        policies in {LICENSED_ABBRS.join(", ")} &mdash; everywhere else we will point you to your
+        state&rsquo;s free counselling programme, which is also free to you.
       </p>
     </aside>
   );

@@ -3,8 +3,9 @@ import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Cite, SourceList } from "@/components/Cite";
 import { LeadCta } from "@/components/LeadCta";
-import { SITE } from "@/lib/site";
-import { STATES } from "@/lib/states";
+import { SITE, COMPENSATION_NOTE } from "@/lib/site";
+import { STATES, ruleLabel, ruleSource } from "@/lib/states";
+import { verificationProgress } from "@/lib/switching-rules";
 import type { SourceId } from "@/lib/sources";
 
 const SOURCES: readonly SourceId[] = [
@@ -34,38 +35,10 @@ export const metadata: Metadata = {
   },
 };
 
-const RULE_GROUPS = [
-  {
-    key: "birthday",
-    name: "Birthday rule",
-    blurb:
-      "An annual window tied to your birthday in which you may move to a policy with equal or lesser benefits without answering health questions.",
-  },
-  {
-    key: "anniversary",
-    name: "Anniversary rule",
-    blurb: "A similar annual window, tied to your policy's anniversary rather than your birthday.",
-  },
-  {
-    key: "continuous",
-    name: "Year-round guaranteed issue",
-    blurb:
-      "Insurers must sell to eligible applicants throughout the year, without medical underwriting.",
-  },
-  {
-    key: "waiver",
-    name: "Year-round switching to equal or lesser benefits",
-    blurb: "A standing right to move between plans of equal or lesser benefit at any time.",
-  },
-  {
-    key: "state-standardized",
-    name: "State-standardised plans",
-    blurb:
-      "The state does not use the federal plan letters at all; it has its own plan structure, so the rules differ throughout.",
-  },
-] as const;
-
 export default function Page() {
+  const beyond = STATES.filter((st) => st.rules !== "federal-only");
+  const progress = verificationProgress(STATES.map((st) => st.abbr));
+
   return (
     <section className="section">
       <div className="wrap">
@@ -128,27 +101,36 @@ export default function Page() {
 
           <h2>What your state may add on top</h2>
           <p>
-            The federal rules are a floor, not a ceiling. Some states give residents standing rights
-            to move that federal law does not, and the categories look roughly like this:
+            The federal rules are a floor, not a ceiling. {progress.beyondFederal} states go
+            beyond it, and we have read {progress.verified} of those {progress.beyondFederal} in
+            the state&rsquo;s own material and cited it below. A one-word label like
+            &ldquo;birthday rule&rdquo; hides the parts that decide whether you can actually
+            move, so the summaries here carry the limits.
           </p>
           <div className="table-scroll">
             <table className="data">
               <thead>
                 <tr>
-                  <th scope="col">Category</th>
-                  <th scope="col">What it generally means</th>
-                  <th scope="col">States we classify this way</th>
+                  <th scope="col">State</th>
+                  <th scope="col">Rule</th>
+                  <th scope="col">Source</th>
                 </tr>
               </thead>
               <tbody>
-                {RULE_GROUPS.map((g) => {
-                  const members = STATES.filter((s) => s.rules === g.key);
+                {beyond.map((st) => {
+                  const src = ruleSource(st);
                   return (
-                    <tr key={g.key}>
-                      <th scope="row">{g.name}</th>
-                      <td>{g.blurb}</td>
+                    <tr key={st.abbr}>
+                      <th scope="row">{st.name}</th>
+                      <td>{ruleLabel(st)}</td>
                       <td>
-                        {members.length ? members.map((s) => s.abbr).join(", ") : "—"}
+                        {src ? (
+                          <a href={src.url} rel="noopener noreferrer" target="_blank">
+                            {src.publisher}
+                          </a>
+                        ) : (
+                          <span className="card__meta">not yet verified</span>
+                        )}
                       </td>
                     </tr>
                   );
@@ -157,12 +139,20 @@ export default function Page() {
             </table>
           </div>
           <p className="citation">
-            <strong>Read this table as a starting point, not as advice.</strong> These groupings are
-            our own editorial classification, not a regulator&rsquo;s. State switching rules change
-            through legislation, they carry conditions and deadlines this table cannot hold, and
-            two states in the same row can work quite differently in practice. Before you act on
-            any of it, confirm the current rule with your own state&rsquo;s insurance department or
-            with your free state counselling programme &mdash; both are listed below.
+            Every state above links to the material we read it in. The remaining{" "}
+            {progress.total - progress.beyondFederal} states are, as far as we have found, on the
+            federal floor &mdash; which is not the same as having proved it. State rules change by
+            legislation; confirm the current wording with your insurance department or your free
+            counselling programme before acting.
+          </p>
+          <p>
+            Three examples of why the label is not enough, all from the table above.{" "}
+            <strong>Illinois</strong> caps its birthday rule at ages 65 to 75 and confines it to
+            your existing insurer, so it will not move you to a different company.{" "}
+            <strong>Nevada</strong>&rsquo;s reaches carriers with open blocks of business, which
+            may exclude the closed block you are trying to leave. <strong>Maine</strong> is
+            widely described as year-round guaranteed issue and is not: each insurer picks one
+            month a year, and only Plan A has to be offered in it.
           </p>
 
           <h2>The two traps in the mechanics</h2>
@@ -228,13 +218,20 @@ export default function Page() {
             your state is not giving you advice.
           </p>
 
-          <h2>Free help that takes no commission</h2>
+          <h2>Free help, and what our help costs you</h2>
           <p>
             Every state has a <strong>State Health Insurance Assistance Program</strong> (SHIP)
             giving free, unbiased, one-to-one Medicare counselling, federally funded through the
             Administration for Community Living.
             <Cite id="ship-about" />
-            <Cite id="acl-ship" /> They sell nothing and earn nothing on your decision.
+            <Cite id="acl-ship" /> They sell nothing and are funded federally rather than by
+            carriers.
+          </p>
+          <p>
+            We are a licensed agency, and carriers pay us when someone buys through us. Worth being
+            precise about what that means for you: {COMPENSATION_NOTE.charAt(0).toLowerCase() +
+            COMPENSATION_NOTE.slice(1)} The difference between us and the counselling service is
+            that they cannot sell you a policy and we can &mdash; not that one of us is cheaper.
           </p>
           <p>
             Find yours through the{" "}

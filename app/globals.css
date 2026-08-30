@@ -449,3 +449,15 @@ dl.facts dd { margin: 0; text-align: right; font-weight: 600; font-size: .93rem;
 }
 .inline-list li::after { content: "·"; margin-left: .9rem; color: var(--ink-3); }
 .inline-list li:last-child::after { content: ""; }
+
+.medicare-costs { margin: 1.6rem 0 0; }
+.medicare-costs__caption {
+  caption-side: top; text-align: left; padding-bottom: .6rem;
+  font-size: .82rem; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--ink-3);
+}
+.medicare-costs__note {
+  display: block; margin-top: .25rem; font-weight: 400;
+  font-size: .9rem; line-height: 1.5; color: var(--ink-2); max-width: 46ch;
+}
+.medicare-costs__now { font-weight: 700; font-size: 1.06rem; white-space: nowrap; }

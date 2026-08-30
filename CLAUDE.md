@@ -63,13 +63,26 @@ Corollaries, all non-negotiable:
 - **Never republish licensed data.** The reconciliation kit lives at
   `data/csg/` and is git-ignored. Never commit it, never move it under
   `public/`, never expose it through a route handler or an API.
+- **State switching rules come from `lib/switching-rules.ts`, never from a
+  category label.** Each state's rule is recorded as its own regulator states
+  it, with a citation, because the label hides what decides whether somebody can
+  actually move: Illinois caps its birthday rule at ages 65-75 and confines it
+  to the existing insurer; Nevada's reaches only carriers with open blocks;
+  Maine's is one insurer-chosen month for Plan A, not year-round guaranteed
+  issue. A state with no `source` renders as unverified and says so.
 - **Never rank carriers on rate stability.** Rate actions apply to a block of
   policies in one state, not to a company. "Carrier X raises rates a lot" is
   almost always wrong somewhere. Point at the NAIC for company-level questions.
-- **Never invent or "update" a dollar figure.** Part B premiums, deductibles and
-  plan out-of-pocket limits change annually and are not hard-coded anywhere in
-  this repo on purpose. Editorial copy describes them in words. Only introduce a
-  specific figure when the user supplies a verified, dated source, and cite it.
+- **Official Medicare amounts live in one file, and only there.** Part B
+  premiums and deductibles and the Part A hospital deductible are published, on
+  purpose — a Medigap page that will not state the Part B deductible cannot
+  explain Plan G. They live in `lib/medicare-figures.ts`, keyed by year, each
+  year carrying the CMS fact sheet it came from and the date it was read. Render
+  them through `components/MedicareCosts.tsx`, never inline, and never write one
+  into prose. `npm run check:figures` fails the build once the published year
+  falls behind the calendar year; CMS announces the next year each November.
+  Every *other* dollar figure still obeys the rule above: no number without a
+  citation. Carrier premiums come only through `gate()`.
 - **Never build a second site on a redirect domain.** Redirects point here.
   Doorway sites violate Google's spam policy.
 
@@ -96,7 +109,10 @@ lib/
   rate-filings.ts    filed rate actions, already gated
   premiums.ts        premiums and published bands, already gated
   tn-rate-actions.ts Tennessee adapter (reference for per-state adapters)
-  states.ts          51 states, switching rules, licensing
+  states.ts          51 states, licensing, and the switching-rule shape
+  switching-rules.ts per-state switching rights, each cited to its regulator
+  sources.ts         federal sources cited by the editorial pages
+  medicare-figures.ts official Medicare amounts by year, with CMS citations
   plans.ts           plans A-N; ROUTED_PLANS drives the state x plan routes
   site.ts            identity, contact, disclaimers
   format.ts          the only place a value is turned into display text
@@ -145,10 +161,18 @@ This is a Medicare marketing site subject to CMS/TPMO rules.
   footer of every page via `components/SiteFooter.tsx`. Do not weaken or remove
   them, and do not move them behind a click.
 - 1-800-MEDICARE, Medicare.gov and the free SHIP counseling program are linked
-  in the footer as the official, no-commission alternatives. Keep them.
+  in the footer as the official, independent alternatives. Keep them.
 - Any contact form must carry the permission-to-contact checkbox and its
   wording. It is required, not decorative.
-- The commission conflict is disclosed plainly on `/about`. Keep it plain.
+- The commission conflict is disclosed plainly on `/about` and in the footer.
+  Keep it plain — and always keep it next to `COMPENSATION_NOTE` in
+  `lib/site.ts`. Disclosing the commission on its own reads as "using an agent
+  costs money", which is false: Medigap commission is paid out of the carrier's
+  filed rate, so the buyer pays the same premium direct, through us, or through
+  anyone else. Say both, or the disclosure misinforms.
+- SHIP is described as federally funded rather than carrier-funded. Do not
+  describe it as "the no-commission option" — that implies we are the option
+  that costs money.
 
 ## Commands
 
@@ -156,7 +180,8 @@ This is a Medicare marketing site subject to CMS/TPMO rules.
 npm run dev                # local dev server
 npm run build              # production build — must be warning-free
 npm run typecheck          # tsc --noEmit
-npm run verify:publishable # pre-deploy evidence guard
+npm run check:figures      # fails if the Medicare amounts are a year behind
+npm run verify:publishable # figures check + pre-deploy evidence guard
 npm start                  # serve the production build
 ```
 

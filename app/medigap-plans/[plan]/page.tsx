@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { PLANS, ROUTED_PLANS, getPlan } from "@/lib/plans";
 import { STATES } from "@/lib/states";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { MedicareCosts } from "@/components/MedicareCosts";
 import { SITE } from "@/lib/site";
 
 interface Props {
@@ -70,6 +71,14 @@ export default async function PlanPage({ params }: Props) {
               <li key={item}>{item}</li>
             ))}
           </ul>
+
+          <h2>The Medicare amounts behind those items</h2>
+          <p>
+            Medigap plans are described in terms of Medicare&rsquo;s own deductibles and
+            coinsurance, so the plan only means something once you know what those are. These are
+            set by Medicare and change every year; no policy you buy changes them.
+          </p>
+          <MedicareCosts />
 
           <h2>Who can buy it</h2>
           <p>

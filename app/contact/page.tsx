@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ORG, SITE, TPMO_DISCLAIMER } from "@/lib/site";
+import { COMPENSATION_NOTE, ORG, SITE, TPMO_DISCLAIMER } from "@/lib/site";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 export const metadata: Metadata = {
@@ -112,12 +112,16 @@ export default function ContactPage() {
           </div>
         )}
 
-        <h2>Free help with no commission attached</h2>
+        <h2>What this costs you, and where else to get help</h2>
         <p>
-          If you would rather talk to someone who is not paid by a carrier, every state runs a
-          State Health Insurance Assistance Program offering free, unbiased Medicare counseling.
-          Medicare itself answers questions at{" "}
-          <a href="tel:+18006334227">1-800-MEDICARE</a>, 24 hours a day.
+          <strong>Talking to us is free, and so is buying through us.</strong> {COMPENSATION_NOTE}
+        </p>
+        <p>
+          If you would rather talk to someone who is not paid by a carrier at all, every state runs
+          a State Health Insurance Assistance Program offering free, unbiased Medicare counseling,
+          funded federally. Medicare itself answers questions at{" "}
+          <a href="tel:+18006334227">1-800-MEDICARE</a>, 24 hours a day. We would rather you used
+          them for a second opinion than went uninformed.
         </p>
 
         <p className="citation" style={{ marginTop: "2.5rem" }}>

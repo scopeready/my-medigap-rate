@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { STATES, getState, RULE_LABEL, RULE_NOTE } from "@/lib/states";
+import { STATES, getState, ruleLabel, ruleNote, ruleSource } from "@/lib/states";
 import { ROUTED_PLANS } from "@/lib/plans";
 import { getFilings } from "@/lib/rate-filings";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
@@ -65,8 +65,8 @@ export default async function StatePage({ params }: Props) {
 
         <div className="grid grid--2" style={{ marginTop: "2rem", alignItems: "start" }}>
           <div className="card">
-            <h3>{RULE_LABEL[s.rules]}</h3>
-            <p>{RULE_NOTE[s.rules]}</p>
+            <h3>{ruleLabel(s)}</h3>
+            <p>{ruleNote(s)}</p>
             {/*
               This classification is editorial, not a regulator's wording, and it
               has not been verified against the state's own rules the way a rate
@@ -99,7 +99,7 @@ export default async function StatePage({ params }: Props) {
               </div>
               <div>
                 <dt>Switching rule</dt>
-                <dd>{RULE_LABEL[s.rules]}</dd>
+                <dd>{ruleLabel(s)}</dd>
               </div>
               <div>
                 <dt>We are licensed here</dt>
@@ -170,7 +170,7 @@ export default async function StatePage({ params }: Props) {
               tells you almost nothing about age 78.
             </li>
             <li>
-              <strong>Whether you can leave.</strong> {RULE_NOTE[s.rules]}
+              <strong>Whether you can leave.</strong> {ruleNote(s)}
             </li>
           </ul>
           <p>

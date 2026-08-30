@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { STATES, getState, RULE_LABEL, RULE_SHORT, RULE_NOTE } from "@/lib/states";
+import { STATES, getState, ruleLabel, ruleShort, ruleNote, ruleSource } from "@/lib/states";
 import { ROUTED_PLANS, getPlan } from "@/lib/plans";
 import { getFilings } from "@/lib/rate-filings";
 import { getPremiums, getPremiumBand } from "@/lib/premiums";
@@ -239,9 +239,9 @@ export default async function StatePlanPage({ params }: Props) {
             <h2>
               Switching {p.name} carriers in {s.name}
             </h2>
-            <p style={{ maxWidth: "64ch" }}>{RULE_NOTE[s.rules]}</p>
+            <p style={{ maxWidth: "64ch" }}>{ruleNote(s)}</p>
             <p className="citation">
-              {s.name} is a {RULE_LABEL[s.rules].toLowerCase()}. State rules change; confirm the
+              {s.name}: {ruleLabel(s).toLowerCase()}. State rules change; confirm the
               current window with the {s.name} insurance department or your SHIP counselor before
               you apply anywhere.
             </p>
@@ -275,7 +275,7 @@ export default async function StatePlanPage({ params }: Props) {
                 </div>
                 <div>
                   <dt>Switching rule</dt>
-                  <dd>{RULE_SHORT[s.rules]}</dd>
+                  <dd>{ruleShort(s)}</dd>
                 </div>
                 <div>
                   <dt>Open to new enrollees</dt>

@@ -4,8 +4,8 @@ import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Cite, SourceList } from "@/components/Cite";
 import { LeadCta } from "@/components/LeadCta";
-import { SITE, ORG } from "@/lib/site";
-import { STATES, getState } from "@/lib/states";
+import { SITE, ORG, COMPENSATION_NOTE } from "@/lib/site";
+import { STATES, getState, ruleLabel, ruleNote, ruleSource } from "@/lib/states";
 import { ROUTED_PLANS } from "@/lib/plans";
 import type { SourceId } from "@/lib/sources";
 
@@ -32,22 +32,6 @@ export function generateStaticParams() {
 }
 
 export const dynamicParams = false;
-
-/** Editorial description of each switching-rule category, in consumer language. */
-const RULE_COPY: Record<string, string> = {
-  standard:
-    "follows the federal baseline. Outside your one-time six-month window, and without a guaranteed issue right, an insurer may ask health questions and may decline you.",
-  birthday:
-    "is generally described as a birthday-rule state: an annual window tied to your birthday in which you may move to a policy of equal or lesser benefits without medical underwriting.",
-  anniversary:
-    "is generally described as an anniversary-rule state: an annual window tied to your policy anniversary rather than your birthday.",
-  continuous:
-    "is generally described as offering year-round guaranteed issue, meaning insurers must sell to eligible applicants without medical underwriting.",
-  waiver:
-    "is generally described as allowing year-round switching between plans of equal or lesser benefit.",
-  "state-standardized":
-    "does not use the federal plan letters at all. It has its own standardised plan structure, so plan-letter comparisons from other states do not apply here.",
-};
 
 export async function generateMetadata({
   params,
@@ -77,8 +61,8 @@ export default async function Page({ params }: { params: Promise<{ state: string
   const s = getState(state);
   if (!s || !s.licensed) notFound();
 
-  const ruleCopy = RULE_COPY[s.rules] ?? RULE_COPY.standard;
   const isStandardized = s.rules === "state-standardized";
+  const src = ruleSource(s);
 
   return (
     <section className="section">
@@ -126,19 +110,26 @@ export default async function Page({ params }: { params: Promise<{ state: string
             .
           </p>
 
-          <h2>What {s.name} adds after that</h2>
-          <p>
-            Beyond the federal floor, {s.name} {ruleCopy}
-          </p>
-          <p className="citation">
-            <strong>Confirm this before relying on it.</strong> That description is our own
-            editorial classification, not a regulator&rsquo;s wording. State switching rules are
-            changed by legislation, carry conditions and deadlines a single sentence cannot hold,
-            and are the kind of thing worth hearing from the state itself. Check with the{" "}
-            {s.name} insurance department, or with your free state counselling programme, before
-            acting on it.
-            <Cite id="ship-about" />
-          </p>
+          <h2>What {s.name} adds after that: {ruleLabel(s).toLowerCase()}</h2>
+          <p>{ruleNote(s)}</p>
+          {src ? (
+            <p className="citation">
+              Read in {src.publisher}&rsquo;s own material on {src.accessed}:{" "}
+              <a href={src.url} rel="noopener noreferrer" target="_blank">
+                {src.title}
+              </a>
+              . State rules change by legislation, so confirm the current wording before you act
+              on it &mdash; and note that a window being open is not the same as an insurer being
+              obliged to sell you any plan you want.
+            </p>
+          ) : (
+            <p className="citation">
+              We have not identified a {s.name} rule beyond the federal floor. That is not the
+              same as proving none exists, so confirm with the {s.name} insurance department or
+              your free state counselling programme before assuming you cannot move.
+              <Cite id="ship-about" />
+            </p>
+          )}
           {isStandardized && (
             <p>
               Because {s.name} standardises its own plans rather than using the federal letters,
@@ -198,12 +189,13 @@ export default async function Page({ params }: { params: Promise<{ state: string
           <h2>Free help in {s.name}</h2>
           <p>
             {s.name} has a State Health Insurance Assistance Program offering free, unbiased,
-            one-to-one Medicare counselling. It takes no commission on your decision.
+            one-to-one Medicare counselling, funded federally rather than by carriers.
             <Cite id="ship-about" /> Find it through the{" "}
             <a href="https://www.shiphelp.org/" rel="noopener noreferrer" target="_blank">
               SHIP locator
             </a>{" "}
-            or by calling 1-877-839-2675. We recommend using it even if you also talk to us.
+            or by calling 1-877-839-2675. We recommend using it even if you also talk to us &mdash;
+            and note that neither route costs you anything. {COMPENSATION_NOTE}
           </p>
         </div>
 
