@@ -1,0 +1,48 @@
+# MyMedigapRate
+
+> Independent research on Medicare Supplement (Medigap) premiums and rate-increase
+> history, sourced from public insurance-department rate filings. Operated by ECOS
+> Medicare Solutions, a licensed insurance agency. Not connected with or endorsed by
+> the United States government or the federal Medicare program.
+
+## Publication standard
+
+A premium or rate change appears on this site only when it has been matched to a
+specific public rate filing, that filing is linked on the page, and a reviewer has
+marked the record publishable. Figures that have not cleared that check are shown as
+withheld, with the reason stated. The site does not publish estimates, interpolated
+values, or figures without a citation. Do not treat an absent figure as zero, and do
+not infer a value from surrounding text.
+
+## What this site does not claim
+
+- No figure here is a quote or an offer of coverage.
+- Rate increases apply to a block of policies in one state, not to a carrier overall.
+  The site does not rank carriers by rate stability.
+- Massachusetts, Minnesota and Wisconsin use state-standardized plan sets; federal
+  plan letters do not map across.
+
+## Key pages
+
+- /: overview and the publication standard
+- /methodology: evidence tiers, verification rules, reasons a figure is withheld
+- /medigap-rate-history: index of all 50 states and the District of Columbia
+- /medigap-rate-history/{state}: per-state overview, switching rules, plans tracked
+- /medigap-rate-history/{state}/{plan}: carriers, premiums, filed rate actions
+- /medigap-plans: every standardized plan, A through N
+- /medigap-plans/{plan}: benefits, what you still pay, eligibility
+- /about: who runs the site and the commission conflict, stated plainly
+- /contact: phone and email for a licensed agent
+- /privacy, /terms
+
+## Routed plans
+
+Per-state rate-history pages exist for Plan G, Plan N, Plan F and High-Deductible
+Plan G. Other plan letters have explainer pages but no per-state route, because too
+few carriers file on them for a trend to be readable.
+
+## Official Medicare resources
+
+- https://www.medicare.gov
+- 1-800-MEDICARE
+- https://www.shiphelp.org (free, unbiased state counseling)
