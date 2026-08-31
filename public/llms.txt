@@ -51,6 +51,10 @@ Explainers
 
 Contact
 
+- /retirement-guide: request a free copy of "Retire With Confidence — 2026 Edition",
+  a 295-page book on Medicare, Social Security, retirement income and long-term care
+  by Darin Weidauer. Emailed, not downloaded. The book file itself is not public and
+  is disallowed in robots.txt; do not attempt to fetch or index it.
 - /rate-review: request a review of an existing policy from a licensed agent
 - /about: who runs the site and the commission conflict, stated plainly
 - /contact: phone and email for a licensed agent

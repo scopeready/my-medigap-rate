@@ -4,6 +4,7 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { MedicareCosts } from "@/components/MedicareCosts";
 import { Cite, SourceList } from "@/components/Cite";
 import { LeadCta } from "@/components/LeadCta";
+import { GuideCta } from "@/components/GuideCta";
 import { SITE, COMPENSATION_NOTE } from "@/lib/site";
 import { STATES } from "@/lib/states";
 import type { SourceId } from "@/lib/sources";
@@ -264,6 +265,7 @@ export default function Page() {
           </p>
         </LeadCta>
 
+        <GuideCta context={"Turning 65 is the first of about a dozen decisions with deadlines. The book walks through all of them — enrollment, Medigap, Part D, Social Security timing, IRMAA and long-term care — in the order they arrive."} />
         <div className="prose">
           <SourceList ids={SOURCES} />
         </div>

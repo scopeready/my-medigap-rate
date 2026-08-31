@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Cite, SourceList } from "@/components/Cite";
 import { LeadCta } from "@/components/LeadCta";
+import { GuideCta } from "@/components/GuideCta";
 import { SITE } from "@/lib/site";
 import type { SourceId } from "@/lib/sources";
 
@@ -263,6 +264,8 @@ export default function Page() {
 
         <LeadCta />
 
+
+        <GuideCta context={"You have just read why it went up. The book covers what comes next — IRMAA, the penalties that never expire, when to claim Social Security, and how a house sale or a Roth conversion raises your Medicare premium two years later."} />
         <div className="prose">
           <SourceList ids={SOURCES} />
         </div>

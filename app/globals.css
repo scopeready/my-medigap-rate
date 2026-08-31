@@ -534,3 +534,28 @@ dl.facts dd { margin: 0; text-align: right; font-weight: 600; font-size: .93rem;
 .scenario-note p + p {
   margin-top: 0.7rem;
 }
+
+/* ---------------------------------------------------------------------------
+   The book offer. Distinct from .lead-cta so a reader can tell the two apart
+   at a glance: one asks for a phone call, the other asks for an email address.
+   --------------------------------------------------------------------------- */
+.guide-cta {
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--brand);
+  border-radius: var(--radius);
+  padding: 1.5rem 1.6rem;
+  margin: 2.4rem 0;
+  background: var(--paper);
+  box-shadow: var(--shadow-sm);
+}
+.guide-cta__kicker {
+  font-size: .78rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gold);
+  margin: 0 0 .35rem;
+}
+.guide-cta h2 { margin: 0 0 .6rem; font-size: 1.5rem; }
+.guide-cta__ed { font-size: .78rem; font-weight: 600; color: var(--ink-3); white-space: nowrap; }
+.guide-sub { display: block; font-size: .8rem; font-weight: 600; color: var(--ink-3); letter-spacing: .04em; text-transform: uppercase; margin-top: .4rem; }

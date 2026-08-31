@@ -1,54 +1,88 @@
 /**
- * The gated guide (the book), and the rules its request form follows.
+ * The gated guide, and the rules its request form follows.
  *
- * WHY THE IDENTITY LIVES HERE
- * --------------------------
- * The title, the summary and the contents are facts about a document that
- * exists. They are not marketing copy to be invented, and a lead magnet that
+ * Every field below is read from the document itself — title page, table of
+ * contents, author page — not written as marketing copy. A lead magnet that
  * misdescribes what it delivers is a consumer-protection problem as well as a
- * refund request. So the page renders from this object, and when the object is
- * `null` the page and every call to action for it are simply absent — no
- * placeholder, no "coming soon", nothing that promises a document we cannot
- * send.
+ * refund request, and this one is offered by a licensed agent on a Medicare
+ * site, where the standard is higher rather than lower.
  *
- * TO ACTIVATE
- * -----------
- * 1. Put the file at `public/guides/<file>` (or wherever it is hosted).
- * 2. Fill in every field below from the document itself.
- * 3. Set `GUIDE` to that object.
- * 4. Add `/medigap-guide` to `app/sitemap.ts` and `public/llms.txt` — llms.txt
- *    is hand-written, so it does not follow automatically.
+ * When `GUIDE` is null nothing renders: no page, no call to action, no form.
  */
 
 export interface Guide {
-  /** Exact title as printed on the document. */
+  /** Exact title as printed on the title page. */
   title: string;
-  /** One sentence on who it is for and what it answers. */
+  /** The book's own subtitle, verbatim. */
+  subtitle: string;
+  /** One sentence on who it is for. Ours, not the book's. */
   summary: string;
-  /** What the reader actually gets — taken from the contents, not invented. */
-  contains: readonly string[];
-  /** Page count, so the reader knows what they are committing to. */
+  author: string;
+  /** Author credentials as the book states them. */
+  authorCredentials: string;
   pages: number;
-  /** File name as delivered, for the fulfilment email. */
-  fileName: string;
+  /** Edition as printed. */
+  edition: string;
+  /** Path under public/. Unguessable on purpose, and disallowed in robots.txt. */
+  filePath: string;
+  /** Parts of the book, from the table of contents. */
+  parts: readonly { title: string; detail: string }[];
 }
 
-/**
- * `null` until the document is supplied. Nothing renders a guide CTA while this
- * is null, which is deliberate: the alternative is a form that collects a
- * reader's phone number in exchange for a file that does not exist.
- */
-export const GUIDE: Guide | null = null;
+export const GUIDE: Guide | null = {
+  title: "Retire With Confidence",
+  subtitle: "Medicare, Social Security, and the Money Decisions That Decide Your Retirement",
+  summary:
+    "A 295-page reference on the decisions that come at you between 62 and 75 — Medicare, Social Security, income, taxes and long-term care — written by the licensed agent who runs this site.",
+  author: "Darin Weidauer",
+  authorCredentials:
+    "Gerontologist, 22-year U.S. Air Force veteran, independent insurance agent and Registered Social Security Analyst",
+  pages: 295,
+  edition: "2026 Edition",
+  filePath: "/guides/retire-with-confidence-2026-b7fa43423a2c.pdf",
+  parts: [
+    {
+      title: "Medicare: your foundation",
+      detail:
+        "The four parts, the seven-month enrollment window, what Medicare covers and the gaps it leaves, Original Medicare against Medicare Advantage, Medigap, and Part D.",
+    },
+    {
+      title: "IRMAA and the income traps",
+      detail:
+        "The surcharge nobody warns you about, the late-enrollment penalties that never end, and how selling a house or converting an IRA can raise your Medicare premium two years later.",
+    },
+    {
+      title: "Social Security",
+      detail:
+        "How the benefit is calculated, claiming at 62 against 67 against 70, spousal and survivor benefits, the earnings test, and how much of it is taxed.",
+    },
+    {
+      title: "Retirement income planning",
+      detail:
+        "Building the income stack, the tax difference between a 401(k), an IRA and a Roth, life insurance in retirement, and where you live changing what you keep.",
+    },
+    {
+      title: "Protecting what you have built",
+      detail:
+        "Long-term care and the hybrid policies that return your money, where you will live, caring for aging parents, and final expense planning.",
+    },
+    {
+      title: "Future-proofing, and the reference material",
+      detail:
+        "The annual Medicare review, the decision timeline from 59½ to 75+, a glossary of 60+ terms, a 2026 quick-reference card, and what changed for 2026.",
+    },
+  ],
+};
 
 /**
- * How the guide is delivered, stated to the reader before they submit.
+ * How the guide is delivered, stated before the reader submits.
  *
  * It is emailed rather than downloaded. That is a deliberate trade: a download
  * link converts better, but an emailed copy confirms the address is real, gives
- * the reader a permanent copy they can find again, and means the request and
- * the delivery are the same record. Say so plainly on the form — a reader who
- * expects an instant download and gets an email instead feels tricked, and that
- * is a bad first impression to give somebody you want to advise on insurance.
+ * the reader a permanent copy they can find again, and makes the request and
+ * the delivery one record. Say so plainly — a reader who expects an instant
+ * download and gets an email instead feels tricked, and that is a poor first
+ * impression to give somebody you want to advise on insurance.
  */
 export const GUIDE_DELIVERY =
-  "We email it. Nothing downloads from this page — check your inbox, and your spam folder if it is not there within a few minutes.";
+  "We email it. Nothing downloads from this page — check your inbox, and your spam folder if it has not arrived within a few minutes.";

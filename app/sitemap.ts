@@ -21,6 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: url("/turning-65"), lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: url("/methodology"), lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: url("/rate-review"), lastModified: now, changeFrequency: "monthly", priority: 0.9 },
+    { url: url("/retirement-guide"), lastModified: now, changeFrequency: "monthly", priority: 0.9 },
     { url: url("/about"), lastModified: now, changeFrequency: "monthly", priority: 0.5 },
     { url: url("/contact"), lastModified: now, changeFrequency: "monthly", priority: 0.5 },
     { url: url("/privacy"), lastModified: now, changeFrequency: "yearly", priority: 0.2 },

@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Cite, SourceList } from "@/components/Cite";
 import { LeadCta } from "@/components/LeadCta";
+import { GuideCta } from "@/components/GuideCta";
 import { SITE, COMPENSATION_NOTE } from "@/lib/site";
 import { STATES, ruleLabel, ruleSource } from "@/lib/states";
 import { verificationProgress } from "@/lib/switching-rules";
@@ -251,6 +252,7 @@ export default function Page() {
           </p>
         </LeadCta>
 
+        <GuideCta />
         <div className="prose">
           <SourceList ids={SOURCES} />
         </div>
