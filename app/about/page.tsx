@@ -74,6 +74,11 @@ export default function AboutPage() {
             introduced to. You will know you are dealing with a different agent rather than being
             handed off quietly, and the research on this site works the same either way.
           </p>
+          <p>
+            We receive no commission, referral fee or override on anything those agents write. The
+            introduction earns us nothing, which is worth stating because the usual reason a site
+            hands you to somebody else is that it is being paid to.
+          </p>
           <p className="citation">
             Licensed: {licensed.map((s) => s.abbr).join(", ")}. Licensing changes; confirm current
             status through your state&rsquo;s insurance department producer lookup or the NAIC

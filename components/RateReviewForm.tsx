@@ -133,7 +133,9 @@ export function RateReviewForm({
                 </p>
                 <p>
                   This form stays closed for {chosen.name} on purpose. The agent licensed there
-                  should be the one who takes your details, so we do not collect them here.
+                  should be the one who takes your details, so we do not collect them here. We are
+                  paid nothing on what they write — the introduction costs you nothing and earns
+                  us nothing.
                 </p>
               </>
             ) : (

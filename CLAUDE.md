@@ -211,9 +211,15 @@ This is a Medicare marketing site subject to CMS/TPMO rules.
   stays closed, because the agent licensed in that state should be the one
   who takes the reader's details. Offering the introduction is not the same
   as capturing the lead here, and the distinction is the compliance line.
-- **New York is excluded even from the introduction.** `NO_REFERRAL_ABBRS` in
-  `lib/site.ts` holds it, and a New York reader is pointed at SHIP and nothing
-  else. Never NY: no NY landing pages, no NY lead capture, no NY hand-off.
+- **New York gets the introduction like any other unlicensed state**, decided
+  2026-08-31: there are associated agents licensed there and no plan to take a
+  New York licence. `NO_REFERRAL_ABBRS` in `lib/site.ts` is now empty and
+  exists to record that. **NY lead capture is still off** — the form closes for
+  every unlicensed state.
+- **The hand-off is uncompensated and the site says so.** No commission,
+  referral fee or override on partner-written business. Keep that sentence
+  next to the introduction wherever it appears: a hand-off with no disclosed
+  payment reads as a sale unless you say otherwise.
 - **No form on this site asks a health question.** No condition, medication or
   diagnosis field, and the free-text box tells the reader to leave them out.
   Collecting any of it would pull the site into HIPAA and state privacy scope.

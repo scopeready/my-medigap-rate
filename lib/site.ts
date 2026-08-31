@@ -44,18 +44,21 @@ export const LICENSED_ABBRS: readonly string[] = STATES.filter((s) => s.licensed
 export const LICENSING_DISCLOSURE =
   `Insurance products are offered through ${ORG.legalName}. ${ORG.agent} is a licensed ` +
   `insurance agent in ${LICENSED_ABBRS.join(", ")}. In other states we work with contracted ` +
-  `agents who are licensed there and can help you directly. We may receive compensation from ` +
-  `insurance carriers for policies sold.`;
+  `agents who are licensed there and can help you directly; we are paid nothing on business ` +
+  `they write. We may receive compensation from insurance carriers for policies we sell.`;
 
 /**
  * States where we do not offer even a partner introduction.
  *
- * New York is a standing exclusion, not an oversight: no New York landing
- * pages, no New York lead capture, and no New York hand-off. Its Medigap
- * advertising rules are their own regime and the site is not built for them.
- * A reader there is pointed at SHIP and nothing else.
+ * Empty, deliberately. New York sat here until 2026-08-31, when Darin
+ * confirmed he works with associated agents licensed there and does not
+ * intend to take a New York licence himself. New York therefore gets the
+ * same introduction as any other unlicensed state.
+ *
+ * The lead form is a separate matter and still closes for every unlicensed
+ * state, New York included: the agent licensed there takes the details.
  */
-export const NO_REFERRAL_ABBRS: readonly string[] = ["NY"];
+export const NO_REFERRAL_ABBRS: readonly string[] = [];
 
 /** Whether an unlicensed state gets the partner-agent introduction. */
 export const hasPartnerReferral = (abbr: string): boolean =>
