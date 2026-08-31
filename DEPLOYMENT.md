@@ -51,18 +51,27 @@ CSG-licensed data must not reach a remote, and a private repository is not an ex
 4. Root directory: `./`
 
 ### Build settings
-| Setting | Value |
-|---|---|
-| Build command | `npm run build` |
-| Output directory | `.next` (Next.js default) |
-| Install command | `npm install` |
-| Node version | 20.x (20.9 or newer — Next.js 16 requires it) |
+| Setting | Value | Where it is set |
+|---|---|---|
+| Framework preset | **Next.js** | `vercel.json` — pinned there deliberately |
+| Build command | `npm run verify:publishable && next build` | `vercel.json` |
+| Output directory | Next.js default — **do not override** | — |
+| Install command | `npm install` | dashboard default |
+| Node version | 20.x (`package.json` declares `engines.node >= 20.9.0`) | dashboard |
 
-**Recommended:** change the build command to
-`npm run verify:publishable && npm run build`
-so a build fails rather than shipping unverified data. That script now exists and is wired
-into `package.json`; on Vercel the kit is absent, so it reports the path it checked and
-exits 0. See `OPEN_ISSUES.md` #7 for what it does and does not cover.
+**`vercel.json` is the authority for the framework and the build command.** Vercel gives
+`vercel.json` precedence over the dashboard's Project Settings, which is the point: a
+dashboard preset of "Other" silently deploys `public/` as a static site, and `public/` here
+has no `index.html`. That is exactly what happened — a Ready deployment that served
+`/llms.txt` and `/favicon.svg` while `/` returned Vercel's own 404. Leave the dashboard's
+Build & Output overrides empty so the file wins.
+
+The build command runs the evidence guard before the build, so a record marked publishable
+without a citation fails the deploy instead of shipping. With the kit absent — the condition
+on Vercel — the guard prints the path it checked and exits 0.
+
+This is now done — `vercel.json` sets that build command. See `OPEN_ISSUES.md` #7 for what
+the guard does and does not cover: it validates the data layer, not the built routes.
 
 ### Deployment protection
 Leave preview deployments password-protected until launch — pre-launch previews of a
@@ -209,7 +218,9 @@ Go to Settings → Domains and check `www.mymedigaprate.com`:
   it there first, then re-add it here.
 
 **The deployment URL 404s too.** The build produced no routable output, which for a Next.js
-app means the project is not being built as one. Settings → Build & Deployment:
+app means the project is not being built as one. **This is what happened on 2026-08-31**, and
+`vercel.json` now pins `"framework": "nextjs"` so it should not recur. If it does, check
+Settings → Build & Deployment:
 - **Framework Preset** must be **Next.js**, not "Other". Set to Other with an Output
   Directory of `public`, Vercel deploys `public/` as a static site — and `public/` here holds
   only `favicon.svg` and `llms.txt`, with no `index.html`. That yields a Ready deployment
