@@ -1,3 +1,5 @@
+import { switchingRule, type SwitchingKind } from "./switching-rules";
+
 export interface StateInfo {
   /** URL slug, e.g. "nevada". */
   slug: string;
@@ -6,11 +8,25 @@ export interface StateInfo {
   /** Display name. */
   name: string;
   /**
-   * How the state regulates Medigap underwriting outside a guaranteed-issue
-   * window. Drives the copy on each state page.
+   * Shape of the state's switching rights, used for page structure (chiefly
+   * whether the federal plan letters apply here at all).
+   *
+   * The wording shown to a reader does NOT come from this field — it comes from
+   * `lib/switching-rules.ts`, where each state's rule is recorded as its own
+   * regulator states it, with a citation. A one-word category cannot carry the
+   * facts that decide whether somebody can actually move: Illinois caps its
+   * birthday rule at 65-75 and confines it to the existing insurer, Nevada's
+   * reaches only open blocks, Maine's is one insurer-chosen month for Plan A.
    */
-  rules: "standard" | "birthday" | "anniversary" | "continuous" | "waiver" | "state-standardized";
-  /** Whether the agency is licensed to write business in the state. */
+  rules: SwitchingKind;
+  /**
+   * Whether the agency is licensed to write business in the state.
+   *
+   * Exactly fifteen are true: NV, CA, UT, AZ, NM, CO, MN, OH, WA, GA, TX, TN,
+   * FL, SC, NC. Never New York. This list drives the agent call-to-action, so
+   * a state marked true here is a representation that we can sell there —
+   * do not add one without confirming the producer licence is current.
+   */
   licensed: boolean;
 }
 
@@ -24,57 +40,57 @@ export interface StateInfo {
  *   state-standardized— MA, MN and WI use their own plan sets, not A-N
  */
 export const STATES: readonly StateInfo[] = [
-  { slug: "alabama", abbr: "AL", name: "Alabama", rules: "standard", licensed: true },
-  { slug: "alaska", abbr: "AK", name: "Alaska", rules: "standard", licensed: false },
-  { slug: "arizona", abbr: "AZ", name: "Arizona", rules: "standard", licensed: true },
-  { slug: "arkansas", abbr: "AR", name: "Arkansas", rules: "standard", licensed: true },
+  { slug: "alabama", abbr: "AL", name: "Alabama", rules: "federal-only", licensed: false },
+  { slug: "alaska", abbr: "AK", name: "Alaska", rules: "federal-only", licensed: false },
+  { slug: "arizona", abbr: "AZ", name: "Arizona", rules: "federal-only", licensed: true },
+  { slug: "arkansas", abbr: "AR", name: "Arkansas", rules: "federal-only", licensed: false },
   { slug: "california", abbr: "CA", name: "California", rules: "birthday", licensed: true },
-  { slug: "colorado", abbr: "CO", name: "Colorado", rules: "standard", licensed: true },
-  { slug: "connecticut", abbr: "CT", name: "Connecticut", rules: "continuous", licensed: false },
-  { slug: "delaware", abbr: "DE", name: "Delaware", rules: "standard", licensed: false },
-  { slug: "district-of-columbia", abbr: "DC", name: "District of Columbia", rules: "standard", licensed: false },
-  { slug: "florida", abbr: "FL", name: "Florida", rules: "standard", licensed: true },
-  { slug: "georgia", abbr: "GA", name: "Georgia", rules: "standard", licensed: true },
-  { slug: "hawaii", abbr: "HI", name: "Hawaii", rules: "standard", licensed: false },
-  { slug: "idaho", abbr: "ID", name: "Idaho", rules: "birthday", licensed: true },
-  { slug: "illinois", abbr: "IL", name: "Illinois", rules: "birthday", licensed: true },
-  { slug: "indiana", abbr: "IN", name: "Indiana", rules: "standard", licensed: true },
-  { slug: "iowa", abbr: "IA", name: "Iowa", rules: "standard", licensed: true },
-  { slug: "kansas", abbr: "KS", name: "Kansas", rules: "standard", licensed: true },
-  { slug: "kentucky", abbr: "KY", name: "Kentucky", rules: "anniversary", licensed: true },
-  { slug: "louisiana", abbr: "LA", name: "Louisiana", rules: "birthday", licensed: true },
-  { slug: "maine", abbr: "ME", name: "Maine", rules: "continuous", licensed: false },
-  { slug: "maryland", abbr: "MD", name: "Maryland", rules: "standard", licensed: true },
+  { slug: "colorado", abbr: "CO", name: "Colorado", rules: "federal-only", licensed: true },
+  { slug: "connecticut", abbr: "CT", name: "Connecticut", rules: "year-round", licensed: false },
+  { slug: "delaware", abbr: "DE", name: "Delaware", rules: "federal-only", licensed: false },
+  { slug: "district-of-columbia", abbr: "DC", name: "District of Columbia", rules: "federal-only", licensed: false },
+  { slug: "florida", abbr: "FL", name: "Florida", rules: "federal-only", licensed: true },
+  { slug: "georgia", abbr: "GA", name: "Georgia", rules: "federal-only", licensed: true },
+  { slug: "hawaii", abbr: "HI", name: "Hawaii", rules: "federal-only", licensed: false },
+  { slug: "idaho", abbr: "ID", name: "Idaho", rules: "birthday", licensed: false },
+  { slug: "illinois", abbr: "IL", name: "Illinois", rules: "birthday", licensed: false },
+  { slug: "indiana", abbr: "IN", name: "Indiana", rules: "federal-only", licensed: false },
+  { slug: "iowa", abbr: "IA", name: "Iowa", rules: "federal-only", licensed: false },
+  { slug: "kansas", abbr: "KS", name: "Kansas", rules: "federal-only", licensed: false },
+  { slug: "kentucky", abbr: "KY", name: "Kentucky", rules: "birthday", licensed: false },
+  { slug: "louisiana", abbr: "LA", name: "Louisiana", rules: "birthday", licensed: false },
+  { slug: "maine", abbr: "ME", name: "Maine", rules: "annual-designated-month", licensed: false },
+  { slug: "maryland", abbr: "MD", name: "Maryland", rules: "federal-only", licensed: false },
   { slug: "massachusetts", abbr: "MA", name: "Massachusetts", rules: "state-standardized", licensed: false },
-  { slug: "michigan", abbr: "MI", name: "Michigan", rules: "standard", licensed: true },
-  { slug: "minnesota", abbr: "MN", name: "Minnesota", rules: "state-standardized", licensed: false },
-  { slug: "mississippi", abbr: "MS", name: "Mississippi", rules: "standard", licensed: true },
-  { slug: "missouri", abbr: "MO", name: "Missouri", rules: "anniversary", licensed: true },
-  { slug: "montana", abbr: "MT", name: "Montana", rules: "standard", licensed: false },
-  { slug: "nebraska", abbr: "NE", name: "Nebraska", rules: "standard", licensed: true },
+  { slug: "michigan", abbr: "MI", name: "Michigan", rules: "federal-only", licensed: false },
+  { slug: "minnesota", abbr: "MN", name: "Minnesota", rules: "state-standardized", licensed: true },
+  { slug: "mississippi", abbr: "MS", name: "Mississippi", rules: "federal-only", licensed: false },
+  { slug: "missouri", abbr: "MO", name: "Missouri", rules: "anniversary", licensed: false },
+  { slug: "montana", abbr: "MT", name: "Montana", rules: "federal-only", licensed: false },
+  { slug: "nebraska", abbr: "NE", name: "Nebraska", rules: "federal-only", licensed: false },
   { slug: "nevada", abbr: "NV", name: "Nevada", rules: "birthday", licensed: true },
-  { slug: "new-hampshire", abbr: "NH", name: "New Hampshire", rules: "standard", licensed: false },
-  { slug: "new-jersey", abbr: "NJ", name: "New Jersey", rules: "standard", licensed: false },
-  { slug: "new-mexico", abbr: "NM", name: "New Mexico", rules: "standard", licensed: true },
-  { slug: "new-york", abbr: "NY", name: "New York", rules: "continuous", licensed: false },
-  { slug: "north-carolina", abbr: "NC", name: "North Carolina", rules: "standard", licensed: true },
-  { slug: "north-dakota", abbr: "ND", name: "North Dakota", rules: "standard", licensed: false },
-  { slug: "ohio", abbr: "OH", name: "Ohio", rules: "standard", licensed: true },
-  { slug: "oklahoma", abbr: "OK", name: "Oklahoma", rules: "birthday", licensed: true },
-  { slug: "oregon", abbr: "OR", name: "Oregon", rules: "birthday", licensed: true },
-  { slug: "pennsylvania", abbr: "PA", name: "Pennsylvania", rules: "standard", licensed: true },
-  { slug: "rhode-island", abbr: "RI", name: "Rhode Island", rules: "standard", licensed: false },
-  { slug: "south-carolina", abbr: "SC", name: "South Carolina", rules: "standard", licensed: true },
-  { slug: "south-dakota", abbr: "SD", name: "South Dakota", rules: "standard", licensed: false },
-  { slug: "tennessee", abbr: "TN", name: "Tennessee", rules: "standard", licensed: true },
-  { slug: "texas", abbr: "TX", name: "Texas", rules: "standard", licensed: true },
-  { slug: "utah", abbr: "UT", name: "Utah", rules: "standard", licensed: true },
-  { slug: "vermont", abbr: "VT", name: "Vermont", rules: "continuous", licensed: false },
-  { slug: "virginia", abbr: "VA", name: "Virginia", rules: "standard", licensed: true },
-  { slug: "washington", abbr: "WA", name: "Washington", rules: "waiver", licensed: false },
-  { slug: "west-virginia", abbr: "WV", name: "West Virginia", rules: "standard", licensed: true },
+  { slug: "new-hampshire", abbr: "NH", name: "New Hampshire", rules: "federal-only", licensed: false },
+  { slug: "new-jersey", abbr: "NJ", name: "New Jersey", rules: "federal-only", licensed: false },
+  { slug: "new-mexico", abbr: "NM", name: "New Mexico", rules: "federal-only", licensed: true },
+  { slug: "new-york", abbr: "NY", name: "New York", rules: "year-round", licensed: false },
+  { slug: "north-carolina", abbr: "NC", name: "North Carolina", rules: "federal-only", licensed: true },
+  { slug: "north-dakota", abbr: "ND", name: "North Dakota", rules: "federal-only", licensed: false },
+  { slug: "ohio", abbr: "OH", name: "Ohio", rules: "federal-only", licensed: true },
+  { slug: "oklahoma", abbr: "OK", name: "Oklahoma", rules: "birthday", licensed: false },
+  { slug: "oregon", abbr: "OR", name: "Oregon", rules: "birthday", licensed: false },
+  { slug: "pennsylvania", abbr: "PA", name: "Pennsylvania", rules: "federal-only", licensed: false },
+  { slug: "rhode-island", abbr: "RI", name: "Rhode Island", rules: "federal-only", licensed: false },
+  { slug: "south-carolina", abbr: "SC", name: "South Carolina", rules: "federal-only", licensed: true },
+  { slug: "south-dakota", abbr: "SD", name: "South Dakota", rules: "federal-only", licensed: false },
+  { slug: "tennessee", abbr: "TN", name: "Tennessee", rules: "federal-only", licensed: true },
+  { slug: "texas", abbr: "TX", name: "Texas", rules: "federal-only", licensed: true },
+  { slug: "utah", abbr: "UT", name: "Utah", rules: "federal-only", licensed: true },
+  { slug: "vermont", abbr: "VT", name: "Vermont", rules: "federal-only", licensed: false },
+  { slug: "virginia", abbr: "VA", name: "Virginia", rules: "federal-only", licensed: false },
+  { slug: "washington", abbr: "WA", name: "Washington", rules: "year-round", licensed: true },
+  { slug: "west-virginia", abbr: "WV", name: "West Virginia", rules: "federal-only", licensed: false },
   { slug: "wisconsin", abbr: "WI", name: "Wisconsin", rules: "state-standardized", licensed: false },
-  { slug: "wyoming", abbr: "WY", name: "Wyoming", rules: "standard", licensed: false },
+  { slug: "wyoming", abbr: "WY", name: "Wyoming", rules: "federal-only", licensed: false },
 ];
 
 const BY_SLUG = new Map(STATES.map((s) => [s.slug, s]));
@@ -88,36 +104,16 @@ export function getStateByAbbr(abbr: string): StateInfo | undefined {
   return BY_ABBR.get(abbr.toUpperCase());
 }
 
-export const RULE_LABEL: Record<StateInfo["rules"], string> = {
-  standard: "Federal baseline rules",
-  birthday: "Birthday rule state",
-  anniversary: "Anniversary rule state",
-  continuous: "Year-round guaranteed issue",
-  waiver: "Year-round plan switching",
-  "state-standardized": "State-standardized plan set",
-};
+/**
+ * Display helpers. These delegate to lib/switching-rules.ts so that a page can
+ * never render a rule description that has not been checked against the state.
+ */
+export const ruleLabel = (s: StateInfo): string => switchingRule(s.abbr).label;
+export const ruleNote = (s: StateInfo): string => switchingRule(s.abbr).summary;
+export const ruleSource = (s: StateInfo) => switchingRule(s.abbr).source;
 
-export const RULE_NOTE: Record<StateInfo["rules"], string> = {
-  standard:
-    "Outside your Medigap open enrollment period or a federal guaranteed-issue right, an insurer here may ask health questions before it accepts you. That makes the premium you lock in at 65 worth getting right.",
-  birthday:
-    "This state gives existing Medigap policyholders an annual window around their birthday to move to a policy with equal or lesser benefits without medical underwriting. The exact window length and the plans you can move to are set by state law — confirm the current rule before acting.",
-  anniversary:
-    "This state gives existing Medigap policyholders an annual window tied to their policy anniversary to move to a policy with equal or lesser benefits without medical underwriting. Confirm the current rule before acting.",
-  continuous:
-    "This state requires Medigap issuers to accept applicants on a guaranteed-issue basis year-round, so a rate increase can be answered by switching carriers at any time.",
-  waiver:
-    "This state lets Medigap policyholders switch to a plan with equal or lesser benefits at any time, subject to the state's own conditions.",
-  "state-standardized":
-    "This state does not use the federal Plan A-N letters. It has its own standardized Medigap plan set, so plan letters from other states do not map across directly.",
-};
-
-/** Compact form of RULE_LABEL, for tight sidebar rows. */
-export const RULE_SHORT: Record<StateInfo["rules"], string> = {
-  standard: "Federal baseline",
-  birthday: "Birthday rule",
-  anniversary: "Anniversary rule",
-  continuous: "Guaranteed issue",
-  waiver: "Plan switching",
-  "state-standardized": "State plan set",
-};
+/** Compact label for tight sidebar rows. */
+export function ruleShort(s: StateInfo): string {
+  const l = switchingRule(s.abbr).label;
+  return l.includes("—") ? l.split("—")[0].trim() : l;
+}

@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { PLANS } from "@/lib/plans";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { MedicareCosts } from "@/components/MedicareCosts";
 
 export const metadata: Metadata = {
   title: "Medigap plans A through N",
@@ -36,6 +37,13 @@ export default function PlansIndex() {
             </Link>
           ))}
         </div>
+
+        <h2>What Medicare itself costs this year</h2>
+        <p style={{ maxWidth: "64ch" }}>
+          Every plan letter below is defined by which of these it picks up for you.
+        </p>
+        <MedicareCosts />
+
 
         <h2>Three states are different</h2>
         <p style={{ maxWidth: "64ch" }}>

@@ -1,5 +1,13 @@
 import Link from "next/link";
-import { ORG, SITE, TPMO_DISCLAIMER, GOVERNMENT_DISCLAIMER, DATA_DISCLAIMER } from "@/lib/site";
+import {
+  ORG,
+  SITE,
+  TPMO_DISCLAIMER,
+  GOVERNMENT_DISCLAIMER,
+  DATA_DISCLAIMER,
+  LICENSING_DISCLOSURE,
+  COMPENSATION_NOTE,
+} from "@/lib/site";
 
 export function SiteFooter() {
   const year = new Date().getFullYear();
@@ -16,8 +24,20 @@ export function SiteFooter() {
             </ul>
           </div>
           <div>
+            <h4>Guides</h4>
+            <ul>
+              <li><Link href="/why-did-my-medigap-premium-increase">Why my premium went up</Link></li>
+              <li><Link href="/how-medigap-rates-work">How Medigap rates work</Link></li>
+              <li><Link href="/what-is-a-closed-block">What is a closed block</Link></li>
+              <li><Link href="/medigap-loss-ratios-explained">Loss ratios explained</Link></li>
+              <li><Link href="/switching-medigap-plans">Switching plans</Link></li>
+              <li><Link href="/turning-65">Turning 65</Link></li>
+            </ul>
+          </div>
+          <div>
             <h4>Site</h4>
             <ul>
+              <li><Link href="/rate-review">Free rate review</Link></li>
               <li><Link href="/about">About</Link></li>
               <li><Link href="/contact">Contact</Link></li>
               <li><Link href="/privacy">Privacy</Link></li>
@@ -52,6 +72,9 @@ export function SiteFooter() {
 
         <div className="footer-legal">
           <p>{GOVERNMENT_DISCLAIMER}</p>
+          <p>
+            {LICENSING_DISCLOSURE} {COMPENSATION_NOTE}
+          </p>
           <p>{TPMO_DISCLAIMER}</p>
           <p>{DATA_DISCLAIMER}</p>
           <p>

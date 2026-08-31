@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { STATES, RULE_LABEL } from "@/lib/states";
+import { STATES, ruleLabel } from "@/lib/states";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 export const metadata: Metadata = {
@@ -49,12 +49,12 @@ export default function RateHistoryIndex() {
               </tr>
             </thead>
             <tbody>
-              {STATES.filter((s) => s.rules !== "standard").map((s) => (
+              {STATES.filter((s) => s.rules !== "federal-only").map((s) => (
                 <tr key={s.slug}>
                   <th scope="row" style={{ fontWeight: 600 }}>
                     <Link href={`/medigap-rate-history/${s.slug}`}>{s.name}</Link>
                   </th>
-                  <td>{RULE_LABEL[s.rules]}</td>
+                  <td>{ruleLabel(s)}</td>
                   <td>{s.licensed ? "Yes" : "Not currently"}</td>
                 </tr>
               ))}

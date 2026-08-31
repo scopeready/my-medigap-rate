@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { ORG, SITE } from "@/lib/site";
+import { COMPENSATION_NOTE, ORG, SITE } from "@/lib/site";
 import { STATES } from "@/lib/states";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 
@@ -33,6 +33,13 @@ export default function AboutPage() {
             agency, the carrier pays a commission. That is a real conflict of interest and you
             should know about it before you read anything else here.
           </p>
+          <p>
+            One thing it is not, and the distinction matters: it is not a cost to you.{" "}
+            {COMPENSATION_NOTE} So the conflict to watch for is not that we make a policy more
+            expensive &mdash; we cannot. It is that we have a reason to prefer carriers we are
+            appointed with, and a reason to prefer that you move rather than stay put. Which is
+            why the next three things are true.
+          </p>
           <p>Three things follow from it:</p>
           <ul>
             <li>
@@ -48,9 +55,10 @@ export default function AboutPage() {
             <li>
               <strong>We tell you when the free option is better.</strong> Every state runs a State
               Health Insurance Assistance Program that gives unbiased Medicare counseling at no
-              cost, and Medicare itself answers questions at 1-800-MEDICARE. If you want advice
-              with no commission attached anywhere in it, start there. Both are linked in the
-              footer of every page.
+              cost, federally funded rather than carrier-funded, and Medicare itself answers
+              questions at 1-800-MEDICARE. If you want a second opinion from someone with no
+              appointment with any carrier, start there. Both are linked in the footer of every
+              page.
             </li>
           </ul>
 

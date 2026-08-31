@@ -61,9 +61,24 @@ is absent, which is the production condition: on Vercel the kit is not present,
 so every figure renders as unverified.
 
 ```bash
-npm run data:status        # records, tier breakdown, queue depth
-npm run data:status -- NV  # one state
+npm run data:status         # records, tier breakdown, queue depth, next items by rank
+npm run data:status -- NV   # one state
+npm run verify:publishable  # pre-deploy guard: nothing publishable without a citation
 ```
+
+Run `verify:publishable` before any deploy, and ideally as part of the Vercel build
+command. It applies the same tests as `gate()` and fails the build if a record is
+flagged publishable while still on the research tier, unconfirmed, or uncited. With
+the kit absent it prints the path it checked and exits 0.
+
+## Documentation
+
+| File | Purpose |
+| --- | --- |
+| `CLAUDE.md` | Rules and restrictions — read first |
+| `PROJECT_HANDOFF.md` | What the data phase produced, decided, and left unfinished |
+| `OPEN_ISSUES.md` | Everything unresolved or awaiting a decision |
+| `DEPLOYMENT.md` | GitHub, Vercel, domain, and the pre-launch checklist |
 
 ## Stack
 
@@ -78,7 +93,7 @@ Everything in `.env.example` is optional:
 | Variable | Effect when unset |
 | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | canonical URLs default to `https://www.mymedigaprate.com` |
-| `NEXT_PUBLIC_CONTACT_FORM_ENDPOINT` | contact page shows phone and email only, no form |
+| `NEXT_PUBLIC_WEB3FORMS_KEY` | `/rate-review` and `/contact` show phone and email only, no form |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | no analytics script is injected |
 
 `NEXT_PUBLIC_*` values are visible in the browser. Never put a private key in

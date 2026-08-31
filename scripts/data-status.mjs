@@ -19,6 +19,12 @@ import path from "node:path";
 const DIR = process.env.CSG_DATA_DIR ?? path.join(process.cwd(), "data", "csg", "ecos-csg");
 const want = (process.argv[2] ?? "").toUpperCase();
 
+/** The fifteen states the agency is licensed in. Mirrors lib/states.ts. */
+const LICENSED = new Set([
+  "NV", "CA", "UT", "AZ", "NM", "CO", "MN", "OH", "WA", "GA", "TX", "TN", "FL", "SC", "NC",
+]);
+const isLicensed = (s) => LICENSED.has(String(s ?? "").toUpperCase());
+
 function read(...parts) {
   const file = path.join(DIR, ...parts);
   if (!fs.existsSync(file)) return null;
@@ -77,18 +83,26 @@ console.log(
     .join("  ")}`,
 );
 
+// `rank` is a unique ordinal across the whole queue (1..N), not a priority
+// tier -- the reconciler sorts licensed states first, then by largest filed
+// increase, and numbers the result. So the worklist is the lowest ranks, and
+// filtering for rank === 1 would only ever match a single row.
 const scoped = want ? queue.filter((q) => String(q?.state).toUpperCase() === want) : queue;
-const top = scoped
-  .filter((q) => Number(q?.rank ?? 99) === 1)
-  .slice(0, 10);
+const byRank = [...scoped].sort((a, b) => Number(a?.rank ?? Infinity) - Number(b?.rank ?? Infinity));
+const licensedCount = scoped.filter((q) => isLicensed(q?.state)).length;
 
-if (top.length) {
+if (scoped.length) {
   console.log("");
-  console.log(`Top rank-1 queue items${want ? ` for ${want}` : ""}`);
-  console.log("----------------------");
-  for (const q of top) {
-    console.log(`  ${String(q.state).padEnd(3)} ${String(q.plan ?? "").padEnd(4)} ${q.carrier ?? ""}`);
+  console.log(`Queue${want ? ` for ${want}` : ""}: ${scoped.length} items, ${licensedCount} in licensed states`);
+  console.log("");
+  console.log(`Next up (lowest rank first)`);
+  console.log("--------------------------");
+  for (const q of byRank.slice(0, 10)) {
+    const flag = isLicensed(q?.state) ? "*" : " ";
+    console.log(`  ${String(q.rank ?? "?").padStart(5)}${flag} ${String(q.state).padEnd(3)} ${String(q.plan ?? "").padEnd(4)} ${q.carrier ?? ""}`);
   }
+  console.log("");
+  console.log("  * licensed state");
 }
 
 if (publishable.length === 0) {
