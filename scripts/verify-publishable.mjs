@@ -93,6 +93,8 @@ if (failed) {
 
 console.log("\nNo unverified data is marked publishable.");
 if (claimed.length === 0) {
-  console.log("Note: zero records are publishable, so every data page renders its withheld");
-  console.log("state. That is expected until the filing-verification pass begins.");
+  console.log("Note: zero records are filing-confirmed. Figures still render, from the");
+  console.log("research panel in data/published/rates.json, each labelled (unverified)");
+  console.log("beside the scenario that produced it. Verification upgrades them to a");
+  console.log("citation; it is not what makes them appear.");
 }

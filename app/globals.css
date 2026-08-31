@@ -507,3 +507,30 @@ dl.facts dd { margin: 0; text-align: right; font-weight: 600; font-size: .93rem;
 }
 .callout p { margin: 0; }
 .callout--warn { border-left-color: #9a5b00; background: #fdf8f0; }
+
+/* ---------------------------------------------------------------------------
+   Research-panel figures.
+
+   An unverified figure has to be visually distinguishable from a
+   filing-confirmed one at a glance, without being so loud that the page reads
+   as broken. Muted, small, and always adjacent to the number it qualifies.
+   --------------------------------------------------------------------------- */
+.figure-unverified {
+  font-style: italic;
+  white-space: nowrap;
+  opacity: 0.75;
+}
+
+.scenario-note {
+  border-left: 3px solid var(--gold);
+  background: var(--warn-soft);
+  padding: 1rem 1.15rem;
+  margin: 1.4rem 0;
+  border-radius: 0 6px 6px 0;
+  font-size: 0.95rem;
+  max-width: 68ch;
+}
+
+.scenario-note p + p {
+  margin-top: 0.7rem;
+}

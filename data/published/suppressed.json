@@ -1,0 +1,372 @@
+[
+ {
+  "key": "IA|G|69868|std|age65",
+  "state": "IA",
+  "plan": "G",
+  "naic": "69868",
+  "carrier": "United Of Omaha Life Insurance Company",
+  "field": "increase",
+  "reason": "known_suspect_carrier",
+  "detail": "12% effective 2012-09-01. 107.6% at both ages, and the Plan N series for this carrier in this state is empty. Possibly an incomplete series rather than a wrong figure. Raised with the vendor."
+ },
+ {
+  "key": "IA|G|69868|std|age65",
+  "state": "IA",
+  "plan": "G",
+  "naic": "69868",
+  "carrier": "United Of Omaha Life Insurance Company",
+  "field": "increase",
+  "reason": "implausible_increase",
+  "detail": "107.6% effective 2026-08-28 is at or above the 100% defect threshold."
+ },
+ {
+  "key": "NC|G|79987|std|age65",
+  "state": "NC",
+  "plan": "G",
+  "naic": "79987",
+  "carrier": "Medico Corp Life Insurance Company",
+  "field": "premium",
+  "reason": "implausible_premium",
+  "detail": "$3007.56/mo is at or above the $1500 defect threshold."
+ },
+ {
+  "key": "NC|G|79987|std|age65",
+  "state": "NC",
+  "plan": "G",
+  "naic": "79987",
+  "carrier": "Medico Corp Life Insurance Company",
+  "field": "increase",
+  "reason": "implausible_increase",
+  "detail": "2079.9% effective 2026-08-01 is at or above the 100% defect threshold."
+ },
+ {
+  "key": "OK|G|94587|std|age65",
+  "state": "OK",
+  "plan": "G",
+  "naic": "94587",
+  "carrier": "Farm Bureau Health Plans Member S Health Insurance Company",
+  "field": "increase",
+  "reason": "implausible_increase",
+  "detail": "100% effective 2025-06-01 is at or above the 100% defect threshold."
+ },
+ {
+  "key": "VT|G|53295|std|age65",
+  "state": "VT",
+  "plan": "G",
+  "naic": "53295",
+  "carrier": "Blue Cross And Blue Shield Of Vermont",
+  "field": "increase",
+  "reason": "known_suspect_carrier",
+  "detail": "4.5% effective 2021-01-01. 189.8% on Plan N effective 2025-01-01 where Plan G for the same carrier and date shows 30.4%, and the Plan N series carries two rows against Plan G's six. Raised with the vendor."
+ },
+ {
+  "key": "VT|G|53295|std|age65",
+  "state": "VT",
+  "plan": "G",
+  "naic": "53295",
+  "carrier": "Blue Cross And Blue Shield Of Vermont",
+  "field": "increase",
+  "reason": "known_suspect_carrier",
+  "detail": "-2.8% effective 2022-01-01. 189.8% on Plan N effective 2025-01-01 where Plan G for the same carrier and date shows 30.4%, and the Plan N series carries two rows against Plan G's six. Raised with the vendor."
+ },
+ {
+  "key": "VT|G|53295|std|age65",
+  "state": "VT",
+  "plan": "G",
+  "naic": "53295",
+  "carrier": "Blue Cross And Blue Shield Of Vermont",
+  "field": "increase",
+  "reason": "known_suspect_carrier",
+  "detail": "0% effective 2023-01-01. 189.8% on Plan N effective 2025-01-01 where Plan G for the same carrier and date shows 30.4%, and the Plan N series carries two rows against Plan G's six. Raised with the vendor."
+ },
+ {
+  "key": "VT|G|53295|std|age65",
+  "state": "VT",
+  "plan": "G",
+  "naic": "53295",
+  "carrier": "Blue Cross And Blue Shield Of Vermont",
+  "field": "increase",
+  "reason": "known_suspect_carrier",
+  "detail": "6.2% effective 2024-01-01. 189.8% on Plan N effective 2025-01-01 where Plan G for the same carrier and date shows 30.4%, and the Plan N series carries two rows against Plan G's six. Raised with the vendor."
+ },
+ {
+  "key": "VT|G|53295|std|age65",
+  "state": "VT",
+  "plan": "G",
+  "naic": "53295",
+  "carrier": "Blue Cross And Blue Shield Of Vermont",
+  "field": "increase",
+  "reason": "known_suspect_carrier",
+  "detail": "30.4% effective 2025-01-01. 189.8% on Plan N effective 2025-01-01 where Plan G for the same carrier and date shows 30.4%, and the Plan N series carries two rows against Plan G's six. Raised with the vendor."
+ },
+ {
+  "key": "VT|G|53295|std|age65",
+  "state": "VT",
+  "plan": "G",
+  "naic": "53295",
+  "carrier": "Blue Cross And Blue Shield Of Vermont",
+  "field": "increase",
+  "reason": "known_suspect_carrier",
+  "detail": "7.4% effective 2026-01-01. 189.8% on Plan N effective 2025-01-01 where Plan G for the same carrier and date shows 30.4%, and the Plan N series carries two rows against Plan G's six. Raised with the vendor."
+ },
+ {
+  "key": "NV|G|99724|std|age65",
+  "state": "NV",
+  "plan": "G",
+  "naic": "99724",
+  "carrier": "Lifeshield National Insurance Co.",
+  "field": "record",
+  "reason": "naic_join_name_only",
+  "detail": "NAIC matched by carrier-name similarity, not by an exact rate match. The entity behind the figure is not established, and every claim on this site is entity-level."
+ },
+ {
+  "key": "NV|G|65269|std|age65",
+  "state": "NV",
+  "plan": "G",
+  "naic": "65269",
+  "carrier": "Healthspring Insurance Company (F/K/A Cic)",
+  "field": "record",
+  "reason": "naic_join_name_only",
+  "detail": "NAIC matched by carrier-name similarity, not by an exact rate match. The entity behind the figure is not established, and every claim on this site is entity-level."
+ },
+ {
+  "key": "NV|G|22713|std|age65",
+  "state": "NV",
+  "plan": "G",
+  "naic": "22713",
+  "carrier": "Insurance Company Of North America",
+  "field": "record",
+  "reason": "naic_join_name_only",
+  "detail": "NAIC matched by carrier-name similarity, not by an exact rate match. The entity behind the figure is not established, and every claim on this site is entity-level."
+ },
+ {
+  "key": "NV|G|66001|std|age65",
+  "state": "NV",
+  "plan": "G",
+  "naic": "66001",
+  "carrier": "American Benefit Life Insurance Company",
+  "field": "record",
+  "reason": "naic_join_name_only",
+  "detail": "NAIC matched by carrier-name similarity, not by an exact rate match. The entity behind the figure is not established, and every claim on this site is entity-level."
+ },
+ {
+  "key": "NV|G|65269|Standard II|age65",
+  "state": "NV",
+  "plan": "G",
+  "naic": "65269",
+  "carrier": "Healthspring Insurance Company (F/K/A Cic)",
+  "field": "record",
+  "reason": "naic_join_name_only",
+  "detail": "NAIC matched by carrier-name similarity, not by an exact rate match. The entity behind the figure is not established, and every claim on this site is entity-level."
+ },
+ {
+  "key": "NC|N|79987|std|age65",
+  "state": "NC",
+  "plan": "N",
+  "naic": "79987",
+  "carrier": "Medico Corp Life Insurance Company",
+  "field": "premium",
+  "reason": "implausible_premium",
+  "detail": "$2612.46/mo is at or above the $1500 defect threshold."
+ },
+ {
+  "key": "NC|N|79987|std|age65",
+  "state": "NC",
+  "plan": "N",
+  "naic": "79987",
+  "carrier": "Medico Corp Life Insurance Company",
+  "field": "increase",
+  "reason": "implausible_increase",
+  "detail": "2058.3% effective 2026-08-01 is at or above the 100% defect threshold."
+ },
+ {
+  "key": "OK|N|94587|std|age65",
+  "state": "OK",
+  "plan": "N",
+  "naic": "94587",
+  "carrier": "Farm Bureau Health Plans Member S Health Insurance Company",
+  "field": "increase",
+  "reason": "known_suspect_carrier",
+  "detail": "29.9% effective 2025-06-01. 100.0% may be genuine on a small block (3,747 lives): the carrier's own Plan N shows 29.9% on the same date and its other five states look ordinary. Withheld pending confirmation with the Oklahoma Insurance Department rather than dismissed."
+ },
+ {
+  "key": "VT|N|53295|std|age65",
+  "state": "VT",
+  "plan": "N",
+  "naic": "53295",
+  "carrier": "Blue Cross And Blue Shield Of Vermont",
+  "field": "increase",
+  "reason": "implausible_increase",
+  "detail": "189.8% effective 2025-01-01 is at or above the 100% defect threshold."
+ },
+ {
+  "key": "VT|N|53295|std|age65",
+  "state": "VT",
+  "plan": "N",
+  "naic": "53295",
+  "carrier": "Blue Cross And Blue Shield Of Vermont",
+  "field": "increase",
+  "reason": "known_suspect_carrier",
+  "detail": "6.9% effective 2026-01-01. 189.8% on Plan N effective 2025-01-01 where Plan G for the same carrier and date shows 30.4%, and the Plan N series carries two rows against Plan G's six. Raised with the vendor."
+ },
+ {
+  "key": "IA|G|69868|std|age70",
+  "state": "IA",
+  "plan": "G",
+  "naic": "69868",
+  "carrier": "United Of Omaha Life Insurance Company",
+  "field": "increase",
+  "reason": "known_suspect_carrier",
+  "detail": "12% effective 2012-09-01. 107.6% at both ages, and the Plan N series for this carrier in this state is empty. Possibly an incomplete series rather than a wrong figure. Raised with the vendor."
+ },
+ {
+  "key": "IA|G|69868|std|age70",
+  "state": "IA",
+  "plan": "G",
+  "naic": "69868",
+  "carrier": "United Of Omaha Life Insurance Company",
+  "field": "increase",
+  "reason": "implausible_increase",
+  "detail": "107.6% effective 2026-08-28 is at or above the 100% defect threshold."
+ },
+ {
+  "key": "NC|G|79987|std|age70",
+  "state": "NC",
+  "plan": "G",
+  "naic": "79987",
+  "carrier": "Medico Corp Life Insurance Company",
+  "field": "premium",
+  "reason": "implausible_premium",
+  "detail": "$3106.72/mo is at or above the $1500 defect threshold."
+ },
+ {
+  "key": "NC|G|79987|std|age70",
+  "state": "NC",
+  "plan": "G",
+  "naic": "79987",
+  "carrier": "Medico Corp Life Insurance Company",
+  "field": "increase",
+  "reason": "implausible_increase",
+  "detail": "2079.9% effective 2026-08-01 is at or above the 100% defect threshold."
+ },
+ {
+  "key": "OK|G|94587|std|age70",
+  "state": "OK",
+  "plan": "G",
+  "naic": "94587",
+  "carrier": "Farm Bureau Health Plans Member S Health Insurance Company",
+  "field": "increase",
+  "reason": "implausible_increase",
+  "detail": "100% effective 2025-06-01 is at or above the 100% defect threshold."
+ },
+ {
+  "key": "VT|G|53295|std|age70",
+  "state": "VT",
+  "plan": "G",
+  "naic": "53295",
+  "carrier": "Blue Cross And Blue Shield Of Vermont",
+  "field": "increase",
+  "reason": "known_suspect_carrier",
+  "detail": "4.5% effective 2021-01-01. 189.8% on Plan N effective 2025-01-01 where Plan G for the same carrier and date shows 30.4%, and the Plan N series carries two rows against Plan G's six. Raised with the vendor."
+ },
+ {
+  "key": "VT|G|53295|std|age70",
+  "state": "VT",
+  "plan": "G",
+  "naic": "53295",
+  "carrier": "Blue Cross And Blue Shield Of Vermont",
+  "field": "increase",
+  "reason": "known_suspect_carrier",
+  "detail": "-2.8% effective 2022-01-01. 189.8% on Plan N effective 2025-01-01 where Plan G for the same carrier and date shows 30.4%, and the Plan N series carries two rows against Plan G's six. Raised with the vendor."
+ },
+ {
+  "key": "VT|G|53295|std|age70",
+  "state": "VT",
+  "plan": "G",
+  "naic": "53295",
+  "carrier": "Blue Cross And Blue Shield Of Vermont",
+  "field": "increase",
+  "reason": "known_suspect_carrier",
+  "detail": "0% effective 2023-01-01. 189.8% on Plan N effective 2025-01-01 where Plan G for the same carrier and date shows 30.4%, and the Plan N series carries two rows against Plan G's six. Raised with the vendor."
+ },
+ {
+  "key": "VT|G|53295|std|age70",
+  "state": "VT",
+  "plan": "G",
+  "naic": "53295",
+  "carrier": "Blue Cross And Blue Shield Of Vermont",
+  "field": "increase",
+  "reason": "known_suspect_carrier",
+  "detail": "6.2% effective 2024-01-01. 189.8% on Plan N effective 2025-01-01 where Plan G for the same carrier and date shows 30.4%, and the Plan N series carries two rows against Plan G's six. Raised with the vendor."
+ },
+ {
+  "key": "VT|G|53295|std|age70",
+  "state": "VT",
+  "plan": "G",
+  "naic": "53295",
+  "carrier": "Blue Cross And Blue Shield Of Vermont",
+  "field": "increase",
+  "reason": "known_suspect_carrier",
+  "detail": "30.4% effective 2025-01-01. 189.8% on Plan N effective 2025-01-01 where Plan G for the same carrier and date shows 30.4%, and the Plan N series carries two rows against Plan G's six. Raised with the vendor."
+ },
+ {
+  "key": "VT|G|53295|std|age70",
+  "state": "VT",
+  "plan": "G",
+  "naic": "53295",
+  "carrier": "Blue Cross And Blue Shield Of Vermont",
+  "field": "increase",
+  "reason": "known_suspect_carrier",
+  "detail": "7.4% effective 2026-01-01. 189.8% on Plan N effective 2025-01-01 where Plan G for the same carrier and date shows 30.4%, and the Plan N series carries two rows against Plan G's six. Raised with the vendor."
+ },
+ {
+  "key": "NC|N|79987|std|age70",
+  "state": "NC",
+  "plan": "N",
+  "naic": "79987",
+  "carrier": "Medico Corp Life Insurance Company",
+  "field": "premium",
+  "reason": "implausible_premium",
+  "detail": "$2698.6/mo is at or above the $1500 defect threshold."
+ },
+ {
+  "key": "NC|N|79987|std|age70",
+  "state": "NC",
+  "plan": "N",
+  "naic": "79987",
+  "carrier": "Medico Corp Life Insurance Company",
+  "field": "increase",
+  "reason": "implausible_increase",
+  "detail": "2058.3% effective 2026-08-01 is at or above the 100% defect threshold."
+ },
+ {
+  "key": "OK|N|94587|std|age70",
+  "state": "OK",
+  "plan": "N",
+  "naic": "94587",
+  "carrier": "Farm Bureau Health Plans Member S Health Insurance Company",
+  "field": "increase",
+  "reason": "known_suspect_carrier",
+  "detail": "29.9% effective 2025-06-01. 100.0% may be genuine on a small block (3,747 lives): the carrier's own Plan N shows 29.9% on the same date and its other five states look ordinary. Withheld pending confirmation with the Oklahoma Insurance Department rather than dismissed."
+ },
+ {
+  "key": "VT|N|53295|std|age70",
+  "state": "VT",
+  "plan": "N",
+  "naic": "53295",
+  "carrier": "Blue Cross And Blue Shield Of Vermont",
+  "field": "increase",
+  "reason": "implausible_increase",
+  "detail": "189.8% effective 2025-01-01 is at or above the 100% defect threshold."
+ },
+ {
+  "key": "VT|N|53295|std|age70",
+  "state": "VT",
+  "plan": "N",
+  "naic": "53295",
+  "carrier": "Blue Cross And Blue Shield Of Vermont",
+  "field": "increase",
+  "reason": "known_suspect_carrier",
+  "detail": "6.9% effective 2026-01-01. 189.8% on Plan N effective 2025-01-01 where Plan G for the same carrier and date shows 30.4%, and the Plan N series carries two rows against Plan G's six. Raised with the vendor."
+ }
+]

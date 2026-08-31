@@ -1,7 +1,14 @@
 import "server-only";
 import fs from "node:fs";
 import path from "node:path";
-import type { EvidenceEnvelope, EvidenceTier, SourceCitation, VerificationStatus } from "./evidence";
+import { STATES } from "./states";
+import type {
+  EvidenceEnvelope,
+  EvidenceTier,
+  ResearchPanel,
+  SourceCitation,
+  VerificationStatus,
+} from "./evidence";
 
 /**
  * Build-time loader for the licensed reconciliation kit.
@@ -252,8 +259,112 @@ function normalizeQueue(r: Record<string, unknown>): QueueItem | null {
   return { state, plan, carrier, naic: str(r.naic), rank, flags, where: str(r.where) };
 }
 
+/**
+ * The committed, publish-safe dataset — `data/published/rates.json`, produced
+ * by `npm run data:build` from the git-ignored kit.
+ *
+ * This is what the site actually reads, and the only rate data that reaches
+ * Vercel. The kit is local-only, so a build that depended on it would render
+ * every figure withheld in production while looking correct on a laptop.
+ *
+ * The path is statically rooted on purpose: a variable directory makes the
+ * bundler trace the whole project into the server output.
+ */
+const PUBLISHED_FILE = path.join(process.cwd(), "data", "published", "rates.json");
+
+interface PublishedRow {
+  key?: string;
+  state?: string;
+  plan?: string;
+  naic?: string;
+  carrier?: string;
+  age?: number;
+  rateType?: string;
+  ratingClass?: string;
+  monthly?: number;
+  rateEffective?: string;
+  history?: { d?: string; p?: number }[];
+  tier?: string;
+  citation?: unknown;
+}
+
+function loadPublishedRecords(): RateRecord[] | null {
+  let parsed: unknown;
+  try {
+    if (!fs.existsSync(PUBLISHED_FILE)) return null;
+    parsed = JSON.parse(fs.readFileSync(PUBLISHED_FILE, "utf8"));
+  } catch {
+    return null;
+  }
+  if (!parsed || typeof parsed !== "object") return null;
+  const doc = parsed as { snapshot?: unknown; rows?: unknown };
+  const snap = doc.snapshot as ResearchPanel | undefined;
+  if (!snap || !Array.isArray(doc.rows)) return null;
+
+  const licensed = new Set(STATES.filter((x) => x.licensed).map((x) => x.abbr));
+
+  return (doc.rows as PublishedRow[])
+    .map((r): RateRecord | null => {
+      const state = (r.state ?? "").toUpperCase();
+      const plan = (r.plan ?? "").toUpperCase();
+      const carrier = r.carrier ?? "";
+      if (!state || !plan || !carrier) return null;
+
+      // A filed action dated after the panel was quoted has been announced but
+      // is not yet in force. Requested is not approved: it stays in the series,
+      // flagged, and never becomes the record's headline change.
+      const increaseHistory: RateIncrease[] = (r.history ?? [])
+        .filter((h): h is { d: string; p: number } => Boolean(h?.d) && typeof h?.p === "number")
+        .map((h) => ({
+          effectiveDate: h.d,
+          percent: h.p / 100,
+          scheduled: h.d > snap.quoteEffective,
+        }))
+        .sort((a, b) => a.effectiveDate.localeCompare(b.effectiveDate));
+
+      const inForce = increaseHistory.filter((h) => !h.scheduled);
+      const latest = inForce.length ? inForce[inForce.length - 1] : undefined;
+
+      const cited = citation(r.citation);
+      const tier = (r.tier ?? "").toUpperCase();
+      const confirmed = (tier === "A" || tier === "B") && cited !== null;
+
+      return {
+        key: r.key,
+        state,
+        plan,
+        carrier,
+        naic: r.naic,
+        ratingClass: r.ratingClass,
+        effectiveDate: latest?.effectiveDate ?? r.rateEffective,
+        ratePercent: latest?.percent,
+        increaseHistory,
+        premium: r.monthly,
+        age: r.age,
+        ratingMethod: r.rateType,
+        licensedState: licensed.has(state),
+        // Confirmed records carry their filing and publish as verified.
+        // Everything else stays Tier C and publishes only through the panel,
+        // which forces the scenario onto the page beside the number.
+        evidence_tier: confirmed ? (tier as EvidenceTier) : "C",
+        verification_status: confirmed ? "filing_confirmed" : "unverified",
+        publishable: confirmed,
+        source_citation: cited,
+        research_panel: confirmed ? null : snap,
+      };
+    })
+    .filter((r): r is RateRecord => r !== null);
+}
+
 export function loadSnapshot(): Snapshot {
   if (cache) return cache;
+
+  const published = loadPublishedRecords();
+  if (published) {
+    cache = { present: true, records: published, queue: [] };
+    return cache;
+  }
+
   const rawRecords = readJson("reconciliation_layer.json");
   const rawQueue = readJson("serff_queue.json");
   const present = rawRecords !== null || rawQueue !== null;
@@ -271,4 +382,17 @@ export function recordsFor(stateAbbr: string, planLetters: readonly string[]): R
   return loadSnapshot().records.filter(
     (r) => r.state === stateAbbr.toUpperCase() && want.has(r.plan),
   );
+}
+
+/**
+ * The research panel behind the unverified figures, when any are being shown.
+ *
+ * Returns null once every figure on the site is filing-confirmed, so the
+ * scenario disclosure disappears at exactly the moment it stops being true.
+ */
+export function getResearchPanel(): ResearchPanel | null {
+  for (const r of loadSnapshot().records) {
+    if (r.research_panel) return r.research_panel;
+  }
+  return null;
 }

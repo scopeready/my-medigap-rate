@@ -21,8 +21,16 @@ export interface PremiumBand {
   low: number | null;
   /** Highest published monthly premium, or null when none is publishable. */
   high: number | null;
-  /** How many carriers contributed a published figure. */
+  /**
+   * How many distinct carriers contributed a published figure.
+   *
+   * Distinct carriers, not rows: the dataset holds one row per age scenario,
+   * so counting rows would double every carrier and overstate the breadth of
+   * the comparison.
+   */
   carriers: number;
+  /** True only when every figure in the band is confirmed against a filing. */
+  allFilingConfirmed: boolean;
 }
 
 export function getPremiums(stateAbbr: string, planLetters: readonly string[]): PremiumRow[] {
@@ -33,10 +41,14 @@ export function getPremiums(stateAbbr: string, planLetters: readonly string[]): 
       ratingMethod: r.ratingMethod,
       monthly: gate(r, r.premium),
     }))
+    // Cheapest first, but a carrier's age rows stay adjacent: two prices for
+    // one carrier scattered down a price-sorted table read as a duplicate-row
+    // bug rather than as the same block quoted at two ages.
     .sort((a, b) => {
-      if (a.monthly.published && b.monthly.published) return a.monthly.value - b.monthly.value;
-      if (a.monthly.published) return -1;
-      if (b.monthly.published) return 1;
+      const av = a.monthly.published ? a.monthly.value : Number.POSITIVE_INFINITY;
+      const bv = b.monthly.published ? b.monthly.value : Number.POSITIVE_INFINITY;
+      if (a.carrier === b.carrier) return (a.age ?? 0) - (b.age ?? 0);
+      if (av !== bv) return av - bv;
       return a.carrier.localeCompare(b.carrier);
     });
 }
@@ -49,10 +61,13 @@ export function getPremiums(stateAbbr: string, planLetters: readonly string[]): 
  * with a single contributor invites the reader to treat it as the market.
  */
 export function getPremiumBand(stateAbbr: string, planLetters: readonly string[]): PremiumBand {
-  const values = getPremiums(stateAbbr, planLetters)
-    .map((p) => (p.monthly.published ? p.monthly.value : null))
-    .filter((v): v is number => v !== null);
+  const published = getPremiums(stateAbbr, planLetters).filter((p) => p.monthly.published);
+  const values = published.map((p) => (p.monthly.published ? p.monthly.value : 0));
+  const carriers = new Set(published.map((p) => p.carrier)).size;
+  const allFilingConfirmed =
+    published.length > 0 &&
+    published.every((p) => p.monthly.published && p.monthly.provenance.kind === "filing");
 
-  if (values.length < 2) return { low: null, high: null, carriers: values.length };
-  return { low: Math.min(...values), high: Math.max(...values), carriers: values.length };
+  if (values.length < 2) return { low: null, high: null, carriers, allFilingConfirmed };
+  return { low: Math.min(...values), high: Math.max(...values), carriers, allFilingConfirmed };
 }

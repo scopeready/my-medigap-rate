@@ -5,6 +5,8 @@ import { STATES, getState, ruleLabel, ruleShort, ruleNote, ruleSource } from "@/
 import { ROUTED_PLANS, getPlan } from "@/lib/plans";
 import { getFilings } from "@/lib/rate-filings";
 import { getPremiums, getPremiumBand } from "@/lib/premiums";
+import { getResearchPanel } from "@/lib/csg-data";
+import { ScenarioNote } from "@/components/ScenarioNote";
 import { TN_NOTE } from "@/lib/tn-rate-actions";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { EvidenceNote } from "@/components/EvidenceNote";
@@ -100,10 +102,12 @@ export default async function StatePlanPage({ params }: Props) {
             </h2>
             {band.low !== null && band.high !== null ? (
               <p className="lede">
-                Verified {p.name} premiums in {s.name} run from{" "}
-                <strong>{money(band.low, true)}</strong> to{" "}
+                {p.name} premiums in {s.name} run from <strong>{money(band.low, true)}</strong> to{" "}
                 <strong>{money(band.high, true)}</strong> per month across {band.carriers}{" "}
-                carriers. Each figure is cited to its filing in the table below.
+                {band.carriers === 1 ? "carrier" : "carriers"}
+                {band.allFilingConfirmed
+                  ? ". Each figure is cited to its filing in the table below."
+                  : ", for the quoted scenario described below. Figures marked unverified have not yet been matched to a filing."}
               </p>
             ) : (
               <>
@@ -118,15 +122,18 @@ export default async function StatePlanPage({ params }: Props) {
               </>
             )}
 
+            <ScenarioNote panel={getResearchPanel()} />
+
             <div className="table-scroll">
               <table className="data">
                 <caption>
                   {p.name} carriers on file for {s.name}. Premiums are monthly and reflect the
-                  filed scenario, not a quote for you.
+                  quoted scenario, not a quote for you.
                 </caption>
                 <thead>
                   <tr>
                     <th scope="col">Carrier</th>
+                    <th scope="col">Age</th>
                     <th scope="col">Rating method</th>
                     <th scope="col">Monthly premium</th>
                   </tr>
@@ -134,10 +141,11 @@ export default async function StatePlanPage({ params }: Props) {
                 <tbody>
                   {premiums.length > 0 ? (
                     premiums.map((row, i) => (
-                      <tr key={`${row.carrier}-${i}`}>
+                      <tr key={`${row.carrier}-${row.age ?? "x"}-${i}`}>
                         <th scope="row" style={{ fontWeight: 600 }}>
                           {row.carrier}
                         </th>
+                        <td className="num">{row.age ?? "—"}</td>
                         <td>{row.ratingMethod ?? "Not stated in the filing"}</td>
                         <td className="num">
                           <Figure result={row.monthly} kind="money" />
@@ -146,7 +154,7 @@ export default async function StatePlanPage({ params }: Props) {
                     ))
                   ) : (
                     <tr>
-                      <td colSpan={3}>
+                      <td colSpan={4}>
                         No {p.name} carrier records have been published for {s.name} yet.
                       </td>
                     </tr>

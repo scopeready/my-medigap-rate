@@ -46,15 +46,27 @@ export function Figure({
   return (
     <>
       <span className="figure-value">{text}</span>
-      {showCitation && (
+      {showCitation && result.provenance.kind === "filing" && (
         <>
           {" "}
           <span className="citation">
             (
-            <a href={result.citation.url} rel="nofollow noopener noreferrer" target="_blank">
-              {result.citation.filingNumber}
+            <a
+              href={result.provenance.citation.url}
+              rel="nofollow noopener noreferrer"
+              target="_blank"
+            >
+              {result.provenance.citation.filingNumber}
             </a>
-            , {result.citation.regulator})
+            , {result.provenance.citation.regulator})
+          </span>
+        </>
+      )}
+      {showCitation && result.provenance.kind === "research" && (
+        <>
+          {" "}
+          <span className="citation figure-unverified" title="Not yet confirmed against a filing">
+            (unverified)
           </span>
         </>
       )}

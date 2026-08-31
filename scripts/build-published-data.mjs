@@ -56,10 +56,10 @@ const MAX_LOSS_RATIO = 300;
 const KNOWN_SUSPECT = [
   {
     state: "NC",
-    naic: "66087",
+    naic: "79987",
     match: /medico corp life/i,
-    scope: "all",
-    note: "Premium reads roughly 21x plausible; the reported increase is consistent with it, implying one inflated current-premium value produced both symptoms. Raised with the vendor.",
+    scope: "premium",
+    note: "Premium reads roughly 21x plausible ($3,007 where the market is near $140); the reported increase is consistent with it, implying one inflated current-premium value produced both symptoms. Scoped to the premium: the increase it distorted is removed by the percentage threshold anyway, and the older history rows predate the defect and look ordinary. Raised with the vendor.",
   },
   {
     state: "IA",
@@ -107,13 +107,17 @@ const note = (rec, field, reason, detail) =>
     detail,
   });
 
+const suspectHits = new Map(KNOWN_SUSPECT.map((k) => [k, 0]));
+
 function suspectFor(rec) {
-  return KNOWN_SUSPECT.find(
+  const hit = KNOWN_SUSPECT.find(
     (k) =>
       k.state === rec.state &&
       (!k.naic || k.naic === String(rec.naic)) &&
       k.match.test(String(rec.carrier ?? "")),
   );
+  if (hit) suspectHits.set(hit, suspectHits.get(hit) + 1);
+  return hit;
 }
 
 const rows = [];
@@ -142,7 +146,7 @@ for (const rec of layer) {
     note(rec, "premium", "non_positive_premium", `Reported as ${monthly}.`);
     monthly = undefined;
   }
-  if (monthly !== undefined && suspect && suspect.scope === "all") {
+  if (monthly !== undefined && suspect && (suspect.scope === "all" || suspect.scope === "premium")) {
     note(rec, "premium", "known_suspect_carrier", suspect.note);
     monthly = undefined;
   }
@@ -200,6 +204,39 @@ for (const rec of layer) {
   if (history.length) row.history = history;
   if (lossRatio !== undefined) row.lossRatio = lossRatio;
   if (num(stateMarket.lives) !== undefined) row.lives = num(stateMarket.lives);
+
+  // Carry verification through. Without this the published dataset would be
+  // research-only and a record cleared by `npm run data:verify` would silently
+  // lose its citation on the site — the verification pass would do nothing
+  // visible, which is the failure this project has already had once.
+  // The test mirrors gate(): tier A or B, filing_confirmed, publishable, and a
+  // citation carrying a filing number, an http(s) URL and a regulator.
+  const c = rec.source_citation;
+  const citedOk =
+    c &&
+    typeof c.filingNumber === "string" &&
+    c.filingNumber.trim() &&
+    typeof c.url === "string" &&
+    /^https?:\/\//.test(c.url) &&
+    typeof c.regulator === "string" &&
+    c.regulator.trim();
+  const tier = String(rec.evidence_tier ?? "C").toUpperCase();
+  if (
+    (tier === "A" || tier === "B") &&
+    rec.verification_status === "filing_confirmed" &&
+    rec.publishable === true &&
+    citedOk
+  ) {
+    row.tier = tier;
+    row.citation = {
+      filingNumber: c.filingNumber.trim(),
+      url: c.url,
+      regulator: c.regulator.trim(),
+      ...(c.accessed ? { accessed: c.accessed } : {}),
+      ...(c.exhibit ? { exhibit: c.exhibit } : {}),
+    };
+  }
+
   rows.push(row);
 }
 
@@ -225,12 +262,25 @@ const bytes = fs.statSync(OUT).size;
 const withPremium = rows.filter((r) => r.monthly !== undefined).length;
 const withHistory = rows.filter((r) => r.history?.length).length;
 const withLoss = rows.filter((r) => r.lossRatio !== undefined).length;
+const verified = rows.filter((r) => r.citation).length;
 
 console.log(`Read      ${layer.length} records from the kit`);
 console.log(`Published ${rows.length} rows  (${(bytes / 1e6).toFixed(2)} MB)`);
 console.log(`  with a premium       ${withPremium}`);
 console.log(`  with rate history    ${withHistory}`);
 console.log(`  with a loss ratio    ${withLoss}`);
+console.log(`  filing-confirmed     ${verified}  (the rest render as unverified)`);
 console.log(`Suppressed ${suppressed.length} values -> ${path.relative(process.cwd(), GAPS)}`);
+
+// A KNOWN_SUSPECT rule that matches no record is worse than no rule: it reads
+// as protection that is not there. This is not hypothetical -- the NC Medico
+// entry originally carried a guessed NAIC and silently matched nothing.
+const dead = [...suspectHits.entries()].filter(([, n]) => n === 0);
+if (dead.length) {
+  console.error(`\n${dead.length} KNOWN_SUSPECT rule(s) matched no record:`);
+  for (const [k] of dead) console.error(`   ${k.state} ${k.naic ?? ""} ${k.match}`);
+  console.error("Fix the state, NAIC or pattern -- a rule that matches nothing protects nothing.");
+  process.exit(1);
+}
 console.log(`\nCommit ${path.relative(process.cwd(), OUT)} — the site reads it, the kit never ships.`);
 console.log(`Run 'npm run data:gaps' for the worklist of what was suppressed and what is missing.`);

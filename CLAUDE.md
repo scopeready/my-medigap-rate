@@ -41,28 +41,52 @@ keeps these out of the verification queue; they stay in `qa_flags.json`.
 
 ## The rule that outranks everything else
 
-**No figure is published without a citation to a public rate filing.**
+**No figure is published without its provenance shown, and the two kinds of
+provenance are never blurred.**
 
 Every premium and every rate change goes through `gate()` in `lib/evidence.ts`,
-which fails closed. It publishes a value only when all of these hold:
+which fails closed and returns one of two dispositions:
 
-1. `evidence_tier` is `A` or `B` — never `C`
-2. `verification_status === "filing_confirmed"`
-3. `publishable === true`
-4. `source_citation` carries a filing number, an `http(s)` URL and a regulator
+- **Filing-confirmed.** `evidence_tier` is `A` or `B`, `verification_status`
+  is `filing_confirmed`, `publishable` is `true`, and `source_citation` carries
+  a filing number, an `http(s)` URL and a regulator. Renders with a link to the
+  filing the reader can check.
+- **Research panel.** Tier C carrying a `research_panel`. Renders the number
+  labelled **(unverified)**, and the page must carry `ScenarioNote` stating the
+  scenario that produced it. Never presented as filing-confirmed.
 
-If any check fails, the page renders *why the figure is withheld*, never a
-placeholder number, never a dash, never an estimate.
+Anything else is withheld with the reason shown — never a placeholder, never a
+dash, never an estimate.
+
+**Publishing the research panel was authorised by Darin on 2026-08-31**, who
+confirmed the vendor agreement permits it. The earlier blanket prohibition was
+his own editorial control, not a licence term.
 
 Corollaries, all non-negotiable:
 
-- **Tier C is never publishable.** Tier C is the ingestion tier: records seeded
-  from a licensed vendor export. That export is research scaffolding — it tells
-  us which filing to go read. It is never a source, never cited, and the vendor
-  is **never named on a public page**.
-- **Never republish licensed data.** The reconciliation kit lives at
-  `data/csg/` and is git-ignored. Never commit it, never move it under
-  `public/`, never expose it through a route handler or an API.
+- **The vendor is never named on a public page.** Provenance renders as
+  "a licensed industry rate database". Nothing else.
+- **Never commit the kit.** `data/csg/` is git-ignored and stays that way. What
+  ships is `data/published/rates.json`, produced by `npm run data:build`, which
+  strips vendor filenames, the Excel-side carrier names and the join method.
+  Never move the kit under `public/`, never expose it through a route handler.
+- **Never publish a figure known to be wrong.** The build script suppresses
+  premiums ≥ $1,500/mo, increases ≥ 100%, loss ratios outside 0–300%, increases
+  with no effective date, four carriers raised with the vendor, and records
+  whose NAIC was matched on name similarity alone. Every suppression records
+  its reason; `npm run data:gaps` is the worklist. A `KNOWN_SUSPECT` rule that
+  matches no record fails the build — a rule that protects nothing reads as
+  protection that is there.
+- **A premium never appears without its scenario.** The panel covers one
+  profile only, and most readers do not match it. `ScenarioNote` renders from
+  the data itself and disappears automatically once figures are
+  filing-confirmed.
+- **Never say "verified" about a research figure.** The page copy branches on
+  `band.allFilingConfirmed`. This has already been got wrong once: the band
+  claimed "Each figure is cited to its filing" above uncited figures.
+- **Count carriers, not rows.** The dataset holds one row per age scenario, so
+  counting rows doubles every carrier. Rate actions belong to the block, not
+  the age, and are de-duplicated before rendering.
 - **State switching rules come from `lib/switching-rules.ts`, never from a
   category label.** Each state's rule is recorded as its own regulator states
   it, with a citation, because the label hides what decides whether somebody can

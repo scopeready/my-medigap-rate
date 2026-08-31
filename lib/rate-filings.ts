@@ -39,14 +39,26 @@ function toRow(r: RateRecord): FilingRow {
     naic: r.naic,
     effectiveDate: r.effectiveDate,
     ratePercent: g,
-    citation: g.published ? g.citation : undefined,
+    citation: g.published && g.provenance.kind === "filing" ? g.provenance.citation : undefined,
   };
 }
 
 export function getFilings(stateAbbr: string, planLetters: readonly string[]): StatePlanFilings {
   const snapshot = loadSnapshot();
+  // The queue carries one record per age scenario, but a rate action belongs to
+  // the block, not to an age — the same filing appears identically at 65 and
+  // 70. Rendering both makes one increase look like several, which is exactly
+  // the kind of overstatement this site exists not to make.
+  const seen = new Set<string>();
   const rows = recordsFor(stateAbbr, planLetters)
     .map(toRow)
+    .filter((r) => {
+      const pct = r.ratePercent.published ? r.ratePercent.value : "withheld";
+      const k = `${r.naic ?? r.carrier}|${r.effectiveDate ?? ""}|${pct}`;
+      if (seen.has(k)) return false;
+      seen.add(k);
+      return true;
+    })
     .sort((a, b) => (b.effectiveDate ?? "").localeCompare(a.effectiveDate ?? ""));
 
   return {
