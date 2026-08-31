@@ -65,9 +65,14 @@ export default function AboutPage() {
           <h2>What we are licensed to do</h2>
           <p>
             {ORG.agent} holds a resident insurance license and non-resident licenses in{" "}
-            {licensed.length} states, National Producer Number {ORG.npn}. Where we are not
-            licensed, the research pages still work — we just cannot write the policy, and we will
-            say so rather than take a referral fee for handing you off quietly.
+            {licensed.length} states, National Producer Number {ORG.npn}. In states outside that
+            list, {ORG.legalName} works with contracted agents who are licensed there and can help
+            you directly.
+          </p>
+          <p>
+            If that applies to you, we will say so plainly and tell you who you are being
+            introduced to. You will know you are dealing with a different agent rather than being
+            handed off quietly, and the research on this site works the same either way.
           </p>
           <p className="citation">
             Licensed: {licensed.map((s) => s.abbr).join(", ")}. Licensing changes; confirm current

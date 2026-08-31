@@ -7,6 +7,7 @@ import {
   COMPENSATION_NOTE,
   FORM_REDIRECT_URL,
   GOVERNMENT_DISCLAIMER,
+  hasPartnerReferral,
   LICENSED_ABBRS,
   ORG,
   SITE,
@@ -44,6 +45,7 @@ const STATE_OPTIONS = STATES.map((s) => ({
   abbr: s.abbr,
   name: s.name,
   licensed: s.licensed,
+  referral: hasPartnerReferral(s.abbr),
 }));
 
 export default function RateReviewPage() {
@@ -121,6 +123,8 @@ export default function RateReviewPage() {
           states={STATE_OPTIONS}
           agency={ORG.legalName}
           agent={ORG.agent}
+          phone={ORG.phone}
+          phoneHref={ORG.phoneHref}
         />
 
         {/* Required adjacent to every lead form, not only in the footer. */}

@@ -28,6 +28,12 @@ export interface StateOption {
   abbr: string;
   name: string;
   licensed: boolean;
+  /**
+   * Whether an unlicensed state gets the contracted-agent introduction.
+   * Computed on the server from NO_REFERRAL_ABBRS so this component stays
+   * free of lib/site and out of the client bundle.
+   */
+  referral: boolean;
 }
 
 const AGE_BANDS = ["Under 65", "65-69", "70-74", "75-79", "80-84", "85 or older"];
@@ -56,6 +62,8 @@ export function RateReviewForm({
   states,
   agency,
   agent,
+  phone,
+  phoneHref,
 }: {
   endpoint: string;
   /** Web3Forms access key. Public by design; absent means submissions are off. */
@@ -64,6 +72,8 @@ export function RateReviewForm({
   states: readonly StateOption[];
   agency: string;
   agent: string;
+  phone: string;
+  phoneHref: string;
 }) {
   const [stateAbbr, setStateAbbr] = useState("");
 
@@ -111,10 +121,27 @@ export function RateReviewForm({
 
         {unlicensed && (
           <div className="rr-blocked" role="status">
-            <p>
-              <strong>We are not licensed in {chosen.name}, so we cannot write a policy there.</strong>{" "}
-              We would rather tell you now than take your details and tell you later.
-            </p>
+            {chosen.referral ? (
+              <>
+                <p>
+                  <strong>
+                    {agent} is not licensed in {chosen.name}, so he cannot write a policy there
+                  </strong>{" "}
+                  — but {agency} works with contracted agents who are licensed in {chosen.name} and
+                  can help you directly. Call <a href={`tel:${phoneHref}`}>{phone}</a> and we will
+                  introduce you to one.
+                </p>
+                <p>
+                  This form stays closed for {chosen.name} on purpose. The agent licensed there
+                  should be the one who takes your details, so we do not collect them here.
+                </p>
+              </>
+            ) : (
+              <p>
+                <strong>We do not take enquiries from {chosen.name}.</strong> We would rather tell
+                you now than take your details and tell you later.
+              </p>
+            )}
             <p>
               The research on this site still applies to you, and all of it is free:{" "}
               <Link href="/medigap-rate-history">rate history by state and plan</Link> and{" "}

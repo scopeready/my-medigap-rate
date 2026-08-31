@@ -206,6 +206,14 @@ This is a Medicare marketing site subject to CMS/TPMO rules.
   in.** Choosing one removes the contact fields and the consent checkbox
   outright, so there is no submit path. That is browser-side behaviour in
   `components/RateReviewForm.tsx`; re-test it after changing that component.
+  Unlicensed states are offered a **contracted-agent introduction by phone**
+  instead — the agency works with agents licensed elsewhere — but the form
+  stays closed, because the agent licensed in that state should be the one
+  who takes the reader's details. Offering the introduction is not the same
+  as capturing the lead here, and the distinction is the compliance line.
+- **New York is excluded even from the introduction.** `NO_REFERRAL_ABBRS` in
+  `lib/site.ts` holds it, and a New York reader is pointed at SHIP and nothing
+  else. Never NY: no NY landing pages, no NY lead capture, no NY hand-off.
 - **No form on this site asks a health question.** No condition, medication or
   diagnosis field, and the free-text box tells the reader to leave them out.
   Collecting any of it would pull the site into HIPAA and state privacy scope.

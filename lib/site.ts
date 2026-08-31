@@ -43,8 +43,23 @@ export const LICENSED_ABBRS: readonly string[] = STATES.filter((s) => s.licensed
 
 export const LICENSING_DISCLOSURE =
   `Insurance products are offered through ${ORG.legalName}. ${ORG.agent} is a licensed ` +
-  `insurance agent in ${LICENSED_ABBRS.join(", ")}. We may receive compensation from ` +
+  `insurance agent in ${LICENSED_ABBRS.join(", ")}. In other states we work with contracted ` +
+  `agents who are licensed there and can help you directly. We may receive compensation from ` +
   `insurance carriers for policies sold.`;
+
+/**
+ * States where we do not offer even a partner introduction.
+ *
+ * New York is a standing exclusion, not an oversight: no New York landing
+ * pages, no New York lead capture, and no New York hand-off. Its Medigap
+ * advertising rules are their own regime and the site is not built for them.
+ * A reader there is pointed at SHIP and nothing else.
+ */
+export const NO_REFERRAL_ABBRS: readonly string[] = ["NY"];
+
+/** Whether an unlicensed state gets the partner-agent introduction. */
+export const hasPartnerReferral = (abbr: string): boolean =>
+  !NO_REFERRAL_ABBRS.includes(abbr.toUpperCase());
 
 /**
  * Required wherever rate history is shown. Presenting past increases as
