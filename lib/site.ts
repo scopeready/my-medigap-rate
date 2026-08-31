@@ -124,3 +124,6 @@ export const WEB3FORMS_KEY =
  * own generic success page instead of ours.
  */
 export const FORM_REDIRECT_URL = `${SITE.url}/thank-you`;
+
+/** Where the guide request form lands. Absolute, for the same reason. */
+export const GUIDE_REDIRECT_URL = `${SITE.url}/guide-sent`;
