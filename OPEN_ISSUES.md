@@ -124,22 +124,40 @@ strictly stronger. Worth doing before the first data page ships.
 
 ---
 
-## 🟡 8. CSG support ticket — drafted, not sent
+## 🟡 8. CSG support ticket — written, not sent
 
-Six items to report:
+**Drafted in full at `data/csg/ecos-csg/docs/CSG_SUPPORT_TICKET.md`** (git-ignored — it
+quotes carrier names, NAIC codes and premiums from the vendor exports). Every figure in it
+was checked back against the corpus before it was written.
 
-1. **UI bug (most important):** refreshing a quote — changing the effective date, or closing
-   and reopening Market Analytics — permanently stops the Age Increases and Increase History
-   panels from rendering for that session. Every subsequent export inherits the failure.
-   Reproducible; root cause of 26 failed exports.
-2. NC Medico Corp Life shows "2079.9%" (Plan G) / "2058.3%" (Plan N) — garbled values.
-3. IA United of Omaha shows "107.6%" at both ages — likely defect.
-4. OK Farm Bureau shows "100.0%" — **may be genuine** (3,747-life block; its Plan N shows
-   29.9%). Ask CSG to confirm rather than assume.
-5. NM Plan-N age-65 workbook exports empty — reproduced in two independent sittings.
-6. Lumos A.M. Best rating and outlook are swapped in every state.
+Seven items, not the six listed here previously. A cross-check while drafting turned up an
+eighth anomaly that had not been recorded: **Vermont BCBS (NAIC 53295) shows 189.8% on Plan
+N effective 2025-01-01, where Plan G for the same carrier and the same date shows 30.4%** —
+and the Plan N series carries two history rows where Plan G carries six.
 
-**Decision needed:** send it? Items 1 and 5 are real bugs affecting Darin's paid tool.
+Ordered by what it costs rather than by how easy each looks:
+
+1. **The refresh defect.** 26 exports, 634 carrier blocks with rates but no analytics,
+   **166 of them in licensed states** — New Mexico entirely, Nevada on three of four
+   scenarios. The ticket includes the reproduction steps and how it was ruled out as a
+   toggle or account problem.
+2. **NM Plan-N age-65 workbook exports empty**, reproduced in two independent sittings.
+3. **NC Medico Corp Life** — premium roughly 21× too high. The ticket carries a diagnostic
+   worth handing them: the reported increase and the reported premium are consistent with
+   each other, implying prior premiums of $121–$143, so this looks like one inflated
+   current-premium value producing both symptoms rather than two separate errors.
+4. **VT BCBS 189.8%** — the new item above.
+5. **IA United of Omaha 107.6%**, with the same carrier's Plan N series in that state
+   completely empty — possibly an incomplete series rather than a wrong figure.
+6. **Lumos AM Best rating and outlook transposed** — 100 occurrences across 25 states,
+   consistent everywhere, so likely one mapping error.
+7. **OK Farm Bureau 100.0%** — deliberately framed as *please confirm*, not as a defect.
+   Its own Plan N shows 29.9% on the same date and its other five states look ordinary
+   (SD 45.4%, TX 19.1%, KS 12.0%, MI 4.5%, IN 20.0%). If it is real it is a significant
+   consumer story and we would publish it.
+
+**Decision needed:** send it. Items 1 and 2 are defects in a paid tool, and item 1 is the
+only thing standing between us and usable analytics for New Mexico and Nevada.
 
 ---
 
@@ -263,7 +281,7 @@ and weaker pages.
 | 2 | CRM and lead-form destination; analytics platform |
 | 3 | Re-gather TN TDCI and NV DOI data, or recover an archive of the earlier site? |
 | 4 | When to run the NV/NM/MN CSG re-export sitting |
-| 8 | Send the CSG support ticket? |
+| 8 | Send the CSG support ticket? It is written and fact-checked; items 1 and 2 block NM and NV. |
 | 9 | Buy redirect domains? |
 | 10 | Are male/tobacco rate profiles needed? |
 | 11 | Confirm quarterly refresh cadence and owner |
