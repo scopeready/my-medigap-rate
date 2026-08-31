@@ -135,10 +135,11 @@ There are no secrets in this repository and there should never be any.
 `NEXT_PUBLIC_*` values are read at **build time**, so setting one in Vercel does not affect
 an existing deployment — redeploy after changing any of them.
 
-Two Web3Forms settings live outside this repository and are easy to miss: the form's
-**allowed domain** must be `mymedigaprate.com`, or submissions are rejected on arrival; and
-this site uses **its own access key**, separate from any other ECOS property, so leads and
-quota stay attributable per site.
+Two Web3Forms settings live outside this repository. This site uses **its own access key**,
+separate from any other ECOS property, so leads and quota stay attributable per site. And if
+you use Web3Forms' optional **domain restriction**, it must read `mymedigaprate.com` — the
+site's real hostname, not `mymedigap.com` — or every submission is rejected on arrival.
+Leaving the restriction unset also works; the key is public by design either way.
 
 `CSG_DATA_DIR` is a local-only override for the data scripts. **Never set it on Vercel** —
 the kit must not exist in a deployment.
@@ -186,7 +187,55 @@ the kit must not exist in a deployment.
 
 ---
 
-## 6. Ongoing operations
+## 6. Troubleshooting: the deployment is Ready but the domain returns 404
+
+Vercel's own `404: NOT_FOUND` page — the one with a `Code:` and an `ID: sfo1::…` — is not
+this site's 404. This site's 404 renders with the header, the footer and the compliance
+block. A platform 404 means the request reached Vercel and Vercel did not serve this
+project's build.
+
+That has three causes, and one test tells them apart. **Open the production deployment's own
+`*.vercel.app` URL directly** (Vercel → Project → Deployments → the Ready production
+deployment → Visit):
+
+**The deployment URL loads the homepage.** The build is fine; the domain is the problem.
+Go to Settings → Domains and check `www.mymedigaprate.com`:
+- Is it assigned to a **Git branch** other than `main`? A domain pinned to a branch with no
+  deployment 404s. Clear it, or set it to `main`.
+- Is it configured as a **Redirect** rather than as the primary domain? The redirect belongs
+  on the apex, not on `www`.
+- Is the same hostname **claimed by another project** in this account? Vercel serves the
+  project that holds the domain, so a stale claim from an older project wins and 404s. Remove
+  it there first, then re-add it here.
+
+**The deployment URL 404s too.** The build produced no routable output, which for a Next.js
+app means the project is not being built as one. Settings → Build & Deployment:
+- **Framework Preset** must be **Next.js**, not "Other". Set to Other with an Output
+  Directory of `public`, Vercel deploys `public/` as a static site — and `public/` here holds
+  only `favicon.svg` and `llms.txt`, with no `index.html`. That yields a Ready deployment
+  where `/llms.txt` loads and `/` returns exactly this 404. **Quick confirmation: if
+  `/llms.txt` loads on the live domain while `/` does not, this is the cause.**
+- **Root Directory** must be `./`. Pointed at a subfolder, Vercel never sees `package.json`.
+- **Build Command** and **Output Directory** should both be left on their defaults.
+
+**Neither loads and the build log shows an error.** Then it is a build failure — read
+Deployments → the failed build → the log, and fix the named error.
+
+Before concluding the repository is at fault, check it directly rather than inferring:
+
+```bash
+git ls-tree --name-only origin/main        # must list app, components, lib, public, scripts
+git log --oneline origin/main -1           # the commit Vercel says it built
+npm ci && npm run build && npm start       # must serve / on localhost:3000
+```
+
+If those pass, the repository is not the problem and no amount of re-pushing will fix the
+domain. Verified on 2026-08-31: `origin/main` carries all 55 application files, builds
+warning-free, and serves every route locally.
+
+---
+
+## 7. Ongoing operations
 
 **Quarterly data refresh.** Pull fresh CSG exports, run the pipeline (see the kit's
 `scripts/`, and note the hardcoded paths in `OPEN_ISSUES.md` #6), review
