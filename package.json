@@ -2,7 +2,7 @@
   "name": "my-medigap-rate",
   "version": "1.0.0",
   "private": true,
-  "description": "MyMedigapRate.com — Medicare Supplement (Medigap) rate research and plan comparison.",
+  "description": "MyMedigapRate.com \u2014 Medicare Supplement (Medigap) rate research and plan comparison.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -12,7 +12,9 @@
     "data:worksheet": "node scripts/verification-worksheet.mjs",
     "data:verify": "node scripts/verify-record.mjs",
     "check:figures": "node scripts/check-figures.mjs",
-    "verify:publishable": "node scripts/check-figures.mjs && node scripts/verify-publishable.mjs"
+    "verify:publishable": "node scripts/check-figures.mjs && node scripts/verify-publishable.mjs",
+    "data:build": "node scripts/build-published-data.mjs",
+    "data:gaps": "node scripts/data-gaps.mjs"
   },
   "dependencies": {
     "next": "16.3.3",
