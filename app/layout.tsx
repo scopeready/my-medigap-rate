@@ -53,6 +53,23 @@ const organizationJsonLd = {
     "Medigap premium comparison",
   ],
   publishingPrinciples: `${SITE.url}/methodology`,
+  founder: {
+    "@type": "Person",
+    name: ORG.agent,
+    jobTitle: "Licensed Insurance Agent",
+    identifier: `NPN ${ORG.npn}`,
+  },
+  /**
+   * The agency's other properties. This is an entity statement, not a link
+   * campaign: it tells search and answer engines that these sites are one
+   * organisation, so a citation of any of them resolves to the same agency.
+   * The sites are separately useful — state-specific Medicare guidance there,
+   * national rate-filing research here — and none is a duplicate of another.
+   */
+  sameAs: [
+    "https://www.medicareenrollmentarizona.com",
+    "https://georgiamedicareenrollment.com",
+  ],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
