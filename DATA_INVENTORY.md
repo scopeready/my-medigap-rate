@@ -30,8 +30,10 @@ Location in package: `data/csg/ecos-csg/`
 | `parsed/csg_pdf_blocks.json` | 4,913 | 8 MB | Raw parsed PDF blocks, pre-join. Needed to re-run reconciliation. | ✅ |
 | `parsed/csg_excel_rates.json` | 18,981 | 16 MB | All workbook rate rows, all 12 plan letters | ✅ |
 
-**Human-readable registers** (`data/csg/recon/`, all ✅): `SUMMARY.md`,
-`NEEDS_ATTENTION.md`, `REDO_LIST.md`, `MISSING_DATA.md`.
+**Human-readable registers** (`data/csg/ecos-csg/recon/`, all ✅): `SUMMARY.md`,
+`NEEDS_ATTENTION.md`, `REDO_LIST.md`, `MISSING_DATA.md`, and `VERIFICATION_WORKSHEET.md`
+(generated later by `npm run data:worksheet` — it collapses the 1,395 licensed queue items
+into the 305 carrier lookups they actually represent).
 
 > 🔒 **All of the above is CSG-derived and licensed agent-use-only.** It is git-ignored.
 > Never publish, never serve, never cite. See `COMPLIANCE.md`.
@@ -40,7 +42,13 @@ Location in package: `data/csg/ecos-csg/`
 
 ## 2. Ingest pipeline — INCLUDED
 
-Location: `data/csg/ecos-csg/scripts/` — 8 Python files (`track_empty_exports.py` joined the seven below), plus `scripts/verify-publishable.mjs` in the repo proper.
+Location: `data/csg/ecos-csg/scripts/` — 8 Python files (`track_empty_exports.py` joined the
+seven below). All 8 confirmed present on 2026-08-31.
+
+The Node scripts are a separate thing and live in the repository proper, under `scripts/`:
+`verify-publishable.mjs` (the pre-deploy guard), `check-figures.mjs`, `data-status.mjs`,
+`verification-worksheet.mjs` and `verify-record.mjs`. Those are versioned and committed;
+the Python pipeline is not, because it names the vendor.
 
 | Script | Purpose | Included |
 |---|---|---|
@@ -65,8 +73,12 @@ Tracked as `OPEN_ISSUES.md` #6.
 | `docs/CSG_51Jurisdiction_Progress_Log.xlsx` | **Darin's own tracking spreadsheet.** 204 scenario rows across 51 jurisdictions + ZIP-source methodology tab + summary tab. Solved the panel-less root cause and supplies quote provenance (most-populous ZIP per state, Census-sourced with URLs and access dates). | ✅ |
 | `docs/ECOS_Missing_Data_Inventory.docx` | Word deliverable produced during the session: missing-data inventory, recovery paths, priority order. | ✅ |
 
-> Note: the progress log contains Darin's own business contact details in the sheet header
-> (agent contact, not client data). No client PII exists anywhere in this project.
+> Note, corrected 2026-08-31: this previously warned that the progress log carried business
+> contact details in its sheet header. A full scan of both Office documents — every XML part,
+> not just the shared strings — found **no email addresses, no phone numbers and no name
+> mentions**. The same scan across every JSON and Markdown file in the kit found no PII of
+> any kind. No client PII exists anywhere in this project, and no personal data of Darin's
+> is in the kit either.
 
 ---
 
@@ -92,7 +104,7 @@ the form `CSG_{ST}_{StateName}_Plan-{G|N}_Age-{65|70}_Female_NonTobacco_2026-09-
 | Item | Status | Impact |
 |---|---|---|
 | **`ecos-medigap-site.zip`** — the legacy Next.js site | ⚠️ **Superseded.** `lib/rate-filings.ts`, `lib/premiums.ts` and `lib/tn-rate-actions.ts` now exist in the repository and are gated. What was never recovered is the **regulator data** they were built to surface. | The **TN TDCI rate-action list** and **NV DOI annual premium survey** (2020-2024 trend) still need re-gathering from the source portals. Both are Tier A material needing no new filing work, so they remain the fastest route to a first publishable page. `OPEN_ISSUES.md` #3. |
-| **Website source code, images, logos, structured data** | ✅ **Now exists.** Built after this inventory was written: 280 prerendered routes, evidence gating, JSON-LD, favicon and OG image. | No longer a gap. |
+| **Website source code, images, logos, structured data** | ✅ **Now exists.** Built after this inventory was written: 200 prerendered routes, evidence gating, JSON-LD (`InsuranceAgency`, `WebSite`, `WebPage`, `Article`, `FAQPage`), a placeholder logo and favicon, and a generated OG image. | No longer a gap. `Dataset` JSON-LD and a `/sources` page remain — see `CONTENT_MAP.md`. |
 | **MN data** | ❌ Not exported. CSG normalizes plan letters away for Minnesota. | Last licensed state with zero coverage. Export path known (MN-specific plan labels). |
 | **WI / MA data** | ❌ Does not exist in CSG in any format. Confirmed: workbooks structurally empty both ages, PDFs return "No Results Found." | Waivered states. Not licensed states, so low priority. |
 | **Analytics panels for NV (3 of 4 scenarios), NM (all 4), MT, NE, NH, NJ, MO(N)** | ⚠️ Rates present, analytics absent — 25 state-scenarios / 634 blocks are rates-only. | Detailed per-scenario in `data/csg/recon/missing_data.json` and `MISSING_DATA.md`, each with three recovery paths. |

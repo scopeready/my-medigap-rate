@@ -7,7 +7,7 @@ Everything missing, uncertain, unverified, or requiring Darin's decision.
 > This register came out of the data-ingest phase, before the site was built.
 > Items resolved since then are struck through and annotated **RESOLVED**
 > rather than deleted, so the history stays readable. Last reconciled against
-> the repository on 2026-08-30.
+> the repository on 2026-08-31.
 
 ---
 
@@ -36,16 +36,21 @@ enough to launch a credible first set of pages.
 ## ~~🔴 2. No website exists~~ — RESOLVED
 
 The site was built after this register was written. The repository now holds a Next.js 16
-App Router application that prerenders 280 static routes: the home page, the state index,
-51 state pages, 204 state x plan pages, 12 plan explainers, and the methodology, about,
-contact, privacy and terms pages. Evidence gating (`lib/evidence.ts`), the figure component
-(`components/Figure.tsx`) and the site footer's compliance block are all in place.
+App Router application that prerenders **200 static routes**, 195 of them in the sitemap:
+the home page, the state index, 51 state pages, 102 state x plan pages, 12 plan explainers,
+five explainer pages, `/turning-65` and its 15 licensed-state pages, `/rate-review`,
+`/thank-you`, and the methodology, about, contact, privacy and terms pages. Evidence gating
+(`lib/evidence.ts`), the figure component (`components/Figure.tsx`) and the site footer's
+compliance block are all in place.
 
 The remaining decisions below are still open:
-- Visual identity — logo, colors, typography. None exist. (Audience is 65+; legibility
-  outranks style. See `COMPLIANCE.md` §7.)
-- CMS or file-based content for the educational pages?
-- Lead form destination — email, CRM, both? Which CRM?
+- Visual identity — a placeholder logo ships (`components/Logo.tsx`, a three-bar filing
+  ledger in `#0f4c81`, matching `public/favicon.svg`) along with a full token set in
+  `app/globals.css`. No commissioned mark, no photography. (Audience is 65+; legibility
+  outranks style. See `COMPLIANCE.md` §7 — the WCAG audit has still not been run.)
+- CMS or file-based content for the educational pages? They are file-based today.
+- Lead form destination — Web3Forms is wired and tested on both forms. Email only, or a CRM
+  as well? Which CRM?
 - Analytics platform.
 
 ---
@@ -244,10 +249,10 @@ distinction is worth having. Restoring it means widening `EvidenceTier` in
 
 ---
 
-## 🟡 14. `ROUTED_PLANS` routes two plans the data cannot fill
+## ~~🟡 14. `ROUTED_PLANS` routes two plans the data cannot fill~~ — RESOLVED
 
-`lib/plans.ts` routes Plan G, Plan N, High-Deductible G and Plan F — 4 x 51 = the 204
-state x plan pages. Two independent sources say it should be two plans, not four:
+`lib/plans.ts` routed Plan G, Plan N, High-Deductible G and Plan F — 4 x 51 = 204
+state x plan pages. Two independent sources said it should be two plans, not four:
 
 - **The data.** The analytics layer covers **G and N only**. Plan F and HDG have premiums
   in all 48 states (3,260 and 1,760 workbook rows) and **no rate-increase history
@@ -260,16 +265,17 @@ state x plan pages. Two independent sources say it should be two plans, not four
 Plan F is also closed to anyone first eligible on or after 2020-01-01, so its audience is
 shrinking by definition — and the site's audience is switchers, who are mostly on G.
 
-**Recommendation: remove `plan-f` and `high-deductible-plan-g` from `ROUTED_ORDER`.** Both
-keep their national explainer pages under `/medigap-plans/[plan]`, so no content is lost;
-the sitemap regenerates automatically. That takes the route count from 280 to 178 and puts
-the plan, the data and the site back in agreement.
+**Resolved: `plan-f` and `high-deductible-plan-g` were removed from `ROUTED_ORDER`.**
+`ROUTED_ORDER` is now `["plan-g", "plan-n"]`. Both plans keep their national explainer pages
+under `/medigap-plans/[plan]`, so no content was lost, and the sitemap regenerated itself.
+The route count went from 280 to 200 and the state x plan pages from 204 to 102. The plan,
+the data and the site now agree.
 
-**Alternative** if the routes are wanted for search coverage: keep them on a template that
-shows benefits and premium ranges and does not promise a rate history. That is more work
-and weaker pages.
-
-**Decision needed:** drop, or re-template?
+One follow-up was needed and has been made: `public/llms.txt` still advertised per-state
+routes for Plan F and High-Deductible G after the change, which pointed AI crawlers at URLs
+that returned 404. It now names Plan G and Plan N only. **When `ROUTED_ORDER` changes, check
+`public/llms.txt` — it is the one place the route set is written out by hand rather than
+derived.**
 
 ---
 
@@ -287,5 +293,3 @@ and weaker pages.
 | 11 | Confirm quarterly refresh cadence and owner |
 | 12 | WI/MA — informational pages or exclude? |
 | 13 | Evidence tiers — keep a single `A`, or restore the `A1`/`A2` distinction? |
-| 14 | Plan F / HDG routes — drop them, or re-template them? |
-| 14 | `ROUTED_PLANS` includes Plan F and HDG. **Recommendation: drop them** — see #14. |

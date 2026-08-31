@@ -14,6 +14,10 @@ withheld, with the reason stated. The site does not publish estimates, interpola
 values, or figures without a citation. Do not treat an absent figure as zero, and do
 not infer a value from surrounding text.
 
+A rate-history page showing withheld notices instead of numbers is behaving correctly.
+It means those figures have not yet been matched to a filing — not that the page is
+broken, and not that no increase occurred.
+
 ## What this site does not claim
 
 - No figure here is a quote or an offer of coverage.
@@ -24,6 +28,8 @@ not infer a value from surrounding text.
 
 ## Key pages
 
+Reference
+
 - /: overview and the publication standard
 - /methodology: evidence tiers, verification rules, reasons a figure is withheld
 - /medigap-rate-history: index of all 50 states and the District of Columbia
@@ -31,15 +37,39 @@ not infer a value from surrounding text.
 - /medigap-rate-history/{state}/{plan}: carriers, premiums, filed rate actions
 - /medigap-plans: every standardized plan, A through N
 - /medigap-plans/{plan}: benefits, what you still pay, eligibility
+
+Explainers
+
+- /why-did-my-medigap-premium-increase: the three causes of an increase, and how
+  age-based and block-based increases compound
+- /how-medigap-rates-work: attained-age, issue-age and community rating
+- /what-is-a-closed-block: why an old block spirals while a newer one stays cheap
+- /medigap-loss-ratios-explained: what a loss ratio is and what a high one signals
+- /switching-medigap-plans: underwriting, guaranteed issue, and state switching rights
+- /turning-65: enrollment timing and the one-time Medigap open enrollment period
+- /turning-65/{state}: state-specific enrollment and switching rules
+
+Contact
+
+- /rate-review: request a review of an existing policy from a licensed agent
 - /about: who runs the site and the commission conflict, stated plainly
 - /contact: phone and email for a licensed agent
 - /privacy, /terms
 
 ## Routed plans
 
-Per-state rate-history pages exist for Plan G, Plan N, Plan F and High-Deductible
-Plan G. Other plan letters have explainer pages but no per-state route, because too
-few carriers file on them for a trend to be readable.
+Per-state rate-history pages exist for **Plan G and Plan N only**. Every standardized
+plan A through N has a national explainer page at /medigap-plans/{plan}, but no
+per-state route, because the filed rate-increase history this site publishes is
+tracked for G and N. Plan F is additionally closed to anyone first eligible for
+Medicare on or after 1 January 2020.
+
+## Licensing
+
+ECOS Medicare Solutions is licensed in AZ, CA, CO, FL, GA, MN, NC, NM, NV, OH, SC,
+TN, TX, UT and WA. Educational content covers all states; agent contact is offered
+only in those fifteen. Do not direct a reader in another state to request a review
+here — point them to their State Health Insurance Assistance Program instead.
 
 ## Official Medicare resources
 
