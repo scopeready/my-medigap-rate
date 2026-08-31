@@ -117,6 +117,8 @@ lib/
   site.ts            identity, contact, disclaimers
   format.ts          the only place a value is turned into display text
 scripts/data-status.mjs                        local verification-progress report
+scripts/verification-worksheet.mjs             the worklist, grouped by carrier
+scripts/verify-record.mjs                      records a verification safely
 data/csg/                                      git-ignored. Licensed. Never commit.
 ```
 
@@ -132,9 +134,27 @@ returns nothing when they are absent. **The build must never fail because the
 data is missing** — that is the production condition.
 
 ```bash
-npm run data:status        # counts, tier breakdown, next queue items by rank
-npm run data:status -- NV  # scoped to one state
+npm run data:status         # counts, tier breakdown, next queue items by rank
+npm run data:status -- NV   # scoped to one state
+npm run data:worksheet      # the verification worklist, grouped by carrier
+npm run data:worksheet -- NV --top 25
+npm run data:verify -- --state AZ --naic 73288 --tier A \
+  --filing "TRACKING-NUMBER" --url "https://…" \
+  --regulator "Arizona Department of Insurance and Financial Institutions"
 ```
+
+**Never hand-edit the layer to record a verification.** `scripts/verify-record.mjs`
+writes all four governance fields together and validates the citation against the
+same rules `gate()` applies, so a mis-shaped verification fails at the command
+line rather than silently rendering as withheld on a page that looks finished.
+Add `--dry-run` to see which blocks a lookup would clear before writing, and
+`--revoke` to withdraw one.
+
+The queue lists an item per scenario — plan letter crossed with age — but a
+filing search is per carrier per state, and one Medigap filing generally covers a
+carrier's whole portfolio there. So the 1,395 licensed items are really **305
+carrier lookups**. `npm run data:worksheet` does that collapsing and orders the
+result by the size of the filed increase.
 
 Do not hand-edit the JSON. The verification workflow is: work the queue from the
 lowest rank, find the filing, then update that record's `evidence_tier`,

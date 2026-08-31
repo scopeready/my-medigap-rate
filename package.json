@@ -9,6 +9,8 @@
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "data:status": "node scripts/data-status.mjs",
+    "data:worksheet": "node scripts/verification-worksheet.mjs",
+    "data:verify": "node scripts/verify-record.mjs",
     "check:figures": "node scripts/check-figures.mjs",
     "verify:publishable": "node scripts/check-figures.mjs && node scripts/verify-publishable.mjs"
   },
