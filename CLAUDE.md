@@ -240,13 +240,23 @@ variables. Everything in `.env.example` is optional and public-by-design
 (`NEXT_PUBLIC_*` values are visible in the browser). Never put a private API key
 in this repo or in a `NEXT_PUBLIC_` variable.
 
-`NEXT_PUBLIC_WEB3FORMS_KEY` is the Web3Forms access key. It is public by
-design — it is submitted from the browser and appears in the page source of
-every form that uses it — so it is not a secret and does not need protecting.
-It lives in an environment variable so rotating it does not need a commit.
+The Web3Forms access key is public by design — it is submitted from the browser
+and appears in the page source of every form that uses it — so it is not a
+secret and does not need protecting. **It is committed as the default in
+`lib/site.ts`, and both forms work with no environment variable set.**
 
-With it unset the two forms degrade differently, and both are deliberate:
-`/contact` renders no form at all and shows the phone number and email address
-instead, while `/rate-review` renders the whole form — the state gating included —
-and replaces its submit button with a note to call or email. Neither page ever
+That is deliberate, and it was learned the hard way. A `NEXT_PUBLIC_*` variable
+is read at build time, so the first production deploy — which ran before the
+variable was set in Vercel — shipped a lead form with no submit button, no
+error, and nothing in any log. On a lead-generation site that failure is silent
+and costs money, and the indirection was protecting nothing.
+
+`NEXT_PUBLIC_WEB3FORMS_KEY` still overrides the default, so rotating the key
+needs no commit. A blank or whitespace-only value falls back rather than
+switching the forms off.
+
+The no-key fallbacks remain in both components as a safety net for anyone who
+removes the default: `/contact` renders no form and shows the phone number and
+email instead, and `/rate-review` renders the whole form — state gating included
+— with its submit button replaced by a note to call or email. Neither page ever
 accepts input it would silently discard.

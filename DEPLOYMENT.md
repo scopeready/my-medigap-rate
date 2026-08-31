@@ -137,7 +137,7 @@ There are no secrets in this repository and there should never be any.
 
 | Variable | Set for launch? | Behaviour when unset |
 |---|---|---|
-| `NEXT_PUBLIC_WEB3FORMS_KEY` | **Yes** — no key, no leads | `/contact` shows phone and email instead of a form; `/rate-review` renders the full form but replaces its submit button with a note to call or email |
+| `NEXT_PUBLIC_WEB3FORMS_KEY` | **No — leave it blank.** The working key is the committed default; this only overrides it when rotating | Both forms work normally on the committed key. A blank or whitespace value falls back to it rather than disabling the forms |
 | `NEXT_PUBLIC_SITE_URL` | No | Canonicals default to `https://www.mymedigaprate.com`, which is correct |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Your call | No analytics script is injected. Setting it triggers the cookie-consent requirement in `COMPLIANCE.md` §6 |
 
@@ -183,10 +183,12 @@ the kit must not exist in a deployment.
 - [x] Both forms verified in a browser against a production build: correct access key,
       absolute `/thank-you` redirect, consent required before submit, honeypot omitted from
       the payload, and an unlicensed state removing the submit path entirely.
-- [ ] **Still untested: that a submission actually lands.** The build was verified in an
-      environment with no route to `api.web3forms.com`, so delivery was never exercised.
-      Send one real test through the live site after the first deploy and confirm it
-      arrives.
+- [ ] **Still untested: that a submission actually lands.** Every build here runs in an
+      environment with no route to `api.web3forms.com`, so delivery has never been
+      exercised. Send one real test through `/contact` and one through `/rate-review` on
+      the live site and confirm both arrive.
+- [ ] Confirm the Web3Forms dashboard's **notification email** is the address you actually
+      read. Leads go where that setting points, not to the address printed on the page.
 - [ ] Analytics recording, with form contents excluded
 
 **Post-launch**

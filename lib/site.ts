@@ -77,17 +77,28 @@ export const COMPENSATION_NOTE =
  * Web3Forms configuration.
  *
  * The access key is public by design — it is submitted from the browser and is
- * visible in the page source of every form that uses it. It is not a secret and
- * must never be treated as one; it is kept in an environment variable so that
- * rotating it does not need a commit, not because it needs hiding.
+ * visible in the page source of every form that uses it. It is not a secret, it
+ * is not a private API key, and it must never be treated as one.
  *
- * When the key is unset the forms still render in full and tell the reader to
- * call or email instead. That is the same principle as the data layer: the site
- * degrades to a working state rather than a broken one.
+ * Because it is public, it is committed here as the default rather than left to
+ * an environment variable. That is deliberate. A `NEXT_PUBLIC_*` variable is
+ * read at build time, so a deploy that runs before the variable is set produces
+ * a site with no working form and no error anywhere — which is exactly what
+ * happened on 2026-08-31: the site went live with a lead form that could not be
+ * submitted. On a lead-generation site that failure is silent and expensive, and
+ * no secret was being protected by the indirection.
+ *
+ * Rotation still needs no commit: set NEXT_PUBLIC_WEB3FORMS_KEY in Vercel and it
+ * wins over the default. An empty or whitespace-only value falls back, so a
+ * blank variable cannot switch the forms off by accident.
  */
 export const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
 
-export const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
+/** Web3Forms form: "My Medigap Rate". Public value — see the note above. */
+const WEB3FORMS_KEY_DEFAULT = "378a7c36-4a66-40f9-baa7-bbb9fa8e79f0";
+
+export const WEB3FORMS_KEY =
+  process.env.NEXT_PUBLIC_WEB3FORMS_KEY?.trim() || WEB3FORMS_KEY_DEFAULT;
 
 /**
  * Absolute URL Web3Forms redirects to after a successful submission. It has to
