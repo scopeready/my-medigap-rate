@@ -4,7 +4,8 @@ Field-by-field meaning for `data/csg/recon/reconciliation_layer.json` (4,913 rec
 `serff_queue.json` (4,279 items), plus guidance on **how each field should appear on the
 website** — including which fields may never be shown.
 
-> ⚠ Every record is currently `evidence_tier: "C"` / `publishable: false`.
+> ⚠ Every record is currently `evidence_tier: "C"` / `publishable: false` — confirmed
+> 2026-08-31 by `npm run verify:publishable`: 4,913 records, 0 publishable, `C=4913`.
 > The "Display" column describes the intended treatment **once a record is filing-verified.**
 
 > **Schema note (2026-08-30).** This dictionary was written during the data phase, before
@@ -157,7 +158,7 @@ mis-shaped update fails loudly instead of quietly rendering as withheld.
 | `missing_data.json` | 25 entries: state, plan, age, licensed, status, have/missing, recovery paths | Drives "data not yet available for this state" UI states |
 | `needs_attention.json` | per-state item lists | Internal ops register |
 | `reexport_queue.json` | 26 open entries with issue + action | Internal ops register |
-| `excel_only_rows.json` | 14,101 rows | Workbook rows with no PDF block — other plan letters (A, B, C, D, F, HDF, HDG, K, L, M) and non-quoted carriers. **This is where Plan F / HDG / etc. rates live** if the site expands beyond G and N. Note the consequence: the analytics layer covers **G and N only**, so Plan F and HDG have premiums in all 48 states but *no rate-increase history anywhere*. `ROUTED_PLANS` in `lib/plans.ts` currently routes all four, which means half of the 204 state × plan pages cannot show a rate history from this corpus. See `OPEN_ISSUES.md`. |
+| `excel_only_rows.json` | 14,101 rows | Workbook rows with no PDF block — other plan letters (A, B, C, D, F, HDF, HDG, K, L, M) and non-quoted carriers. **This is where Plan F / HDG / etc. rates live** if the site expands beyond G and N. Note the consequence: the analytics layer covers **G and N only**, so Plan F and HDG have premiums in all 48 states but *no rate-increase history anywhere*. `ROUTED_PLANS` in `lib/plans.ts` is therefore `["plan-g", "plan-n"]` — F and HDG were routed briefly and then dropped, because their pages could never show the thing the page type exists to show. Both keep their national explainer at `/medigap-plans/[plan]`, so no content was lost. See `OPEN_ISSUES.md` #14. |
 | `csg_excel_rates.json` | 18,981 rows | All workbook rows, all 12 plan tabs, both ages |
 
 ---

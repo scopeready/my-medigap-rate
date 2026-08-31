@@ -98,11 +98,18 @@ app/
   medigap-rate-history/
     page.tsx                                   state index
     [state]/page.tsx                           state overview (51 pages)
-    [state]/[plan]/page.tsx                    state x plan template (204 pages)
+    [state]/[plan]/page.tsx                    state x plan template (102 pages)
   medigap-plans/page.tsx, [plan]/page.tsx      plan explainers (12 pages)
+  turning-65/page.tsx, [state]/page.tsx        enrollment timing (15 licensed states)
+  why-did-my-medigap-premium-increase/         the highest-intent page on the site
+  how-medigap-rates-work/, what-is-a-closed-block/
+  medigap-loss-ratios-explained/, switching-medigap-plans/
+  rate-review/page.tsx                         the lead form
+  thank-you/page.tsx                           post-submission, noindex
   methodology/, about/, contact/, privacy/, terms/
   sitemap.ts, robots.ts, opengraph-image.tsx, not-found.tsx
-components/                                    Figure, EvidenceNote, header, footer, …
+components/                                    Figure, EvidenceNote, Cite, MedicareCosts,
+                                               RateReviewForm, header, footer, …
 lib/
   evidence.ts        the gate. Start here.
   csg-data.ts        build-time loader for the git-ignored kit
@@ -119,11 +126,20 @@ lib/
 scripts/data-status.mjs                        local verification-progress report
 scripts/verification-worksheet.mjs             the worklist, grouped by carrier
 scripts/verify-record.mjs                      records a verification safely
+scripts/verify-publishable.mjs                 pre-deploy guard; mirrors gate()
+scripts/check-figures.mjs                      fails the build on stale Medicare amounts
 data/csg/                                      git-ignored. Licensed. Never commit.
 ```
 
 Route count comes from `STATES.length * ROUTED_PLANS.length`. Adding a state or a
-routed plan regenerates the sitemap automatically — no file needs hand-editing.
+routed plan regenerates the sitemap, the internal links and the route set automatically.
+
+**One file is the exception: `public/llms.txt`.** It names the routed plans and the licensed
+states in prose, by hand, because it is written for AI crawlers rather than generated. It
+has already gone stale once — it advertised per-state pages for Plan F and High-Deductible G
+after both were dropped from `ROUTED_ORDER`, pointing crawlers at 404s. **Whenever
+`ROUTED_ORDER` or a state's `licensed` flag changes, update `public/llms.txt` in the same
+commit.**
 
 ## Working with the data
 
@@ -227,6 +243,10 @@ in this repo or in a `NEXT_PUBLIC_` variable.
 `NEXT_PUBLIC_WEB3FORMS_KEY` is the Web3Forms access key. It is public by
 design — it is submitted from the browser and appears in the page source of
 every form that uses it — so it is not a secret and does not need protecting.
-It lives in an environment variable so rotating it does not need a commit. With
-it unset, both forms render in full and tell the reader to call or email
-instead; nothing silently discards a submission.
+It lives in an environment variable so rotating it does not need a commit.
+
+With it unset the two forms degrade differently, and both are deliberate:
+`/contact` renders no form at all and shows the phone number and email address
+instead, while `/rate-review` renders the whole form — the state gating included —
+and replaces its submit button with a note to call or email. Neither page ever
+accepts input it would silently discard.

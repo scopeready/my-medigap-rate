@@ -4,8 +4,8 @@
 **From:** Claude (Cowork session, ~92 ingest batches)
 **To:** Claude Code, repo `scopeready/my-medigap-rate`
 
-> Record of the data-ingest phase, kept as written. Two items in §6 have since
-> been completed and are annotated inline; everything else stands.
+> Record of the data-ingest phase, kept as written. Items in §6 completed since are
+> annotated inline; everything else stands. Reconciled against the repository 2026-08-31.
 
 ---
 
@@ -158,11 +158,11 @@ Recorded for transparency; all were caught and corrected.
 | # | Item | Status |
 |---|---|---|
 | 1 | **SERFF verification pass** — 4,279 queued items, 0 verified | Not started. This is the whole product. |
-| 2 | ~~**Website** — no application code exists~~ | **Done.** 280 prerendered routes; see `OPEN_ISSUES.md` #2 |
+| 2 | ~~**Website** — no application code exists~~ | **Done.** 200 prerendered routes, 195 in the sitemap; see `OPEN_ISSUES.md` #2 |
 | 3 | **NV / NM analytics recovery** — 26 re-exports | Recipe known, not executed |
 | 4 | **MN data** — last licensed state with nothing | Export path identified, not executed |
 | 5 | **Legacy site join** — `lib/rate-filings.ts`, `lib/premiums.ts`, `lib/tn-rate-actions.ts` | Modules now in the repo and gated; the TN TDCI / NV DOI **data** still needs re-gathering. See `OPEN_ISSUES.md` #3 |
-| 6 | **CSG support ticket** — 6 items (1 UI bug, 4 data defects, 1 state-format question) | Drafted in `OPEN_ISSUES.md`, not sent |
+| 6 | **CSG support ticket** — **7** items, not the 6 counted here; an eighth anomaly (VT BCBS 189.8% on Plan N) turned up while drafting | Written in full at `data/csg/ecos-csg/docs/CSG_SUPPORT_TICKET.md` (git-ignored), fact-checked, **not sent**. See `OPEN_ISSUES.md` #8 |
 | 7 | **7 unresolved NAIC codes** — Humana Achieve entities in NJ/SC | Indistinguishable in CSG; SERFF filings will resolve |
 
 See `OPEN_ISSUES.md` for detail and decisions required.

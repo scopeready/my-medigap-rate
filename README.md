@@ -25,18 +25,23 @@ deploys with none set.
 
 ## What it builds
 
-280 statically prerendered routes:
+200 prerendered routes, 195 of them in `sitemap.xml`:
 
 | Route | Count |
 | --- | --- |
-| `/medigap-rate-history/{state}/{plan}` | 204 (51 states × 4 plans) |
+| `/medigap-rate-history/{state}/{plan}` | 102 (51 jurisdictions × Plan G, Plan N) |
 | `/medigap-rate-history/{state}` | 51 |
 | `/medigap-plans/{plan}` | 12 |
-| Home, indexes, methodology, about, contact, privacy, terms, 404 | 10 |
-| `sitemap.xml`, `robots.txt`, OG image | 3 |
+| `/turning-65/{state}` | 15 (licensed states only) |
+| Explainers — why-did-my-medigap-premium-increase, how-medigap-rates-work, what-is-a-closed-block, medigap-loss-ratios-explained, switching-medigap-plans, turning-65 | 6 |
+| Home, the two indexes, methodology, about, contact, privacy, terms | 8 |
+| `/rate-review`, `/thank-you` (noindex) | 2 |
+| 404, `sitemap.xml`, `robots.txt`, OG image | 4 |
 
 Route sets are derived from `lib/states.ts` and `lib/plans.ts`. Add a state or a
 routed plan and the pages, the sitemap and the internal links all follow.
+`ROUTED_PLANS` is Plan G and Plan N: those are the plans with filed rate-increase
+history to show, so they are the only ones with per-state routes.
 
 ## The editorial rule
 
@@ -93,7 +98,7 @@ Everything in `.env.example` is optional:
 | Variable | Effect when unset |
 | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | canonical URLs default to `https://www.mymedigaprate.com` |
-| `NEXT_PUBLIC_WEB3FORMS_KEY` | `/rate-review` and `/contact` show phone and email only, no form |
+| `NEXT_PUBLIC_WEB3FORMS_KEY` | `/contact` shows phone and email instead of a form; `/rate-review` still renders the whole form but replaces its submit button with a note to call or email. Nothing is silently discarded either way. |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | no analytics script is injected |
 
 `NEXT_PUBLIC_*` values are visible in the browser. Never put a private key in

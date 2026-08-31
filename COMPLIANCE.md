@@ -5,7 +5,7 @@ made during this project.
 
 > This document records decisions and the reasoning behind them. It is **not legal advice.**
 >
-> **Implementation status (2026-08-30).** §2.1 now renders in a bar at the top of every
+> **Implementation status (2026-08-31).** §2.1 now renders in a bar at the top of every
 > page as well as in the footer. §2.2 renders in the footer site-wide, with the state list
 > derived from `STATES` in `lib/states.ts` so it cannot drift from the flag that governs the
 > agent call-to-action. §2.3's no-prediction sentence renders beneath every rate-history
@@ -115,7 +115,8 @@ FL, GA, MN, NC, NM, NV, OH, SC, TN, TX, UT, WA). **Never NY** — no NY landing 
 no NY lead capture.
 
 ### 3.7 No doorway pages
-Redirect domains must 301 to the main site. Never build parallel or near-duplicate sites on
+Redirect domains must permanently redirect (301 or 308 — Vercel issues 308) to the main
+site. Never build parallel or near-duplicate sites on
 alternate domains — this violates
 [Google's spam policies](https://developers.google.com/search/docs/essentials/spam-policies)
 and risks the main site.
@@ -146,30 +147,45 @@ This is why the evidence-tier system exists, and why all 4,913 records currently
 
 ## 5. Sourcing requirements
 
-Every published figure requires a `source_citation`:
+Every published figure requires a `source_citation`. This is the shape `gate()` in
+`lib/evidence.ts` actually enforces — write this one:
 
 ```jsonc
 {
-  "type": "SERFF",                          // SERFF | DOI | NAIC
-  "filing_id": "AETN-134567890",
-  "state": "TN",
-  "url": "https://...",
-  "retrieved": "2026-09-15",
-  "approved_effective_date": "2026-06-01",
-  "approved_increase_pct": 39.9
+  "evidence_tier": "A",                      // "A" or "B" only. NOT "A1"/"A2".
+  "verification_status": "filing_confirmed",  // NOT "verified".
+  "publishable": true,
+  "source_citation": {
+    "filingNumber": "AETN-134567890",         // NOT "filing_id"
+    "url": "https://…",                       // must be http(s)
+    "regulator": "Tennessee Department of Commerce and Insurance",
+    "accessed": "2026-09-15",                 // optional
+    "exhibit": "Exhibit 3, p. 12"             // optional
+  }
 }
 ```
+
+All four fields move together. Setting `publishable` alone does nothing, because the gate
+checks every one. Record verifications with `npm run data:verify` — it writes all four and
+validates the citation before touching the file — never by hand.
+
+> ⚠ **An earlier draft of this section showed a different shape** — `filing_id`, `type`,
+> `state`, `retrieved`, and `A1`/`A2` tiers. That shape does not pass the gate: the tier
+> degrades to `C`, the status to `unverified`, and the citation to `null`, so the record is
+> **silently withheld with no error and no warning**. It has been replaced above rather than
+> annotated, because a wrong code block gets copied no matter what the prose around it says.
+> `OPEN_ISSUES.md` #13 has the full test.
 
 Rendered visibly on-page as a citation line with a working link.
 
 **Accepted sources by tier:** `A` primary regulator source — a filing or DOI order, or an
 official regulator dataset such as an NAIC Medicare Supplement Experience Exhibit ·
-`B` reputable secondary with attribution · `C` vendor data — **never published.**
+`B` the filing's public summary or the state's published rate table ·
+`C` vendor data — **never published.**
 
-> The tier vocabulary above and the `source_citation` shape shown in the code block are the
-> data-phase versions. **The site enforces a different shape** — see `DATA_DICTIONARY.md` §2
-> for the one `gate()` actually accepts. Whether to restore the `A1`/`A2` split is
-> `OPEN_ISSUES.md` #13.
+Whether to restore the `A1`/`A2` split — separating a primary filing document from an
+official regulator dataset such as an NAIC exhibit — is still open as `OPEN_ISSUES.md` #13.
+It is cheap to decide now and expensive once hundreds of records carry a bare `A`.
 
 **Language precision:**
 - *Requested* ≠ *approved*. Label filings that were requested but not approved as such.
@@ -226,15 +242,22 @@ Tracked here so the pre-launch checklist in `DEPLOYMENT.md` has something to che
 | 2.3 | Visible "filings on record as of [DATE]" on each data page | **Pending** — the date should derive from the citations' access dates once records are verified, so that it cannot be sourced from the vendor snapshot. Zero records are verified today. |
 | 2.4 | SHIP named in the not-all-plans disclosure | **Partial** — SHIP is linked in the footer, but the disclosure text names only Medicare.gov and 1-800-MEDICARE. |
 | 3.4 | Lead forms state what happens next | **Done** — who calls, how soon, that nothing is sold on the call, and that consent can be withdrawn. Repeated on `/thank-you`. |
-| 6 | Cookie consent | **Pending** — not needed while no analytics ID is set; required the moment one is. |
+| 6 | Cookie consent | **Pending** — not needed while `NEXT_PUBLIC_GA_MEASUREMENT_ID` is unset, and it is unset. Required the moment it is set, so decide the two together. |
 | 7 | Chart text alternatives | **Pending** — no charts exist yet. A rate-history timeline needs a data-table equivalent. |
-| 7 | WCAG 2.1 AA audit | **Not run.** Body text is 17px against a 16px floor; contrast and focus states have not been measured. |
+| 7 | WCAG 2.1 AA audit | **Not run.** Body text is 17px against a 16px floor; contrast and focus states have not been measured. This is the largest unaddressed compliance item for a 65+ audience, and it is a conversion problem as much as an exposure one. |
 
 A note on 3.5 and 3.6, both enforced in `components/RateReviewForm.tsx`: the form collects no
 health field of any kind and asks the reader to keep conditions out of the free-text box, and
 choosing a state we are not licensed in removes the contact fields and the consent checkbox
 entirely, so a lead cannot be submitted from a state we cannot serve. That behaviour is
 browser-side, so re-test it after any change to that component.
+
+Last verified in a browser against a production build on 2026-08-31: selecting NY or PA
+removes the name, email, phone and consent fields and the submit button; selecting AZ or TX
+restores them; and on both `/rate-review` and `/contact` a submission is refused until the
+permission-to-contact box is ticked. What that test could **not** cover is delivery — the
+verification ran in an environment with no route to the form endpoint — so confirm one real
+submission arrives after the first production deploy.
 
 One open question rather than a gap: the header's "Talk to a person" call-to-action is
 global, so it appears on non-licensed state pages. It points at `/contact`, which is general
