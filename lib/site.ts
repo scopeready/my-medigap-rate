@@ -15,9 +15,9 @@ export const ORG = {
   legalName: "ECOS Medicare Solutions",
   agent: "Darin Weidauer",
   npn: "18580338",
-  phone: "480-845-0246",
-  phoneHref: "+14808450246",
-  email: "darinweidauer@gmail.com",
+  phone: "702-706-6564",
+  phoneHref: "+17027066564",
+  email: "darinweidauer@ecos.care",
 } as const;
 
 export const TPMO_DISCLAIMER =
