@@ -38,8 +38,8 @@ export function LeadCta({
         </p>
       )}
       <p className="lead-cta__actions">
-        <Link href="/contact" className="btn">
-          Ask about your policy
+        <Link href="/rate-review" className="btn btn--primary">
+          Get a free rate review
         </Link>
         <a href={`tel:${ORG.phoneHref}`} className="btn btn--ghost">
           {ORG.phone}

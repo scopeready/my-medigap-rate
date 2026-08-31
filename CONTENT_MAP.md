@@ -102,11 +102,11 @@ These can be built **now**; they don't depend on verified rate data.
 
 | URL | Purpose | Status |
 |---|---|---|
-| `/rate-review/` | **Primary lead form.** "Free Medigap rate-stability review" — capture current carrier, plan, state, ZIP, age. This is the money page; every data page funnels here. | `PLANNED` |
+| `/rate-review/` | **Primary lead form.** Captures state, carrier, plan letter, current premium, age band, name, email, phone, ZIP. No health fields and no date of birth. Unlicensed states are told so before they fill anything in. | `BUILT` |
 | `/compare-rates/` | Secondary form — quote request for shoppers rather than switchers | `PLANNED` |
 | `/contact/` | Standard contact + phone | `PLANNED` |
 | `/schedule/` | Calendar booking for consultations | `PLANNED` |
-| `/thank-you/` | Post-submission confirmation; sets expectations for follow-up | `PLANNED` |
+| `/thank-you/` | Post-submission confirmation; sets expectations for follow-up. `noindex`. | `BUILT` |
 
 **Lead form fields (minimum):** name, email, phone, ZIP, current carrier (optional),
 current plan (optional), date of birth or age. **Never collect health information** through
@@ -143,7 +143,7 @@ the site — that changes the compliance posture entirely.
 |---|---|---|---|
 | Programmatic data pages | ~200+ | 267 | State index, 51 state pages, 204 state × plan, 12 plan explainers. Structure done; figures withheld pending verification. F/HDG routes cannot be filled — see the divergence note in §1. |
 | Educational pages | 9 | 0 | **The largest remaining gap, and the most buildable.** Needs no verified data. |
-| Conversion pages | 5 | 1 | `/contact` exists. `/rate-review`, `/compare-rates`, `/schedule`, `/thank-you` do not. |
+| Conversion pages | 5 | 3 | `/contact`, `/rate-review` and `/thank-you` exist. `/compare-rates` and `/schedule` do not. |
 | Trust & compliance | 6 | 4 | `/sources` and `/disclosures` remain. |
 | Infrastructure | 3 | 2 | `/rss.xml` or `/updates` remains. |
 | Carrier pages, comparison pages | ~700 | 0 | Deliberately deferred; build after the state template proves out. |
@@ -153,8 +153,8 @@ substantially done. What remains, in order:
 
 1. **Educational pages (9).** They carry the block-level thesis, need no verified data, and
    include the highest-intent page on the site. Nothing blocks them today.
-2. **`/rate-review`** — the primary lead form. Ship §2.1's non-affiliation notice and §3.4's
-   what-happens-next copy *with* it, not after.
+2. ~~**`/rate-review`** — the primary lead form.~~ **Done**, with §2.1's non-affiliation notice
+   and §3.4's what-happens-next copy shipped alongside it.
 3. **Verification pass** on the queue, lowest ranks first — the only work that turns figures on.
 4. **Carrier and comparison pages**, once the state template has proved out with real cited data.
 

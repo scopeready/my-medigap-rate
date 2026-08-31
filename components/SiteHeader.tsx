@@ -38,8 +38,8 @@ export function SiteHeader() {
               </li>
             ))}
             <li>
-              <Link href="/contact" className="cta">
-                Talk to a person
+              <Link href="/rate-review" className="cta">
+                Free rate review
               </Link>
             </li>
           </ul>

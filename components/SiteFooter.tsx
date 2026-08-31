@@ -37,6 +37,7 @@ export function SiteFooter() {
           <div>
             <h4>Site</h4>
             <ul>
+              <li><Link href="/rate-review">Free rate review</Link></li>
               <li><Link href="/about">About</Link></li>
               <li><Link href="/contact">Contact</Link></li>
               <li><Link href="/privacy">Privacy</Link></li>

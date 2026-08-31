@@ -461,3 +461,49 @@ dl.facts dd { margin: 0; text-align: right; font-weight: 600; font-size: .93rem;
   font-size: .9rem; line-height: 1.5; color: var(--ink-2); max-width: 46ch;
 }
 .medicare-costs__now { font-weight: 700; font-size: 1.06rem; white-space: nowrap; }
+
+/* ---------------------------------------------------------------------------
+   Rate-review form. Inputs are deliberately large: the audience is 65+, and a
+   16px minimum on form controls also stops iOS zooming on focus.
+   --------------------------------------------------------------------------- */
+
+.rr-intro { max-width: 62ch; color: var(--ink-2); margin-bottom: 1.6rem; }
+
+.rr-form { max-width: 34rem; }
+.rr-form fieldset {
+  border: 0; padding: 0; margin: 0 0 2rem;
+}
+.rr-form legend {
+  padding: 0; margin-bottom: .9rem;
+  font-size: .78rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--ink-3);
+}
+.rr-form .field input,
+.rr-form .field select,
+.rr-form .field textarea { font-size: 1rem; padding: .6rem .7rem; }
+.rr-form .field select { background: var(--paper); }
+
+.rr-hint {
+  display: block; margin-top: .3rem;
+  font-size: .88rem; line-height: 1.5; color: var(--ink-3);
+}
+.rr-form .rr-hint:first-child { margin-top: 0; margin-bottom: 1rem; }
+
+.rr-blocked {
+  margin-top: 1.2rem; padding: 1.1rem 1.2rem;
+  background: var(--paper-2); border: 1px solid var(--line);
+  border-left: 4px solid var(--brand); border-radius: 6px;
+  font-size: .95rem; line-height: 1.6;
+}
+.rr-blocked p { margin: 0 0 .8rem; }
+
+.rr-submit { margin-top: 1.6rem; }
+.rr-disclaimer { margin-top: 2rem; }
+
+.callout {
+  margin: 1.6rem 0; padding: 1.1rem 1.2rem;
+  background: var(--paper-2); border: 1px solid var(--line);
+  border-left: 4px solid var(--brand); border-radius: 6px;
+}
+.callout p { margin: 0; }
+.callout--warn { border-left-color: #9a5b00; background: #fdf8f0; }

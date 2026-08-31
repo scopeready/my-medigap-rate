@@ -222,13 +222,19 @@ Tracked here so the pre-launch checklist in `DEPLOYMENT.md` has something to che
 
 | § | Requirement | Status |
 |---|---|---|
-| 2.1 | Non-affiliation adjacent to every lead form | **Pending** — no lead form exists yet. Must ship with the form, not after. |
+| 2.1 | Non-affiliation adjacent to every lead form | **Done** — `/rate-review` renders `GOVERNMENT_DISCLAIMER` directly beneath the form, and `/thank-you` carries it too. |
 | 2.3 | Visible "filings on record as of [DATE]" on each data page | **Pending** — the date should derive from the citations' access dates once records are verified, so that it cannot be sourced from the vendor snapshot. Zero records are verified today. |
 | 2.4 | SHIP named in the not-all-plans disclosure | **Partial** — SHIP is linked in the footer, but the disclosure text names only Medicare.gov and 1-800-MEDICARE. |
-| 3.4 | Lead forms state what happens next | **Pending** — with the form. |
+| 3.4 | Lead forms state what happens next | **Done** — who calls, how soon, that nothing is sold on the call, and that consent can be withdrawn. Repeated on `/thank-you`. |
 | 6 | Cookie consent | **Pending** — not needed while no analytics ID is set; required the moment one is. |
 | 7 | Chart text alternatives | **Pending** — no charts exist yet. A rate-history timeline needs a data-table equivalent. |
 | 7 | WCAG 2.1 AA audit | **Not run.** Body text is 17px against a 16px floor; contrast and focus states have not been measured. |
+
+A note on 3.5 and 3.6, both enforced in `components/RateReviewForm.tsx`: the form collects no
+health field of any kind and asks the reader to keep conditions out of the free-text box, and
+choosing a state we are not licensed in removes the contact fields and the consent checkbox
+entirely, so a lead cannot be submitted from a state we cannot serve. That behaviour is
+browser-side, so re-test it after any change to that component.
 
 One open question rather than a gap: the header's "Talk to a person" call-to-action is
 global, so it appears on non-licensed state pages. It points at `/contact`, which is general
