@@ -72,3 +72,26 @@ export const COMPENSATION_NOTE =
   "You pay the same premium whichever way you buy: the commission comes out of the carrier's " +
   "filed rate, it is never added to yours. Going direct to the insurer does not make the policy " +
   "cheaper, and using us does not make it dearer.";
+
+/**
+ * Web3Forms configuration.
+ *
+ * The access key is public by design — it is submitted from the browser and is
+ * visible in the page source of every form that uses it. It is not a secret and
+ * must never be treated as one; it is kept in an environment variable so that
+ * rotating it does not need a commit, not because it needs hiding.
+ *
+ * When the key is unset the forms still render in full and tell the reader to
+ * call or email instead. That is the same principle as the data layer: the site
+ * degrades to a working state rather than a broken one.
+ */
+export const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
+
+export const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
+
+/**
+ * Absolute URL Web3Forms redirects to after a successful submission. It has to
+ * be absolute — a path alone is ignored and the reader lands on the service's
+ * own generic success page instead of ours.
+ */
+export const FORM_REDIRECT_URL = `${SITE.url}/thank-you`;

@@ -3,7 +3,16 @@ import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Cite, SourceList } from "@/components/Cite";
 import { RateReviewForm } from "@/components/RateReviewForm";
-import { COMPENSATION_NOTE, GOVERNMENT_DISCLAIMER, LICENSED_ABBRS, ORG, SITE } from "@/lib/site";
+import {
+  COMPENSATION_NOTE,
+  FORM_REDIRECT_URL,
+  GOVERNMENT_DISCLAIMER,
+  LICENSED_ABBRS,
+  ORG,
+  SITE,
+  WEB3FORMS_ENDPOINT,
+  WEB3FORMS_KEY,
+} from "@/lib/site";
 import { STATES } from "@/lib/states";
 import type { SourceId } from "@/lib/sources";
 
@@ -30,13 +39,6 @@ export const metadata: Metadata = {
     type: "website",
   },
 };
-
-/**
- * Public by design — this is a form-relay endpoint, never a secret. When it is
- * unset the page still renders in full and tells the reader to call instead,
- * which is a working contact path rather than a broken one.
- */
-const endpoint = process.env.NEXT_PUBLIC_CONTACT_FORM_ENDPOINT;
 
 const STATE_OPTIONS = STATES.map((s) => ({
   abbr: s.abbr,
@@ -113,7 +115,9 @@ export default function RateReviewPage() {
         </p>
 
         <RateReviewForm
-          endpoint={endpoint}
+          endpoint={WEB3FORMS_ENDPOINT}
+          accessKey={WEB3FORMS_KEY}
+          redirectTo={FORM_REDIRECT_URL}
           states={STATE_OPTIONS}
           agency={ORG.legalName}
           agent={ORG.agent}

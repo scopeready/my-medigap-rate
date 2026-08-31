@@ -51,11 +51,16 @@ const PLANS = [
 
 export function RateReviewForm({
   endpoint,
+  accessKey,
+  redirectTo,
   states,
   agency,
   agent,
 }: {
-  endpoint?: string;
+  endpoint: string;
+  /** Web3Forms access key. Public by design; absent means submissions are off. */
+  accessKey?: string;
+  redirectTo: string;
   states: readonly StateOption[];
   agency: string;
   agent: string;
@@ -64,20 +69,25 @@ export function RateReviewForm({
 
   const chosen = states.find((s) => s.abbr === stateAbbr);
   const unlicensed = chosen !== undefined && !chosen.licensed;
+  const live = Boolean(accessKey);
 
   return (
     <form
       action={endpoint}
       method="POST"
       className="rr-form"
-      // With no endpoint configured there is nowhere to post. Without this the
-      // form would submit to the page itself when somebody presses Enter in a
-      // text field, reloading it and throwing away everything they typed.
-      onSubmit={endpoint ? undefined : (e) => e.preventDefault()}
+      // With no access key there is nowhere for this to go. Without the guard
+      // the form would submit to the endpoint anyway and fail, or — worse, if
+      // the action were ever empty — reload the page and throw away everything
+      // the visitor typed.
+      onSubmit={live ? undefined : (e) => e.preventDefault()}
     >
       {/* Where the submission lands, and where the visitor lands after it. */}
-      <input type="hidden" name="subject" value="Rate-stability review request" />
-      <input type="hidden" name="from_page" value="/rate-review" />
+      <input type="hidden" name="access_key" value={accessKey ?? ""} />
+      <input type="hidden" name="subject" value="Rate-stability review request — MyMedigapRate" />
+      <input type="hidden" name="from_name" value="MyMedigapRate" />
+      <input type="hidden" name="lead_source" value="Rate review page" />
+      <input type="hidden" name="redirect" value={redirectTo} />
 
       <fieldset>
         <legend>Where you live</legend>
@@ -215,11 +225,12 @@ export function RateReviewForm({
             </div>
           </fieldset>
 
-          {/* Honeypot — hidden from people, filled in by bots. */}
-          <div className="hp" aria-hidden="true">
-            <label htmlFor="rr-company">Company</label>
-            <input id="rr-company" name="botcheck" type="text" tabIndex={-1} autoComplete="off" />
-          </div>
+          {/*
+            Honeypot. Web3Forms rejects any submission where botcheck carries a
+            value. Positioned off-screen rather than display:none — some bots
+            skip fields that are display:none, which defeats the point.
+          */}
+          <input className="hp" type="checkbox" name="botcheck" tabIndex={-1} autoComplete="off" aria-hidden="true" />
 
           <div className="consent">
             <input id="rr-consent" name="tcpa_consent" type="checkbox" required value="yes" />
@@ -231,7 +242,7 @@ export function RateReviewForm({
             </label>
           </div>
 
-          {endpoint ? (
+          {live ? (
             <button type="submit" className="btn btn--primary rr-submit">
               Request my rate review
             </button>

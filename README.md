@@ -93,7 +93,7 @@ Everything in `.env.example` is optional:
 | Variable | Effect when unset |
 | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | canonical URLs default to `https://www.mymedigaprate.com` |
-| `NEXT_PUBLIC_CONTACT_FORM_ENDPOINT` | contact page shows phone and email only, no form |
+| `NEXT_PUBLIC_WEB3FORMS_KEY` | `/rate-review` and `/contact` show phone and email only, no form |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | no analytics script is injected |
 
 `NEXT_PUBLIC_*` values are visible in the browser. Never put a private key in

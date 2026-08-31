@@ -163,7 +163,16 @@ This is a Medicare marketing site subject to CMS/TPMO rules.
 - 1-800-MEDICARE, Medicare.gov and the free SHIP counseling program are linked
   in the footer as the official, independent alternatives. Keep them.
 - Any contact form must carry the permission-to-contact checkbox and its
-  wording. It is required, not decorative.
+  wording. It is required, not decorative. Both forms — `/rate-review` and
+  `/contact` — post to Web3Forms and carry the government non-affiliation
+  notice adjacent to the form, not only in the footer.
+- **`/rate-review` must never accept a lead from a state we are not licensed
+  in.** Choosing one removes the contact fields and the consent checkbox
+  outright, so there is no submit path. That is browser-side behaviour in
+  `components/RateReviewForm.tsx`; re-test it after changing that component.
+- **No form on this site asks a health question.** No condition, medication or
+  diagnosis field, and the free-text box tells the reader to leave them out.
+  Collecting any of it would pull the site into HIPAA and state privacy scope.
 - The commission conflict is disclosed plainly on `/about` and in the footer.
   Keep it plain — and always keep it next to `COMPENSATION_NOTE` in
   `lib/site.ts`. Disclosing the commission on its own reads as "using an agent
@@ -194,3 +203,10 @@ There are none, and there should be none. The site requires zero environment
 variables. Everything in `.env.example` is optional and public-by-design
 (`NEXT_PUBLIC_*` values are visible in the browser). Never put a private API key
 in this repo or in a `NEXT_PUBLIC_` variable.
+
+`NEXT_PUBLIC_WEB3FORMS_KEY` is the Web3Forms access key. It is public by
+design — it is submitted from the browser and appears in the page source of
+every form that uses it — so it is not a secret and does not need protecting.
+It lives in an environment variable so rotating it does not need a commit. With
+it unset, both forms render in full and tell the reader to call or email
+instead; nothing silently discards a submission.

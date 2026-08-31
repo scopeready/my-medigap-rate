@@ -1,5 +1,13 @@
 import type { Metadata } from "next";
-import { COMPENSATION_NOTE, ORG, SITE, TPMO_DISCLAIMER } from "@/lib/site";
+import {
+  COMPENSATION_NOTE,
+  FORM_REDIRECT_URL,
+  ORG,
+  SITE,
+  TPMO_DISCLAIMER,
+  WEB3FORMS_ENDPOINT,
+  WEB3FORMS_KEY,
+} from "@/lib/site";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 export const metadata: Metadata = {
@@ -9,11 +17,11 @@ export const metadata: Metadata = {
 };
 
 /**
- * Optional form endpoint. When it is not configured the page renders phone and
- * email only — which is a complete contact page, not a degraded one. No API key
- * or secret is ever needed here; this value is public by design.
+ * When no Web3Forms key is configured the page renders phone and email only —
+ * which is a complete contact page, not a degraded one. The key is public by
+ * design and is never a secret.
  */
-const endpoint = process.env.NEXT_PUBLIC_CONTACT_FORM_ENDPOINT;
+const live = Boolean(WEB3FORMS_KEY);
 
 export default function ContactPage() {
   return (
@@ -59,10 +67,15 @@ export default function ContactPage() {
           number shown on it, and we will pull the figure while we recheck it.
         </p>
 
-        {endpoint ? (
+        {live ? (
           <>
             <h2>Send a message</h2>
-            <form action={endpoint} method="POST">
+            <form action={WEB3FORMS_ENDPOINT} method="POST">
+              <input type="hidden" name="access_key" value={WEB3FORMS_KEY ?? ""} />
+              <input type="hidden" name="subject" value="Message from MyMedigapRate" />
+              <input type="hidden" name="from_name" value="MyMedigapRate" />
+              <input type="hidden" name="lead_source" value="Contact page" />
+              <input type="hidden" name="redirect" value={FORM_REDIRECT_URL} />
               <div className="field">
                 <label htmlFor="name">Your name</label>
                 <input id="name" name="name" type="text" autoComplete="name" required />
@@ -80,11 +93,15 @@ export default function ContactPage() {
                 <textarea id="message" name="message" rows={5} required />
               </div>
 
-              {/* Honeypot — hidden from people, filled in by bots. */}
-              <div className="hp" aria-hidden="true">
-                <label htmlFor="company">Company</label>
-                <input id="company" name="botcheck" type="text" tabIndex={-1} autoComplete="off" />
-              </div>
+              {/* Honeypot. Web3Forms rejects a submission where botcheck is set. */}
+              <input
+                className="hp"
+                type="checkbox"
+                name="botcheck"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+              />
 
               <div className="consent">
                 <input id="tcpa_consent" name="tcpa_consent" type="checkbox" required value="yes" />
