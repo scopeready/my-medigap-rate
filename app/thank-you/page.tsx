@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { GuideCta } from "@/components/GuideCta";
 import { ORG, SITE, GOVERNMENT_DISCLAIMER } from "@/lib/site";
 
 const TITLE = "Request received";
@@ -81,6 +82,8 @@ export default function ThankYouPage() {
             </li>
           </ul>
         </div>
+
+        <GuideCta context="While you wait for the call: the book covers everything around the policy decision — Social Security timing, IRMAA, taxes in retirement and long-term care. Free, and asking for it does not add you to anything." />
 
         <p className="citation rr-disclaimer">{GOVERNMENT_DISCLAIMER}</p>
       </div>

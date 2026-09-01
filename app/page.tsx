@@ -4,6 +4,7 @@ import { STATES } from "@/lib/states";
 import { ROUTED_PLANS } from "@/lib/plans";
 import { getCoverage } from "@/lib/rate-filings";
 import { EvidenceNote } from "@/components/EvidenceNote";
+import { GuideCta } from "@/components/GuideCta";
 import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -111,6 +112,12 @@ export default function HomePage() {
           <p style={{ marginTop: "1.5rem" }}>
             <Link href="/medigap-plans">Every standardized plan, A through N &rarr;</Link>
           </p>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="wrap wrap-narrow">
+          <GuideCta context="This site answers one narrow question well: what your carrier filed, and what it did to the block your policy sits in. The book covers the rest of the decisions that arrive between 62 and 75 — Medicare, Social Security, IRMAA, income, taxes and long-term care." />
         </div>
       </section>
 
