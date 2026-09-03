@@ -69,6 +69,8 @@ const organizationJsonLd = {
   sameAs: [
     "https://www.medicareenrollmentarizona.com",
     "https://georgiamedicareenrollment.com",
+    "https://minnesotamedicareenrollment.com",
+    "https://www.myecos360.com/darin-weidauer",
   ],
 };
 
