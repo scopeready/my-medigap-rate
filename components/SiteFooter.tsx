@@ -61,6 +61,31 @@ export function SiteFooter() {
             </ul>
           </div>
           <div>
+            <h4>Same agency</h4>
+            <ul>
+              <li>
+                <a href="https://www.medicareenrollmentarizona.com" rel="noopener noreferrer">
+                  Medicare Enrollment Arizona
+                </a>
+              </li>
+              <li>
+                <a href="https://georgiamedicareenrollment.com" rel="noopener noreferrer">
+                  Georgia Medicare Enrollment
+                </a>
+              </li>
+              <li>
+                <a href="https://minnesotamedicareenrollment.com" rel="noopener noreferrer">
+                  Minnesota Medicare Enrollment
+                </a>
+              </li>
+              <li>
+                <a href="https://www.myecos360.com/darin-weidauer" rel="noopener noreferrer">
+                  About Darin Weidauer
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div>
             <h4>Contact</h4>
             <ul>
               <li><a href={`tel:${ORG.phoneHref}`}>{ORG.phone}</a></li>
