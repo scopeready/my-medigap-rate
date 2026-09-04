@@ -94,6 +94,21 @@ export function SiteFooter() {
                 </a>
               </li>
               <li>
+                <a href="https://texasmedicareenrollment.com" rel="noopener noreferrer">
+                  Texas Medicare Enrollment
+                </a>
+              </li>
+              <li>
+                <a href="https://medicareenrollmentutah.com" rel="noopener noreferrer">
+                  Medicare Enrollment Utah
+                </a>
+              </li>
+              <li>
+                <a href="https://medicareenrollmentflorida.com" rel="noopener noreferrer">
+                  Medicare Enrollment Florida
+                </a>
+              </li>
+              <li>
                 <a href="https://www.myecos360.com/darin-weidauer" rel="noopener noreferrer">
                   About Darin Weidauer
                 </a>
