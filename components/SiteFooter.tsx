@@ -109,6 +109,11 @@ export function SiteFooter() {
                 </a>
               </li>
               <li>
+                <a href="https://www.californiamedicareenrollment.com" rel="noopener noreferrer">
+                  California Medicare Enrollment
+                </a>
+              </li>
+              <li>
                 <a href="https://www.myecos360.com/darin-weidauer" rel="noopener noreferrer">
                   About Darin Weidauer
                 </a>
