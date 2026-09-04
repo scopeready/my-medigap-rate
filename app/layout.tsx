@@ -76,6 +76,7 @@ const organizationJsonLd = {
     "https://texasmedicareenrollment.com",
     "https://medicareenrollmentutah.com",
     "https://medicareenrollmentflorida.com",
+    "https://www.californiamedicareenrollment.com",
     "https://www.myecos360.com/darin-weidauer",
   ],
 };
