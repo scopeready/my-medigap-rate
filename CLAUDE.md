@@ -8,7 +8,7 @@ Guidance for Claude Code (claude.ai/code) when working in this repository.
 publishes what carriers filed with state insurance regulators: premiums, filed
 rate actions, and the plan mechanics that make those numbers mean something.
 
-It is **its own site**, operated by ECOS Medicare Solutions (Darin Weidauer,
+It is **its own site**, operated by ECOS Insurance Solutions (Darin Weidauer,
 NPN 18580338). It shares no code, assets, content, data or deployment with any
 other repository in this organization. Do not copy from, link build steps to,
 or deploy anything from another project into this one.

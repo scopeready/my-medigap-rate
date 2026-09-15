@@ -70,7 +70,7 @@ Medicare on or after 1 January 2020.
 
 ## Licensing
 
-ECOS Medicare Solutions is licensed in AZ, CA, CO, FL, GA, MN, NC, NM, NV, OH, SC,
+ECOS Insurance Solutions is licensed in AZ, CA, CO, FL, GA, MN, NC, NM, NV, OH, SC,
 TN, TX, UT and WA. Educational content covers all states; agent contact is offered
 only in those fifteen. Do not direct a reader in another state to request a review
 here — point them to their State Health Insurance Assistance Program instead.

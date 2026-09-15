@@ -49,7 +49,7 @@ content-identical. The corpus is confirmed stable as of 2026-08-26.
 
 ### Business / positioning
 
-- **Site purpose is lead generation for ECOS Medicare Solutions**, not a standalone data
+- **Site purpose is lead generation for ECOS Insurance Solutions**, not a standalone data
   product. The data earns trust; the agency converts it.
 - **Target audience is the "rate-shocked switcher"** — already on Medicare, premium jumped,
   searching for whether their carrier is the problem. This was a significant reframe: the

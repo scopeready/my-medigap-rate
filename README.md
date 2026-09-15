@@ -106,7 +106,7 @@ one, and never commit a real `.env`.
 
 ## Compliance
 
-Operated by ECOS Medicare Solutions — Darin Weidauer, licensed insurance agent,
+Operated by ECOS Insurance Solutions — Darin Weidauer, licensed insurance agent,
 NPN 18580338. Not connected with or endorsed by the United States government or
 the federal Medicare program. The TPMO disclaimer, the government disclaimer and
 links to Medicare.gov, 1-800-MEDICARE and free SHIP counseling appear in the

@@ -12,7 +12,7 @@ export const SITE = {
 
 /** Third-party marketing organization behind the site (CMS/TPMO identification). */
 export const ORG = {
-  legalName: "ECOS Medicare Solutions",
+  legalName: "ECOS Insurance Solutions",
   agent: "Darin Weidauer",
   npn: "18580338",
   phone: "702-706-6564",

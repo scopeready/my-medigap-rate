@@ -169,7 +169,7 @@ substantially done. What remains, in order:
 
 Recommended per page type. This matters more for AI citation than for classic SEO.
 
-- **All pages:** `Organization` (ECOS Medicare Solutions, with `isNotGovernmentAgency`-style
+- **All pages:** `Organization` (ECOS Insurance Solutions, with `isNotGovernmentAgency`-style
   disambiguation in the description), `WebSite`
 - **Educational pages:** `Article` with `author`, `datePublished`, `dateModified`
 - **Rate-history pages:** `Dataset` with `creator`, `temporalCoverage`, `spatialCoverage`,

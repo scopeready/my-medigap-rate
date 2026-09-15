@@ -42,7 +42,7 @@ without rework.** Do not add MA/PD content casually.
 
 Place near the header, adjacent to every lead form, and in the footer:
 
-> **My Medigap Rate is operated by ECOS Medicare Solutions, an independent insurance agency.
+> **My Medigap Rate is operated by ECOS Insurance Solutions, an independent insurance agency.
 > It is not connected with or endorsed by the U.S. government or the federal Medicare program.**
 
 This is the single most important disclaimer on the site. The domain and design intentionally
@@ -51,7 +51,7 @@ necessary, not less.
 
 ### 2.2 Agent/licensing disclosure — REQUIRED
 
-> Insurance products are offered through ECOS Medicare Solutions. Darin Weidauer is a
+> Insurance products are offered through ECOS Insurance Solutions. Darin Weidauer is a
 > licensed insurance agent in AZ, CA, CO, FL, GA, MN, NC, NM, NV, OH, SC, TN, TX, UT, and WA.
 > We may receive compensation from insurance carriers for policies sold.
 
