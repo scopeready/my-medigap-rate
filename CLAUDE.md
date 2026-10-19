@@ -247,6 +247,9 @@ This is a Medicare marketing site subject to CMS/TPMO rules.
 - **No form on this site asks a health question.** No condition, medication or
   diagnosis field, and the free-text box tells the reader to leave them out.
   Collecting any of it would pull the site into HIPAA and state privacy scope.
+  `/rate-review` asks exact age, tobacco use and sex (owner, 2026-10-19): the
+  three factors a Medigap rate is filed on. Tobacco is a rating class, not a
+  health question; never widen it into one.
 - The commission conflict is disclosed plainly on `/about` and in the footer.
   Keep it plain — and always keep it next to `COMPENSATION_NOTE` in
   `lib/site.ts`. Disclosing the commission on its own reads as "using an agent
