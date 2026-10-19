@@ -19,8 +19,11 @@ import Link from "next/link";
  *    Underwriting belongs in a conversation with an agent; collecting any of
  *    it here would pull the site into HIPAA and state privacy scope for no
  *    benefit to anybody.
- *  - No date of birth. Age band is enough to know which rules apply, and it is
- *    markedly less identifying than a full DOB.
+ *  - No date of birth. Exact age, tobacco use and sex are the three things a
+ *    Medigap rate is filed on (owner, 2026-10-19: "change the age range question
+ *    to asking for the exact age, ask tobacco or no tobacco and if they are Female
+ *    or Male"); a full DOB is markedly more identifying and adds nothing to a quote.
+ *    Tobacco use is a rating class, not a health question.
  *  - No pre-ticked consent, and consent is not a condition of anything.
  */
 
@@ -36,7 +39,6 @@ export interface StateOption {
   referral: boolean;
 }
 
-const AGE_BANDS = ["Under 65", "65-69", "70-74", "75-79", "80-84", "85 or older"];
 
 const PLANS = [
   "Plan A",
@@ -201,15 +203,43 @@ export function RateReviewForm({
                 placeholder="e.g. 184"
               />
             </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>What your rate is based on</legend>
+            <p className="rr-hint">
+              Medigap premiums are filed by age, tobacco use and sex, so these three let us price
+              your options exactly.
+            </p>
             <div className="field">
               <label htmlFor="rr-age">Your age</label>
-              <select id="rr-age" name="age_band" defaultValue="">
+              <input
+                id="rr-age"
+                name="age"
+                type="number"
+                inputMode="numeric"
+                min={18}
+                max={120}
+                step={1}
+                autoComplete="off"
+                placeholder="e.g. 72"
+                required
+              />
+            </div>
+            <div className="field">
+              <label htmlFor="rr-tobacco">Do you use tobacco?</label>
+              <select id="rr-tobacco" name="tobacco" defaultValue="" required>
                 <option value="">Choose one…</option>
-                {AGE_BANDS.map((a) => (
-                  <option key={a} value={a}>
-                    {a}
-                  </option>
-                ))}
+                <option value="No tobacco">No tobacco</option>
+                <option value="Tobacco">Tobacco</option>
+              </select>
+            </div>
+            <div className="field">
+              <label htmlFor="rr-sex">Female or male?</label>
+              <select id="rr-sex" name="sex" defaultValue="" required>
+                <option value="">Choose one…</option>
+                <option value="Female">Female</option>
+                <option value="Male">Male</option>
               </select>
             </div>
           </fieldset>

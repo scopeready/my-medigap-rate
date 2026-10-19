@@ -102,7 +102,7 @@ These can be built **now**; they don't depend on verified rate data.
 
 | URL | Purpose | Status |
 |---|---|---|
-| `/rate-review/` | **Primary lead form.** Captures state, carrier, plan letter, current premium, age band, name, email, phone, ZIP. No health fields and no date of birth. Unlicensed states are told so before they fill anything in. | `BUILT` |
+| `/rate-review/` | **Primary lead form.** Captures state, carrier, plan letter, current premium, exact age, tobacco use, sex, name, email, phone, ZIP. No health fields and no date of birth. Unlicensed states are told so before they fill anything in. | `BUILT` |
 | `/compare-rates/` | Secondary form — quote request for shoppers rather than switchers | `PLANNED` |
 | `/contact/` | Standard contact + phone | `BUILT` |
 | `/schedule/` | Calendar booking for consultations | `PLANNED` |
