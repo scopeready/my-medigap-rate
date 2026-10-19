@@ -208,11 +208,11 @@ export function RateReviewForm({
           <fieldset>
             <legend>What your rate is based on</legend>
             <p className="rr-hint">
-              Optional. Medigap premiums are filed by age, tobacco use and sex, so these three let us
-              price your options exactly.
+              <strong>Optional, but highly encouraged.</strong> Every Medigap quote is based on these
+              three answers, so they are what let us give you the most accurate quotes.
             </p>
             <div className="field">
-              <label htmlFor="rr-age">Your age</label>
+              <label htmlFor="rr-age">Your age (recommended)</label>
               <input
                 id="rr-age"
                 name="age"
@@ -226,7 +226,7 @@ export function RateReviewForm({
               />
             </div>
             <div className="field">
-              <label htmlFor="rr-tobacco">Do you use tobacco?</label>
+              <label htmlFor="rr-tobacco">Do you use tobacco? (recommended)</label>
               <select id="rr-tobacco" name="tobacco" defaultValue="">
                 <option value="">Choose one…</option>
                 <option value="No tobacco">No tobacco</option>
@@ -234,7 +234,7 @@ export function RateReviewForm({
               </select>
             </div>
             <div className="field">
-              <label htmlFor="rr-sex">Female or male?</label>
+              <label htmlFor="rr-sex">Female or male? (recommended)</label>
               <select id="rr-sex" name="sex" defaultValue="">
                 <option value="">Choose one…</option>
                 <option value="Female">Female</option>
