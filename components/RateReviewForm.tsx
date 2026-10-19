@@ -19,11 +19,12 @@ import Link from "next/link";
  *    Underwriting belongs in a conversation with an agent; collecting any of
  *    it here would pull the site into HIPAA and state privacy scope for no
  *    benefit to anybody.
- *  - No date of birth. Exact age, tobacco use and sex are the three things a
- *    Medigap rate is filed on (owner, 2026-10-19: "change the age range question
- *    to asking for the exact age, ask tobacco or no tobacco and if they are Female
- *    or Male"); a full DOB is markedly more identifying and adds nothing to a quote.
- *    Tobacco use is a rating class, not a health question.
+ *  - Date of birth, tobacco use and sex are asked, optional but recommended: they
+ *    are what a Medigap rate is filed on (owner, 2026-10-19: exact age, tobacco or no
+ *    tobacco, female or male; then "make the age part request their actual
+ *    birthday, like 10/19/2026"). The birthday gives the exact age on the policy's
+ *    effective date and the reader's birthday-rule window. Tobacco use is a rating
+ *    class, not a health question.
  *  - No pre-ticked consent, and consent is not a condition of anything.
  */
 
@@ -208,21 +209,21 @@ export function RateReviewForm({
           <fieldset>
             <legend>What your rate is based on</legend>
             <p className="rr-hint">
-              <strong>Optional, but highly encouraged.</strong> Every Medigap quote is based on these
-              three answers, so they are what let us give you the most accurate quotes.
+              <strong>Optional, but highly encouraged.</strong> Every Medigap quote is based on your
+              age, tobacco use and sex, so they are what let us give you the most accurate quotes.
             </p>
             <div className="field">
-              <label htmlFor="rr-age">Your age (recommended)</label>
+              <label htmlFor="rr-dob">Your date of birth (recommended)</label>
               <input
-                id="rr-age"
-                name="age"
-                type="number"
+                id="rr-dob"
+                name="date_of_birth"
+                type="text"
                 inputMode="numeric"
-                min={18}
-                max={120}
-                step={1}
-                autoComplete="off"
-                placeholder="e.g. 72"
+                autoComplete="bday"
+                placeholder="MM/DD/YYYY"
+                maxLength={10}
+                pattern="(0?[1-9]|1[0-2])/(0?[1-9]|[12][0-9]|3[01])/(19|20)[0-9]{2}"
+                title="Month/day/year, for example 10/19/1955"
               />
             </div>
             <div className="field">
