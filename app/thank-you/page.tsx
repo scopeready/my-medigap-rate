@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { GuideCta } from "@/components/GuideCta";
+import { SoaTextNotice } from "@/components/SoaTextNotice";
 import { ORG, SITE, GOVERNMENT_DISCLAIMER } from "@/lib/site";
 
 const TITLE = "Request received";
@@ -28,9 +29,11 @@ export default function ThankYouPage() {
         <Breadcrumbs items={[{ href: "/", label: "Home" }, { label: "Request received" }]} />
         <h1 style={{ marginTop: 0 }}>We have it. Thank you.</h1>
         <p className="lede">
-          Nothing else is needed from you. {ORG.agent} will read it and call the number you gave
-          us, usually the same business day and always within two business days.
+          {ORG.agent} will read it and call the number you gave us, usually the same business day
+          and always within two business days. One quick thing to watch for first:
         </p>
+
+        <SoaTextNotice agent={ORG.agent} />
 
         <div className="prose">
           <h2>What the call is, and is not</h2>
