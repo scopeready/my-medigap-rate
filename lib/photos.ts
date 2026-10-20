@@ -21,8 +21,8 @@ export interface Photo {
   height: number;
 }
 
-const wide = { width: 1280, height: 720 } as const;
-const photo = { width: 880, height: 587 } as const;
+const wide = { width: 1280, height: 724 } as const;
+const photo = { width: 880, height: 585 } as const;
 
 export const PHOTOS = {
   homeHero: {
