@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { getCoverage } from "@/lib/rate-filings";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { Photo } from "@/components/Photo";
 import { EvidenceNote } from "@/components/EvidenceNote";
 
 export const metadata: Metadata = {
@@ -25,6 +26,7 @@ export default function MethodologyPage() {
           a check before it can appear, and if it does not survive the check we print the gap
           instead.
         </p>
+        <Photo id="researchDesk" variant="banner" priority />
 
         <div className="prose" style={{ marginTop: "2.5rem" }}>
           <h2>The standard</h2>

@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { PLANS } from "@/lib/plans";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { Photo } from "@/components/Photo";
 import { MedicareCosts } from "@/components/MedicareCosts";
 
 export const metadata: Metadata = {
@@ -23,6 +24,7 @@ export default function PlansIndex() {
           pays. What differs is the premium, the rate-increase history, and how the company
           behaves when you file a claim.
         </p>
+        <Photo id="doctorVisit" variant="banner" priority />
 
         <div className="grid grid--pair" style={{ marginTop: "2rem" }}>
           {PLANS.map((p) => (

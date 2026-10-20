@@ -577,3 +577,81 @@ dl.facts dd { margin: 0; text-align: right; font-weight: 600; font-size: .93rem;
 .soa-dialog::backdrop { background: rgba(10, 20, 35, .55); }
 .soa-dialog form { margin: 1rem 0 0; }
 .soa-dialog h2:focus { outline: none; }
+
+/* ---------------------------------------------------------------------------
+   Photographs (components/Photo.tsx, lib/photos.ts).
+
+   Pictures carry mood, never information: every fact on a page is still in
+   its text. They sit on a tinted ground so the box reads as intentional while
+   the file loads, and a page reads the same with images turned off.
+   --------------------------------------------------------------------------- */
+
+.photo {
+  display: block; width: 100%; height: auto;
+  background: var(--paper-3);
+  border-radius: var(--radius-lg);
+}
+
+/* The strip under a page's lede: wide, short, cropped to the subject. */
+.photo--banner {
+  aspect-ratio: 21 / 8;
+  object-fit: cover;
+  margin-top: 2rem;
+  box-shadow: var(--shadow);
+}
+@media (max-width: 640px) {
+  .photo--banner { aspect-ratio: 16 / 9; margin-top: 1.4rem; }
+}
+
+/* Home hero: copy left, photograph right; stacked, photograph second. */
+.hero--photo {
+  position: relative; isolation: isolate; overflow: hidden;
+  padding-block: clamp(2.5rem, 6vw, 4.5rem);
+}
+.hero__grid {
+  display: grid; gap: clamp(1.8rem, 4vw, 3rem); align-items: center;
+}
+@media (min-width: 940px) {
+  .hero__grid { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); }
+}
+.hero__media { position: relative; }
+.hero__media .photo {
+  aspect-ratio: 5 / 4; object-fit: cover; object-position: 62% center;
+  box-shadow: 0 18px 40px -18px rgba(10, 53, 87, .45), var(--shadow);
+}
+/* A gold rule offset behind the picture: the site's citation colour. */
+.hero__media::before {
+  content: ""; position: absolute; inset: 1.1rem -1.1rem -1.1rem 1.1rem;
+  border: 2px solid var(--gold); border-radius: var(--radius-lg);
+  opacity: .35; z-index: -1;
+}
+@media (max-width: 939px) {
+  .hero__media .photo { aspect-ratio: 16 / 10; }
+  .hero__media::before { display: none; }
+}
+
+/* Image-and-copy feature band. */
+.feature {
+  display: grid; gap: clamp(1.6rem, 4vw, 3rem); align-items: center;
+}
+@media (min-width: 860px) {
+  .feature { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); }
+}
+.feature__media .photo { aspect-ratio: 4 / 3; object-fit: cover; box-shadow: var(--shadow); }
+.feature__copy h2 { margin-top: 0; }
+.feature__copy .lede { max-width: 52ch; }
+
+/* The two calls-to-action, with a photograph beside the copy. */
+.lead-cta--photo, .guide-cta--photo {
+  display: grid; gap: 1.4rem; align-items: start;
+}
+@media (min-width: 760px) {
+  .lead-cta--photo, .guide-cta--photo { grid-template-columns: 220px minmax(0, 1fr); gap: 1.8rem; }
+}
+.cta-photo {
+  aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius);
+}
+@media (min-width: 760px) {
+  .cta-photo { aspect-ratio: 4 / 5; height: 100%; max-height: 300px; }
+}
+.cta-body > :first-child { margin-top: 0; }

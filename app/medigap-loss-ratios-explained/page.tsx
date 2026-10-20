@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { Photo } from "@/components/Photo";
 import { Cite, SourceList } from "@/components/Cite";
 import { LeadCta } from "@/components/LeadCta";
 import { GuideCta } from "@/components/GuideCta";
@@ -36,6 +37,7 @@ export default function Page() {
           star rating: how much of the premium that block collects is already going back out as
           claims.
         </p>
+        <Photo id="claimsVsPremiums" variant="banner" priority />
 
         <div className="prose" style={{ marginTop: "2.5rem" }}>
           <h2>The definition, in one line</h2>

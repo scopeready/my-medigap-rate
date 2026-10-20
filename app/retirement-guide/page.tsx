@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { Photo } from "@/components/Photo";
 import { GuideRequestForm } from "@/components/GuideRequestForm";
 import { GUIDE, GUIDE_DELIVERY } from "@/lib/guide";
 import {
@@ -44,6 +45,7 @@ export default function RetirementGuidePage() {
           <span className="guide-sub">{GUIDE.edition}</span>
         </h1>
         <p className="lede">{GUIDE.subtitle}</p>
+        <Photo id="retirementGuide" variant="banner" priority />
 
         <div className="prose">
           <p>

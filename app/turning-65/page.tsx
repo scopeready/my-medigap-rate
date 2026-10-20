@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { Photo } from "@/components/Photo";
 import { MedicareCosts } from "@/components/MedicareCosts";
 import { Cite, SourceList } from "@/components/Cite";
 import { LeadCta } from "@/components/LeadCta";
@@ -50,6 +51,7 @@ export default function Page() {
           same day, and missing them has entirely different consequences. Almost everything that
           goes wrong at 65 comes from confusing the two.
         </p>
+        <Photo id="turning65" variant="banner" priority />
 
         <div className="prose" style={{ marginTop: "2.5rem" }}>
           <h2>Window one: signing up for Medicare</h2>

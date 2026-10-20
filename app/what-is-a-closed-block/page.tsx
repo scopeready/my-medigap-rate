@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { Photo } from "@/components/Photo";
 import { Cite, SourceList } from "@/components/Cite";
 import { LeadCta } from "@/components/LeadCta";
 import { GuideCta } from "@/components/GuideCta";
@@ -43,6 +44,7 @@ export default function Page() {
           same address can be paying premiums that differ by a hundred dollars a month — and why
           one of them is watching that gap widen every year.
         </p>
+        <Photo id="porchFriends" variant="banner" priority />
 
         <div className="prose" style={{ marginTop: "2.5rem" }}>
           <h2>First, a plain warning about the term</h2>

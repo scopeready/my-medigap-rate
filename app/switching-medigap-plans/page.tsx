@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { Photo } from "@/components/Photo";
 import { Cite, SourceList } from "@/components/Cite";
 import { LeadCta } from "@/components/LeadCta";
 import { GuideCta } from "@/components/GuideCta";
@@ -51,6 +52,7 @@ export default function Page() {
           health questions first. Here is how to find out which you are, before you cancel
           anything.
         </p>
+        <Photo id="comparingPlans" variant="banner" priority />
 
         <div className="prose" style={{ marginTop: "2.5rem" }}>
           <h2>The one window nobody gets back</h2>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { Photo } from "@/components/Photo";
 import { Cite, SourceList } from "@/components/Cite";
 import { RateReviewForm } from "@/components/RateReviewForm";
 import {
@@ -59,6 +60,7 @@ export default function RateReviewPage() {
           &ldquo;good&rdquo; — it is which filed block your policy actually sits in, and what that
           block has done to everyone else in it.
         </p>
+        <Photo id="phoneReview" variant="banner" priority />
 
         <div className="prose">
           <h2>What you get</h2>
