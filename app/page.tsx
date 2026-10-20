@@ -7,6 +7,7 @@ import { EvidenceNote } from "@/components/EvidenceNote";
 import { GuideCta } from "@/components/GuideCta";
 import { SITE } from "@/lib/site";
 import { Photo } from "@/components/Photo";
+import { STATE_PHOTO_SIZE } from "@/lib/state-photos";
 
 export const metadata: Metadata = {
   title: `${SITE.name} — ${SITE.tagline}`,
@@ -107,12 +108,23 @@ export default function HomePage() {
             Pick a state to see the plans we track there, the carriers filing in that market, and
             what stage of verification each figure has reached.
           </p>
-          <ul className="tile-grid" style={{ marginTop: "1.6rem" }}>
+          <ul className="state-cards" style={{ marginTop: "1.6rem" }}>
             {STATES.filter((s) => featured.includes(s.slug)).map((s) => (
               <li key={s.slug}>
-                <Link className="tile" href={`/medigap-rate-history/${s.slug}`}>
-                  <span>{s.name}</span>
-                  <span className="tile__abbr">{s.abbr}</span>
+                <Link className="state-card" href={`/medigap-rate-history/${s.slug}`}>
+                  <img
+                    src={`/img/states/${s.slug}.webp`}
+                    width={STATE_PHOTO_SIZE.width}
+                    height={STATE_PHOTO_SIZE.height}
+                    sizes="(min-width: 1080px) 250px, 50vw"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span className="state-card__label">
+                    <span>{s.name}</span>
+                    <span className="tile__abbr">{s.abbr}</span>
+                  </span>
                 </Link>
               </li>
             ))}

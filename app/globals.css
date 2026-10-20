@@ -592,15 +592,16 @@ dl.facts dd { margin: 0; text-align: right; font-weight: 600; font-size: .93rem;
   border-radius: var(--radius-lg);
 }
 
-/* The strip under a page's lede: wide, short, cropped to the subject. */
+/* The strip under a page's lede. Banner files are composed at 21:9 and shown
+   at that ratio at every width, so nobody in a picture is ever cropped. */
 .photo--banner {
-  aspect-ratio: 21 / 8;
+  aspect-ratio: 21 / 9;
   object-fit: cover;
   margin-top: 2rem;
   box-shadow: var(--shadow);
 }
 @media (max-width: 640px) {
-  .photo--banner { aspect-ratio: 16 / 9; margin-top: 1.4rem; }
+  .photo--banner { margin-top: 1.4rem; border-radius: var(--radius); }
 }
 
 /* Home hero: copy left, photograph right; stacked, photograph second. */
@@ -616,7 +617,7 @@ dl.facts dd { margin: 0; text-align: right; font-weight: 600; font-size: .93rem;
 }
 .hero__media { position: relative; }
 .hero__media .photo {
-  aspect-ratio: 5 / 4; object-fit: cover; object-position: 62% center;
+  aspect-ratio: 5 / 4; object-fit: cover;
   box-shadow: 0 18px 40px -18px rgba(10, 53, 87, .45), var(--shadow);
 }
 /* A gold rule offset behind the picture: the site's citation colour. */
@@ -626,7 +627,6 @@ dl.facts dd { margin: 0; text-align: right; font-weight: 600; font-size: .93rem;
   opacity: .35; z-index: -1;
 }
 @media (max-width: 939px) {
-  .hero__media .photo { aspect-ratio: 16 / 10; }
   .hero__media::before { display: none; }
 }
 
@@ -637,7 +637,7 @@ dl.facts dd { margin: 0; text-align: right; font-weight: 600; font-size: .93rem;
 @media (min-width: 860px) {
   .feature { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); }
 }
-.feature__media .photo { aspect-ratio: 4 / 3; object-fit: cover; box-shadow: var(--shadow); }
+.feature__media .photo { aspect-ratio: 3 / 2; object-fit: cover; box-shadow: var(--shadow); }
 .feature__copy h2 { margin-top: 0; }
 .feature__copy .lede { max-width: 52ch; }
 
@@ -649,9 +649,30 @@ dl.facts dd { margin: 0; text-align: right; font-weight: 600; font-size: .93rem;
   .lead-cta--photo, .guide-cta--photo { grid-template-columns: 220px minmax(0, 1fr); gap: 1.8rem; }
 }
 .cta-photo {
-  aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius);
+  aspect-ratio: 3 / 2; object-fit: cover; border-radius: var(--radius);
 }
-@media (min-width: 760px) {
-  .cta-photo { aspect-ratio: 4 / 5; height: 100%; max-height: 300px; }
-}
+/* The phone-call picture is composed upright; keep it upright everywhere. */
+.cta-photo--portrait { aspect-ratio: 4 / 5; max-width: 260px; }
 .cta-body > :first-child { margin-top: 0; }
+
+/* Home: featured states as picture cards. The picture is decoration (alt=""),
+   the state name is the link text. */
+.state-cards {
+  display: grid; gap: .9rem; list-style: none; margin: 0; padding: 0;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+.state-card {
+  display: block; overflow: hidden; text-decoration: none; color: var(--ink);
+  background: var(--paper); border: 1px solid var(--line);
+  border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);
+}
+.state-card img {
+  display: block; width: 100%; height: auto; aspect-ratio: 21 / 9; object-fit: cover;
+  background: var(--paper-3);
+}
+.state-card__label {
+  display: flex; align-items: baseline; justify-content: space-between; gap: .5rem;
+  padding: .7rem .9rem; font-weight: 600; font-size: .95rem;
+}
+.state-card:hover { border-color: var(--brand); box-shadow: var(--shadow); color: var(--brand-deep); }
+.state-card:hover .tile__abbr { color: var(--brand); }

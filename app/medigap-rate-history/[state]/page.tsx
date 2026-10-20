@@ -5,6 +5,7 @@ import { STATES, getState, ruleLabel, ruleNote, ruleSource } from "@/lib/states"
 import { ROUTED_PLANS } from "@/lib/plans";
 import { getFilings } from "@/lib/rate-filings";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { StatePhoto } from "@/components/Photo";
 import { EvidenceNote } from "@/components/EvidenceNote";
 import { SITE } from "@/lib/site";
 
@@ -62,6 +63,7 @@ export default async function StatePage({ params }: Props) {
           renewal increases, and which figures we have been able to confirm against the public
           record.
         </p>
+        <StatePhoto slug={s.slug} priority />
 
         <div className="grid grid--2" style={{ marginTop: "2rem", alignItems: "start" }}>
           <div className="card">

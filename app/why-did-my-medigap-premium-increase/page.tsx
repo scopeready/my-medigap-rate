@@ -78,7 +78,7 @@ export default function Page() {
           happening to everyone. The third one is the one worth doing something about — and it is
           the one nobody tells you about, because it is invisible from your bill.
         </p>
-        <Photo id="premiumNotice" variant="banner" priority />
+        <Photo id="premiumNoticeWide" variant="banner" priority />
 
         <div className="prose" style={{ marginTop: "2.5rem" }}>
           <h2>Reason one: you got a year older</h2>
