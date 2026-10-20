@@ -1,0 +1,48 @@
+# One-shot: downloads the generated site photographs into public/img/ as WebP
+# (1x and 2x), then deletes itself in the same commit.
+name: fetch-site-photos
+on:
+  push:
+    branches: [ccr-997ae5f9-0bs3qr]
+    paths: [.github/workflows/fetch-site-photos.yml]
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq webp
+      - name: Download and convert
+        run: |
+          set -euo pipefail
+          mkdir -p public/img /tmp/raw
+          while read -r name w1 w2 url; do
+            curl -sSfL --retry 3 -o /tmp/raw/$name.png "$url"
+            cwebp -quiet -q 80 -resize $w1 0 /tmp/raw/$name.png -o public/img/$name.webp
+            cwebp -quiet -q 74 -resize $w2 0 /tmp/raw/$name.png -o public/img/$name@2x.webp
+          done <<'LIST'
+          home-hero 1280 2400 https://d8j0ntlcm91z4.cloudfront.net/user_3GEMVRyDPJwsEBAPasiXScw8X3T/hf_20261020_044929_3fe168bf-d6ef-4afb-8859-dcd85f7a9b5d.png
+          premium-notice 880 1760 https://d8j0ntlcm91z4.cloudfront.net/user_3GEMVRyDPJwsEBAPasiXScw8X3T/hf_20261020_044930_231cfa34-8cda-46fa-b27c-0ca6810bd125.png
+          research-desk 880 1760 https://d8j0ntlcm91z4.cloudfront.net/user_3GEMVRyDPJwsEBAPasiXScw8X3T/hf_20261020_044929_35b6318a-5b85-4a2d-9586-b6d450091b0a.png
+          neighborhood 880 1760 https://d8j0ntlcm91z4.cloudfront.net/user_3GEMVRyDPJwsEBAPasiXScw8X3T/hf_20261020_044931_2beff99b-20f9-4703-9008-4606c19ddf35.png
+          doctor-visit 880 1760 https://d8j0ntlcm91z4.cloudfront.net/user_3GEMVRyDPJwsEBAPasiXScw8X3T/hf_20261020_044929_8e05c110-0e35-4ddf-b21d-bc6607ff1607.png
+          turning-65 880 1760 https://d8j0ntlcm91z4.cloudfront.net/user_3GEMVRyDPJwsEBAPasiXScw8X3T/hf_20261020_044931_16507fa4-a450-4470-ad13-63451de74d73.png
+          comparing-plans 880 1760 https://d8j0ntlcm91z4.cloudfront.net/user_3GEMVRyDPJwsEBAPasiXScw8X3T/hf_20261020_044930_a74a0a69-41a3-4929-883d-7df08e4f9286.png
+          phone-review 880 1760 https://d8j0ntlcm91z4.cloudfront.net/user_3GEMVRyDPJwsEBAPasiXScw8X3T/hf_20261020_044929_de72ca91-243b-4c5e-a7d4-3518997f2512.png
+          retirement-guide 880 1760 https://d8j0ntlcm91z4.cloudfront.net/user_3GEMVRyDPJwsEBAPasiXScw8X3T/hf_20261020_044930_d7020629-f479-47e1-ac45-d4018c0a11d1.png
+          agency-office 880 1760 https://d8j0ntlcm91z4.cloudfront.net/user_3GEMVRyDPJwsEBAPasiXScw8X3T/hf_20261020_044931_db16980a-a36f-427c-8972-079fe9061242.png
+          porch-friends 880 1760 https://d8j0ntlcm91z4.cloudfront.net/user_3GEMVRyDPJwsEBAPasiXScw8X3T/hf_20261020_044930_8d5e6394-7417-40c2-b797-e6eff0c7234b.png
+          claims-vs-premiums 880 1760 https://d8j0ntlcm91z4.cloudfront.net/user_3GEMVRyDPJwsEBAPasiXScw8X3T/hf_20261020_044929_ca5a29e7-5585-4ebc-8238-f6d916bf1fcf.png
+          LIST
+          ls -la public/img
+      - name: Commit photos and remove this workflow
+        run: |
+          git rm -q .github/workflows/fetch-site-photos.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/img
+          git commit -q -m "Site photos: 12 generated photographs as WebP (1x and 2x)" -m "Downloaded by the one-shot fetch-site-photos workflow, which removes itself in this commit."
+          git push
