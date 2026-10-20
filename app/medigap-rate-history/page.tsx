@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { STATES, ruleLabel } from "@/lib/states";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { Photo } from "@/components/Photo";
 
 export const metadata: Metadata = {
   title: "Medigap rate history by state",
@@ -21,6 +22,7 @@ export default function RateHistoryIndex() {
           one state can have raised rates hard in the one next door, on the same plan letter, in
           the same year. Start with where you live.
         </p>
+        <Photo id="neighborhood" variant="banner" priority />
 
         <ul className="tile-grid" style={{ marginTop: "2rem" }}>
           {STATES.map((s) => (

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { GUIDE } from "@/lib/guide";
+import { Photo } from "./Photo";
 
 /**
  * The book offer, for the foot of the editorial pages.
@@ -18,25 +19,28 @@ export function GuideCta({ context }: { context?: string }) {
   if (!GUIDE) return null;
 
   return (
-    <aside className="guide-cta" aria-labelledby="guide-cta-heading">
-      <p className="guide-cta__kicker">Free, {GUIDE.pages} pages, no cost and nothing to buy</p>
-      <h2 id="guide-cta-heading">
-        {GUIDE.title} <span className="guide-cta__ed">{GUIDE.edition}</span>
-      </h2>
-      <p>
-        {context ??
-          "This page answers one question. The book covers the rest of them — Medicare, Social Security, IRMAA, income, taxes and long-term care, in the order they actually arrive."}
-      </p>
-      <p className="lead-cta__actions">
-        <Link href="/retirement-guide" className="btn btn--primary">
-          Email me the book
-        </Link>
-      </p>
-      <p className="lead-cta__terms">
-        Written by {GUIDE.author}, the licensed agent behind this site. We email it rather than
-        hand you a download, so give us an address you read. Asking for the book does not sign you
-        up for a call &mdash; that is a separate, optional box on the form, and it is unticked.
-      </p>
+    <aside className="guide-cta guide-cta--photo" aria-labelledby="guide-cta-heading">
+      <Photo id="retirementGuide" className="cta-photo" sizes="(min-width: 760px) 260px, 100vw" />
+      <div className="cta-body">
+        <p className="guide-cta__kicker">Free, {GUIDE.pages} pages, no cost and nothing to buy</p>
+        <h2 id="guide-cta-heading">
+          {GUIDE.title} <span className="guide-cta__ed">{GUIDE.edition}</span>
+        </h2>
+        <p>
+          {context ??
+            "This page answers one question. The book covers the rest of them — Medicare, Social Security, IRMAA, income, taxes and long-term care, in the order they actually arrive."}
+        </p>
+        <p className="lead-cta__actions">
+          <Link href="/retirement-guide" className="btn btn--primary">
+            Email me the book
+          </Link>
+        </p>
+        <p className="lead-cta__terms">
+          Written by {GUIDE.author}, the licensed agent behind this site. We email it rather than
+          hand you a download, so give us an address you read. Asking for the book does not sign you
+          up for a call &mdash; that is a separate, optional box on the form, and it is unticked.
+        </p>
+      </div>
     </aside>
   );
 }

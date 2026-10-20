@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { COMPENSATION_NOTE, ORG, SITE } from "@/lib/site";
 import { STATES } from "@/lib/states";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { Photo } from "@/components/Photo";
 
 export const metadata: Metadata = {
   title: "About",
@@ -25,6 +26,7 @@ export default function AboutPage() {
           the carrier has done to the premium of people who already own it — is public, and almost
           nobody publishes it.
         </p>
+        <Photo id="agencyOffice" variant="banner" priority />
 
         <div className="prose" style={{ marginTop: "2.5rem" }}>
           <h2>The conflict, stated plainly</h2>

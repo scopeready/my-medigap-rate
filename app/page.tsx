@@ -6,6 +6,7 @@ import { getCoverage } from "@/lib/rate-filings";
 import { EvidenceNote } from "@/components/EvidenceNote";
 import { GuideCta } from "@/components/GuideCta";
 import { SITE } from "@/lib/site";
+import { Photo } from "@/components/Photo";
 
 export const metadata: Metadata = {
   title: `${SITE.name} — ${SITE.tagline}`,
@@ -20,22 +21,51 @@ export default function HomePage() {
 
   return (
     <>
-      <section className="hero">
-        <div className="wrap">
-          <p className="eyebrow">Medicare Supplement rate research</p>
-          <h1>What your Medigap policy actually costs — and what it did last year.</h1>
-          <p className="hero__lede">
-            The premium a carrier advertises at 65 is not the premium you pay at 75. We read the
-            rate filings insurers submit to state regulators and publish what they show, plan by
-            plan and state by state, with a link to the filing every time.
-          </p>
-          <div className="btn-row">
-            <Link href="/medigap-rate-history" className="btn btn--primary">
-              Find your state
-            </Link>
-            <Link href="/methodology" className="btn btn--ghost">
-              How we verify a figure
-            </Link>
+      <section className="hero hero--photo">
+        <div className="wrap hero__grid">
+          <div className="hero__copy">
+            <p className="eyebrow">Medicare Supplement rate research</p>
+            <h1>What your Medigap policy actually costs — and what it did last year.</h1>
+            <p className="hero__lede">
+              The premium a carrier advertises at 65 is not the premium you pay at 75. We read the
+              rate filings insurers submit to state regulators and publish what they show, plan by
+              plan and state by state, with a link to the filing every time.
+            </p>
+            <div className="btn-row">
+              <Link href="/medigap-rate-history" className="btn btn--primary">
+                Find your state
+              </Link>
+              <Link href="/methodology" className="btn btn--ghost">
+                How we verify a figure
+              </Link>
+            </div>
+          </div>
+          <div className="hero__media">
+            <Photo id="homeHero" priority sizes="(min-width: 940px) 560px, 100vw" />
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="wrap feature">
+          <div className="feature__media">
+            <Photo id="premiumNotice" />
+          </div>
+          <div className="feature__copy">
+            <p className="eyebrow">If your renewal letter just arrived</p>
+            <h2>Your premium went up. Was it your age, or your block?</h2>
+            <p className="lede">
+              Every Medigap increase comes from one of three causes, and only one of them is worth
+              acting on. It is the one you cannot see on your bill.
+            </p>
+            <div className="btn-row">
+              <Link href="/why-did-my-medigap-premium-increase" className="btn btn--primary">
+                Why premiums rise
+              </Link>
+              <Link href="/rate-review" className="btn btn--ghost">
+                Get a free rate review
+              </Link>
+            </div>
           </div>
         </div>
       </section>

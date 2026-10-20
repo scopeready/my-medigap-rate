@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ORG, LICENSED_ABBRS, COMPENSATION_NOTE } from "@/lib/site";
+import { Photo } from "./Photo";
 
 /**
  * The consultation call-to-action used at the foot of the editorial pages.
@@ -28,30 +29,33 @@ export function LeadCta({
   children?: React.ReactNode;
 }) {
   return (
-    <aside className="lead-cta" aria-labelledby="lead-cta-heading">
-      <h2 id="lead-cta-heading">{heading}</h2>
-      {children ?? (
-        <p>
-          Send us your carrier, your plan letter and your state. We will look up which filed
-          block your policy actually sits in, what that block has done historically, and whether
-          a better-behaved block is open to you where you live.
+    <aside className="lead-cta lead-cta--photo" aria-labelledby="lead-cta-heading">
+      <Photo id="phoneReview" className="cta-photo" sizes="(min-width: 760px) 260px, 100vw" />
+      <div className="cta-body">
+        <h2 id="lead-cta-heading">{heading}</h2>
+        {children ?? (
+          <p>
+            Send us your carrier, your plan letter and your state. We will look up which filed
+            block your policy actually sits in, what that block has done historically, and whether
+            a better-behaved block is open to you where you live.
+          </p>
+        )}
+        <p className="lead-cta__actions">
+          <Link href="/rate-review" className="btn btn--primary">
+            Get a free rate review
+          </Link>
+          <a href={`tel:${ORG.phoneHref}`} className="btn btn--ghost">
+            {ORG.phone}
+          </a>
         </p>
-      )}
-      <p className="lead-cta__actions">
-        <Link href="/rate-review" className="btn btn--primary">
-          Get a free rate review
-        </Link>
-        <a href={`tel:${ORG.phoneHref}`} className="btn btn--ghost">
-          {ORG.phone}
-        </a>
-      </p>
-      <p className="lead-cta__terms">
-        <strong>This costs you nothing.</strong> {COMPENSATION_NOTE} {ORG.agent} answers, usually
-        the same business day. It is a conversation, not a quote engine, and nothing is sold on
-        the call. We never ask about your health conditions through this website. We can write
-        policies in {LICENSED_ABBRS.join(", ")} &mdash; everywhere else we will point you to your
-        state&rsquo;s free counselling programme, which is also free to you.
-      </p>
+        <p className="lead-cta__terms">
+          <strong>This costs you nothing.</strong> {COMPENSATION_NOTE} {ORG.agent} answers, usually
+          the same business day. It is a conversation, not a quote engine, and nothing is sold on
+          the call. We never ask about your health conditions through this website. We can write
+          policies in {LICENSED_ABBRS.join(", ")} &mdash; everywhere else we will point you to your
+          state&rsquo;s free counselling programme, which is also free to you.
+        </p>
+      </div>
     </aside>
   );
 }
