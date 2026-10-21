@@ -77,11 +77,6 @@ export const PHOTOS = {
     alt: "A woman in her seventies in an armchair, smiling during a phone call, with a notepad on her lap.",
     ...portrait,
   },
-  retirementGuide: {
-    name: "retirement-guide",
-    alt: "A printed guidebook open on a wooden table beside a cup of coffee and reading glasses.",
-    ...photo,
-  },
   retirementGuideWide: {
     name: "retirement-guide-wide",
     alt: "A printed guidebook open on a long wooden table beside coffee, reading glasses and a closed navy copy.",

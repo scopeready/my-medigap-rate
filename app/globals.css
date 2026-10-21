@@ -560,6 +560,76 @@ dl.facts dd { margin: 0; text-align: right; font-weight: 600; font-size: .93rem;
 .guide-cta__ed { font-size: .78rem; font-weight: 600; color: var(--ink-3); white-space: nowrap; }
 .guide-sub { display: block; font-size: .8rem; font-weight: 600; color: var(--ink-3); letter-spacing: .04em; text-transform: uppercase; margin-top: .4rem; }
 
+/* The cover, made to read as a printed book: a slight tilt, a darker spine
+   strip down the left edge and a long cast shadow. */
+.book-cover {
+  position: relative; width: 100%; max-width: 240px; margin-inline: auto;
+  transform: perspective(900px) rotateY(-9deg) rotateZ(1.2deg);
+  transform-origin: left center;
+}
+.book-cover img {
+  display: block; width: 100%; height: auto; aspect-ratio: 2 / 3;
+  border-radius: 2px 5px 5px 2px;
+  background: var(--brand-deep);
+  box-shadow:
+    1px 1px 0 rgba(255, 255, 255, .25) inset,
+    14px 18px 28px -10px rgba(5, 20, 35, .55),
+    4px 4px 10px rgba(5, 20, 35, .25);
+}
+.book-cover::before {
+  content: ""; position: absolute; inset: 0 auto 0 0; width: 7%;
+  border-radius: 2px 0 0 2px; pointer-events: none;
+  background: linear-gradient(90deg, rgba(0, 0, 0, .38), rgba(255, 255, 255, .18) 55%, rgba(0, 0, 0, .12));
+}
+@media (prefers-reduced-motion: no-preference) {
+  .book-cover { transition: transform .35s ease; }
+  .book-band:hover .book-cover, .guide-cta--book:hover .book-cover {
+    transform: perspective(900px) rotateY(-3deg) rotateZ(0deg);
+  }
+}
+
+/* In a page's column: cover beside the copy, inside the usual card. */
+.guide-cta--book { display: grid; gap: 1.4rem; align-items: center; }
+.guide-cta--book .book-cover { max-width: 130px; }
+@media (min-width: 760px) {
+  .guide-cta--book { grid-template-columns: 150px minmax(0, 1fr); gap: 2rem; }
+  .guide-cta--book .book-cover { max-width: 150px; }
+}
+
+/* Home: a full-width filing-blue band. Copy first, cover on the right; stacked
+   on a phone, the cover comes first and smaller. */
+.book-band {
+  color: #fff;
+  background:
+    radial-gradient(ellipse at 85% 40%, rgba(255, 255, 255, .10), transparent 60%),
+    linear-gradient(160deg, var(--brand) 0%, var(--brand-deep) 70%);
+  padding-block: clamp(2.8rem, 7vw, 5rem);
+  overflow: hidden;
+}
+.book-band__grid { display: grid; gap: 2.2rem; align-items: center; }
+.book-band__grid > .book-cover { order: -1; max-width: 170px; }
+@media (min-width: 760px) {
+  .book-band__grid { grid-template-columns: minmax(0, 1fr) 240px; gap: clamp(2.5rem, 6vw, 5rem); }
+  .book-band__grid > .book-cover { order: 0; max-width: 240px; }
+}
+.book-band .cta-body { max-width: 60ch; }
+.book-band .guide-cta__kicker {
+  color: var(--brand-soft); opacity: .85;
+  border-bottom: 1px solid rgba(255, 255, 255, .25);
+  display: inline-block; padding-bottom: .4rem; margin-bottom: 1rem;
+}
+.book-band h2 { color: #fff; margin: 0 0 .9rem; font-size: clamp(1.8rem, 4vw, 2.6rem); line-height: 1.1; }
+.book-band .guide-cta__ed {
+  display: block; margin-top: .45rem; color: var(--brand-soft);
+  font-family: var(--sans); font-size: .82rem; letter-spacing: .08em; text-transform: uppercase;
+}
+.book-band p { color: rgba(255, 255, 255, .9); }
+.book-band .lead-cta__terms { color: rgba(255, 255, 255, .72); }
+.btn--light { background: var(--paper); color: var(--brand-deep); }
+.btn--light:hover { background: var(--brand-soft); color: var(--brand-deep); }
+.book-band a:not(.btn) { color: #fff; }
+.book-band :focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
 /* Thank-you page: the Scope of Appointment text notice (components/SoaTextNotice.tsx). */
 .soa-notice, .soa-dialog {
   background: var(--gold-soft);
@@ -642,11 +712,11 @@ dl.facts dd { margin: 0; text-align: right; font-weight: 600; font-size: .93rem;
 .feature__copy .lede { max-width: 52ch; }
 
 /* The two calls-to-action, with a photograph beside the copy. */
-.lead-cta--photo, .guide-cta--photo {
+.lead-cta--photo {
   display: grid; gap: 1.4rem; align-items: start;
 }
 @media (min-width: 760px) {
-  .lead-cta--photo, .guide-cta--photo { grid-template-columns: 220px minmax(0, 1fr); gap: 1.8rem; }
+  .lead-cta--photo { grid-template-columns: 220px minmax(0, 1fr); gap: 1.8rem; }
 }
 .cta-photo {
   aspect-ratio: 3 / 2; object-fit: cover; border-radius: var(--radius);
