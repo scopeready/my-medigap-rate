@@ -157,11 +157,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section">
-        <div className="wrap wrap-narrow">
-          <GuideCta context="This site answers one narrow question well: what your carrier filed, and what it did to the block your policy sits in. The book covers the rest of the decisions that arrive between 62 and 75 — Medicare, Social Security, IRMAA, income, taxes and long-term care." />
-        </div>
-      </section>
+      <GuideCta
+        band
+        context="This site answers one narrow question: what your carrier filed, and what that did to the block your policy sits in. The book takes on everything else that lands between 62 and 75 — Medicare, Social Security, IRMAA, income, taxes and long-term care."
+      />
 
       <section className="section section--tint">
         <div className="wrap wrap-narrow">
