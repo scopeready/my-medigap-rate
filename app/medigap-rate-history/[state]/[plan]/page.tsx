@@ -9,6 +9,7 @@ import { getResearchPanel } from "@/lib/csg-data";
 import { ScenarioNote } from "@/components/ScenarioNote";
 import { TN_NOTE } from "@/lib/tn-rate-actions";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { StatePhoto } from "@/components/Photo";
 import { EvidenceNote } from "@/components/EvidenceNote";
 import { Figure, Withheld } from "@/components/Figure";
 import { isoToLong, money } from "@/lib/format";
@@ -77,6 +78,7 @@ export default async function StatePlanPage({ params }: Props) {
           {p.summary} This page tracks what {p.name} carriers have filed with the {s.name}{" "}
           insurance regulator and what those filings show about renewal increases.
         </p>
+        <StatePhoto slug={s.slug} priority />
 
         <div className="layout" style={{ marginTop: "2.5rem" }}>
           <div className="layout__main">

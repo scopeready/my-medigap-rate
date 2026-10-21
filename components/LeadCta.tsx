@@ -30,7 +30,7 @@ export function LeadCta({
 }) {
   return (
     <aside className="lead-cta lead-cta--photo" aria-labelledby="lead-cta-heading">
-      <Photo id="phoneReview" className="cta-photo" sizes="(min-width: 760px) 260px, 100vw" />
+      <Photo id="phoneReviewPortrait" className="cta-photo cta-photo--portrait" sizes="(min-width: 760px) 260px, 100vw" />
       <div className="cta-body">
         <h2 id="lead-cta-heading">{heading}</h2>
         {children ?? (

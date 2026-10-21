@@ -22,7 +22,7 @@ export default function RateHistoryIndex() {
           one state can have raised rates hard in the one next door, on the same plan letter, in
           the same year. Start with where you live.
         </p>
-        <Photo id="neighborhood" variant="banner" priority />
+        <Photo id="rateHistoryUsa" variant="banner" priority />
 
         <ul className="tile-grid" style={{ marginTop: "2rem" }}>
           {STATES.map((s) => (

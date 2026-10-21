@@ -45,7 +45,7 @@ export default function RetirementGuidePage() {
           <span className="guide-sub">{GUIDE.edition}</span>
         </h1>
         <p className="lede">{GUIDE.subtitle}</p>
-        <Photo id="retirementGuide" variant="banner" priority />
+        <Photo id="retirementGuideWide" variant="banner" priority />
 
         <div className="prose">
           <p>

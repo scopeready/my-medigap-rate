@@ -1,4 +1,5 @@
 import { PHOTOS, type PhotoKey } from "@/lib/photos";
+import { STATE_PHOTO_ALT, STATE_PHOTO_SIZE } from "@/lib/state-photos";
 
 /**
  * A responsive photograph from `lib/photos.ts`.
@@ -34,6 +35,28 @@ export function Photo({
       width={p.width}
       height={p.height}
       alt={p.alt}
+      loading={priority ? "eager" : "lazy"}
+      fetchPriority={priority ? "high" : undefined}
+      decoding="async"
+    />
+  );
+}
+
+/** The landscape banner for a state page. Renders nothing for an unknown slug. */
+export function StatePhoto({ slug, priority = false }: { slug: string; priority?: boolean }) {
+  const alt = STATE_PHOTO_ALT[slug];
+  if (!alt) return null;
+  const src = `/img/states/${slug}.webp`;
+  const { width, height } = STATE_PHOTO_SIZE;
+  return (
+    <img
+      className="photo photo--banner"
+      src={src}
+      srcSet={`${src} ${width}w, /img/states/${slug}@2x.webp ${width * 2}w`}
+      sizes="(min-width: 1080px) 1040px, 100vw"
+      width={width}
+      height={height}
+      alt={alt}
       loading={priority ? "eager" : "lazy"}
       fetchPriority={priority ? "high" : undefined}
       decoding="async"
